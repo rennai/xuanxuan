@@ -1,4 +1,4 @@
-import Platform from 'Platform'; // eslint-disable-line
+import Platform from "Platform";
 
 /**
  * 平台模块访问类
@@ -36,7 +36,7 @@ class PlatformModule {
      * @memberof PlatformModule
      */
     get type() {
-        const {$module} = this;
+        const { $module } = this;
         return $module && $module.type;
     }
 
@@ -48,7 +48,7 @@ class PlatformModule {
      * @memberof PlatformModule
      */
     get env() {
-        const {$module} = this;
+        const { $module } = this;
         return $module && $module.env;
     }
 
@@ -72,7 +72,7 @@ class PlatformModule {
      */
     call(nameArr, ...params) {
         const $module = this.access(nameArr);
-        if (typeof $module === 'function') {
+        if (typeof $module === "function") {
             return $module(...params);
         }
         return $module;
@@ -86,13 +86,13 @@ class PlatformModule {
      * @memberof PlatformModule
      */
     access(nameArr) {
-        if (typeof nameArr === 'string') {
-            nameArr = nameArr.split('.');
+        if (typeof nameArr === "string") {
+            nameArr = nameArr.split(".");
         }
-        let {$module} = this;
+        let { $module } = this;
         for (const name of nameArr) {
             $module = $module[name];
-            if ($module === null || typeof $module !== 'object') {
+            if ($module === null || typeof $module !== "object") {
                 break;
             }
         }
@@ -118,7 +118,7 @@ class PlatformModule {
      * @return {void}
      */
     init(settings) {
-        this.call('init', settings);
+        this.call("init", settings);
     }
 }
 
