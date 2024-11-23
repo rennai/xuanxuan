@@ -4,75 +4,86 @@
  * https://webpack.github.io/docs/hot-module-replacement-with-webpack.html
  */
 
+import { fileURLToPath } from 'url';
+import path from 'path';
 import webpack from 'webpack';
-import merge from 'webpack-merge';
-import baseConfig from './webpack.config.base';
+import { merge } from 'webpack-merge';
+import baseConfig from './webpack.config.base.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const port = process.env.PORT || 3000;
 
 export default merge(baseConfig, {
-    mode: 'development',
+  mode: 'development',
+  target: 'electron-renderer',
 
-    devtool: 'inline-source-map',
+  devtool: 'eval-source-map',
 
-    entry: {
-        bundle: [
-            `webpack-hot-middleware/client?path=http://localhost:${port}/__webpack_hmr`,
-            'babel-polyfill',
-            './app/index'
-        ],
-    },
-
-    output: {
-        publicPath: `http://localhost:${port}/dist/`,
-        filename: '[name].js',
-    },
-
-    module: {
-        rules: [
-
-            // Fonts
-            {test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=application/font-woff'},
-            {test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=application/font-woff'},
-            {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=application/octet-stream'},
-            {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader'},
-            {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=image/svg+xml'},
-            {
-                test: /\.less$/,
-                use: [
-                    'style-loader',
-                    'css-loader?importLoaders=1&sourceMap',
-                    'less-loader?strictMath&noIeCompat&sourceMap'
-                ]
-            }
-        ]
-    },
-
-    plugins: [
-        // for bindings package, see https://github.com/rwaldron/johnny-five/issues/1101#issuecomment-213581938
-        new webpack.ContextReplacementPlugin(/bindings$/, /^$/),
-
-        // https://webpack.github.io/docs/hot-module-replacement-with-webpack.html
-        new webpack.HotModuleReplacementPlugin(),
-
-        // “If you are using the CLI, the webpack process will not exit with an error code by enabling this plugin.”
-        // https://webpack.docschina.org/plugins/no-emit-on-errors-plugin/
-        new webpack.NoEmitOnErrorsPlugin(),
-
-        // NODE_ENV should be production so that modules do not perform certain development checks
-        new webpack.DefinePlugin({
-            DEBUG: true,
-            'process.env.NODE_ENV': JSON.stringify('development')
-        }),
-
-        // https://webpack.docschina.org/guides/migrating/#debug
-        new webpack.LoaderOptionsPlugin({
-            debug: true
-        })
+  entry: {
+    bundle: [
+      `webpack-hot-middleware/client?path=http://localhost:${port}/__webpack_hmr`,
+      './app/index'
     ],
+  },
 
-    externals: ['bindings'],
+  output: {
+    path: path.join(__dirname, '../app/dist'),
+    publicPath: `http://localhost:${port}/dist/`,
+    filename: '[name].js',
+  },
 
-    // https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
-    target: 'electron-renderer'
+  module: {
+    rules: [
+      // Fonts
+      {
+        test: /\.(woff|woff2|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        type: 'asset',
+        parser: {
+          dataUrlCondition: {
+            maxSize: 10 * 1024 // 10kb
+          }
+        },
+        generator: {
+          filename: 'fonts/[name][ext]'
+        }
+      },
+      {
+        test: /\.less$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              importLoaders: 1
+            }
+          },
+          {
+            loader: 'less-loader',
+            options: {
+              sourceMap: true,
+              lessOptions: {
+                strictMath: true,
+                noIeCompat: true
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'development',
+      DEBUG: true
+    }),
+
+    new webpack.LoaderOptionsPlugin({
+      debug: true
+    })
+  ],
 });

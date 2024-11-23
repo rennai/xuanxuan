@@ -1,22 +1,30 @@
 {
   "presets": [
-    ["env", { "targets": { "node": 6 }, "useBuiltIns": true }],
-    "stage-0",
-    "react"
+    ["@babel/preset-env", {
+      "targets": {
+        "node": "18"
+      },
+      "useBuiltIns": "usage",
+      "corejs": 3
+    }],
+    "@babel/preset-react"
   ],
-  "plugins": ["add-module-exports"],
+  "plugins": [
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-transform-runtime"
+  ],
   "env": {
     "production": {
-      "presets": ["react-optimize"],
-      "plugins": ["babel-plugin-dev-expression"]
+      "plugins": [
+        ["transform-react-remove-prop-types", {
+          "removeImport": true
+        }]
+      ]
     },
     "development": {
       "plugins": [
-        "transform-class-properties",
-        "transform-es2015-classes",
-        "tcomb"
-      ],
-      "presets": ["react-hmre"]
+        "react-hot-loader/babel"
+      ]
     }
   }
 }
