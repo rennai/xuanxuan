@@ -21,7 +21,7 @@ import {formatDate} from '../app/utils/date-helper';
 const PLATFORMS = new Set(['win', 'mac', 'linux', 'browser']);
 
 // 所支持的架构类型
-const ARCHS = new Set(['x32', 'x64']);
+const ARCHS = new Set(['x32', 'x64', 'arm64']);
 
 /**
  * 自定义格式化字符串
@@ -93,8 +93,12 @@ const getCurrentPlatform = () => {
 
 // 获取当前操作系统平台架构类型
 const getCurrentArch = () => {
-    if (os.arch().includes('32')) {
+    const arch = os.arch();
+    if (arch.includes('32')) {
         return 'x32';
+    }
+    if (arch === 'arm64') {
+        return 'arm64';
     }
     return 'x64';
 };
@@ -199,7 +203,7 @@ program
     }, '')
     .option('-s, --skipbuild', '是否忽略构建最终安装包，仅仅生成用于构建所需的配置文件', false)
     .option('-p, --platform <platform>', '需要打包的平台，可选值包括: "mac", "win", "linux", "browser", "current", 或者使用英文逗号拼接多个平台名称，例如 "win,mac", 特殊值 "current" 用于指定当前打包工具所运行的平台, 特殊值 "all" 或 "*" 用于指定所有平台（相当于 “mac,win,linux,browser”）', formatPlatforms, 'current')
-    .option('-a, --arch <arch>', '需要打包的平台处理器架构类型, 可选值包括: "x32", "x64", 或者使用英文逗号拼接多个架构名称，例如 "x32,x64", 特殊值 "current" 用于快捷指定当前打包工具所运行的平台架构类型, 特殊值 "all" 或 "*" 用于指定所有架构类型（相当于 “x32,x64”）', formatArchs, 'current')
+    .option('-a, --arch <arch>', '需要打包的平台处理器架构类型, 可选值包括: "x32", "x64", "arm64", 或者使用英文逗号拼接多个架构名称，例如 "x32,x64", 特殊值 "current" 用于快捷指定当前打包工具所运行的平台架构类型, 特殊值 "all" 或 "*" 用于指定所有架构类型（相当于 “x32,x64,arm64”）', formatArchs, 'current')
     .option('-d, --debug', '是否打包为方便调试的版本', false)
     .option('-b, --beta [beta]', '是否将版本标记为 Beta 版本', false)
     .option('-v, --verbose', '是否输出额外的信息', false)
@@ -251,12 +255,12 @@ const config = {
     mediaPath: 'media/',
     copyOriginMedia: true,
     buildVersion,
-    artifactName: '${name}.${version}${env.PKG_BETA}${env.PKG_DEBUG}.${os}.${arch}.${ext}',
-    macArtifactName: '${name}.${version}${env.PKG_BETA}${env.PKG_DEBUG}.${os}.${ext}',
-    winArtifactName: '${name}.${version}${env.PKG_BETA}${env.PKG_DEBUG}.${os}${env.PKG_ARCH}.setup.${ext}',
-    winZipArtifactName: '${name}.${version}${env.PKG_BETA}${env.PKG_DEBUG}.${os}${env.PKG_ARCH}.${ext}',
-    linuxZipArtifactName: '${name}.${version}${env.PKG_BETA}${env.PKG_DEBUG}.${os}${env.PKG_ARCH}.${ext}',
-    macZipArtifactName: '${name}.${version}${env.PKG_BETA}${env.PKG_DEBUG}.${os}.${ext}',
+    artifactName: '${productName}-${version}-${os}-${arch}.${ext}',
+    macArtifactName: '${productName}-${version}-${os}-${arch}.${ext}',
+    winArtifactName: '${productName}-${version}-${os}-${arch}.setup.${ext}',
+    winZipArtifactName: '${productName}-${version}-${os}-${arch}.${ext}',
+    linuxZipArtifactName: '${productName}-${version}-${os}-${arch}.${ext}',
+    macZipArtifactName: '${productName}-${version}-${os}-${arch}.${ext}',
     buildZip: true,
     zipSubDir: true,
 };
@@ -383,7 +387,7 @@ const getArtifactName = (platform, arch, ext, name) => {
         ext,
         'env.PKG_BETA': isBeta ? '.beta' : '',
         'env.PKG_DEBUG': isDebug ? '.debug' : '',
-        'env.PKG_ARCH': arch.includes('32') ? '32' : '64',
+        'env.PKG_ARCH': arch.includes('32') ? '32' : (arch === 'arm64' ? 'arm64' : '64'),
     }));
 };
 
@@ -391,7 +395,7 @@ const electronBuilder = {
     productName: config.name,
     appId: config.appid || `com.cnezsoft.${config.name}`,
     compression: 'maximum',
-    artifactName: config.artifactName,
+    artifactName: '${productName}-${version}-${os}-${arch}.${ext}',
     electronVersion: config.electronVersion,
     electronDownload: {mirror: 'https://npm.taobao.org/mirrors/electron/'},
     extraResources: [{
@@ -445,8 +449,16 @@ const electronBuilder = {
         artifactName: config.linuxArtifactName || config.artifactName
     },
     mac: {
-        icon: 'icon.icns',
-        artifactName: config.macArtifactName || config.artifactName
+        icon: config.macIcon || 'resources/icon.icns',
+        target: [{
+            target: 'dmg',
+            arch: ['x64', 'arm64']
+        }, {
+            target: 'zip',
+            arch: ['x64', 'arm64']
+        }],
+        darkModeSupport: true,
+        category: 'public.app-category.productivity',
     },
     nsis: {
         oneClick: false,
@@ -640,7 +652,7 @@ const createPackage = (osType, arch, debug = isDebug) => {
             shell: true,
             env: Object.assign({}, process.env, {
                 SKIP_INSTALL_EXTENSIONS: debug ? 1 : 0,
-                PKG_ARCH: arch.includes('32') ? '32' : '64',
+                PKG_ARCH: arch.includes('32') ? '32' : (arch === 'arm64' ? 'arm64' : '64'),
                 PKG_BETA: isBeta ? '.beta' : '',
                 PKG_DEBUG: debug ? '.debug' : '',
             }),

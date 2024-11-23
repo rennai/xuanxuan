@@ -8,7 +8,16 @@
   - npm 要求升级到 10.x 及以上
   - webpack 升级到 5.89.0
   - Babel 升级到 7.x
+  - Electron 升级到 28.3.3
+  - electron-builder 升级到 24.9.1
+  - electron-debug 升级到 3.2.0
   - 其他依赖包升级到最新稳定版本
+
+### Added
+- 添加 macOS Apple Silicon (M1/M2) 芯片支持
+  - 支持 arm64 架构的应用打包
+  - 支持同时打包 x64 和 arm64 架构的通用二进制文件
+  - 优化 macOS 应用配置，支持深色模式
 
 ### Updated
 - 更新 webpack 配置使用 ES 模块语法
