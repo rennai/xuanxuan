@@ -14,7 +14,7 @@ const ChatsIndex = withReplaceView(_ChatsIndex);
 
 /**
  * 主界面视图路由清单
- * @type {{path: string, view: Class<Component>}
+ * @type {path: string, view: Class<Component>}
  * @private
  */
 const mainViews = [

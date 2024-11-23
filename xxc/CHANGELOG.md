@@ -12,6 +12,10 @@
   - electron-builder 升级到 24.9.1
   - electron-debug 升级到 3.2.0
   - 其他依赖包升级到最新稳定版本
+- 将所有React组件文件扩展名从.js改为.jsx，优化代码组织结构
+  - 重命名所有React组件文件
+  - 更新相应的导入语句
+  - 保持webpack配置兼容性
 
 ### Added
 - 添加 macOS Apple Silicon (M1/M2) 芯片支持
