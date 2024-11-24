@@ -10,22 +10,14 @@
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="resources/icons/144x144.png"/>
     <script>
-    (function() {
-        if(typeof global === 'undefined') {
-            window.global = window;
-        }
-        const process = global.process || {type: 'renderer', env: {HOT: window.location.search.includes('hot'), port: 3000}};
-        if(window.location.search.includes('debug=1')) {
-            window.DEBUG = true;
-        }
-        if (!process.env.HOT) {
-            const link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.href = './dist/style.css';
-            link.id = 'theme';
-            document.getElementsByTagName('head')[0].appendChild(link);
-        }
-    }());
+      // Initialize global object
+      if(typeof global === 'undefined') {
+          window.global = window;
+      }
+      window.process = window.process || {type: 'renderer', env: {HOT: false, port: 3000}};
+      if(window.location.search.includes('debug=1')) {
+          window.DEBUG = true;
+      }
     </script>
     <style>.theme-changing * {transition: all .5s!important}</style>
   </head>
@@ -39,15 +31,15 @@
     </div>
     <input style="position: fixed!important; bottom: -50px!important; left: 0!important; opacity: 0!important;" type="file" id="fileOpenButton" />
     <script>
-    {
-        const process = global.process || {type: 'renderer', env: {HOT: window.location.search.includes('hot'), port: 3000}};
-        const script = document.createElement('script');
-        const port = process.env.PORT || 3000;
-        script.src = (process.env.HOT)
-          ? 'http://localhost:' + port + '/dist/bundle.js'
-          : './dist/bundle.js';
-        document.body.appendChild(script);
-    }
+      // Load bundle script
+      const script = document.createElement('script');
+      script.src = process.env.HOT
+        ? `http://localhost:${process.env.PORT || 3000}/dist/bundle.js`
+        : './dist/bundle.js';
+      script.onerror = function(error) {
+        console.error('Failed to load bundle:', error);
+      };
+      document.body.appendChild(script);
     </script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-import ExtsRuntime from 'ExtsRuntime'; // eslint-disable-line
+import {loadExtensionsModules} from '../exts/runtime.js'; // eslint-disable-line
 import events from './events.js';
 import lang, {initLang} from './lang.js';
 import config from '../config/index.js';
@@ -26,10 +26,13 @@ let isReadied = false;
  * @return {boolean|Symbol} 如果应用已经准备就绪会立即执行回调函数并返回 `false`，否则会返回一个事件 ID
  */
 export const ready = (listener) => {
+    console.log('[Runtime] Ready called, isReadied =', isReadied);
     if (isReadied) {
+        console.log('[Runtime] Already ready, executing listener immediately');
         listener();
         return false;
     }
+    console.log('[Runtime] Not ready yet, registering listener');
     return events.once(EVENT.ready, listener);
 };
 
@@ -39,19 +42,27 @@ export const ready = (listener) => {
  * @return {void}
  */
 const sayReady = () => {
+    console.log('[Runtime] Saying ready');
     isReadied = true;
     events.emit(EVENT.ready);
+    console.log('[Runtime] Ready event emitted');
 };
 
 const run = async () => {
-    // 初始化应用
-    await initLang(config.lang);
-    if (ExtsRuntime) {
-        ExtsRuntime.loadModules();
-        global.ExtsRuntime = ExtsRuntime;
+    try {
+        console.log('[Runtime] Starting initialization');
+        // 初始化应用
+        console.log('[Runtime] Initializing language');
+        await initLang(config.lang);
+        console.log('[Runtime] Loading extension modules');
+        loadExtensionsModules();
+        console.log('[Runtime] Initializing platform');
+        platform.init({config, lang});
+        console.log('[Runtime] All initialization complete');
+        sayReady();
+    } catch (error) {
+        console.error('[Runtime] Error during initialization:', error);
     }
-    platform.init({config, lang});
-    sayReady();
 };
 
 run();

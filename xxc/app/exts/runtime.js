@@ -35,22 +35,28 @@ const replaceViews = {};
  * @return {void}
  */
 export const loadExtensionsModules = () => {
+    console.log('[ExtsRuntime] Initializing extensions');
     initExtensions();
 
+    console.log('[ExtsRuntime] Loading extensions');
     forEachExtension(ext => {
+        console.log('[ExtsRuntime] Processing extension:', ext.name);
         if (ext.isDev) {
+            console.log('[ExtsRuntime] Reloading dev extension:', ext.name);
             const reloadExt = reloadDevExtension(ext);
             if (reloadExt) {
                 ext = reloadExt;
             }
         } else {
+            console.log('[ExtsRuntime] Attaching extension:', ext.name);
             ext.attach();
         }
         if (ext.hasReplaceViews) {
+            console.log('[ExtsRuntime] Adding replace views for extension:', ext.name);
             Object.assign(replaceViews, ext.replaceViews);
         }
     });
-
+    console.log('[ExtsRuntime] All extensions loaded');
     initThemes();
     initUI();
 };
