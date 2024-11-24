@@ -1,6 +1,7 @@
 import path from 'path';
 import fse from 'fs-extra';
-import {remote} from 'electron';
+import electron from 'electron';
+const {remote} = electron;
 import env from './env.js';
 import {ipcSend, remoteOn} from './remote.js';
 import EVENTS from './remote-events.js';

@@ -4,7 +4,10 @@
 
 import path from 'path';
 import { fileURLToPath } from 'url';
-import appPkg from '../app/package.json' assert { type: "json" };
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+const appPkg = require('../app/package.json');
 const externals = appPkg.dependencies || {};
 
 const __filename = fileURLToPath(import.meta.url);
@@ -35,26 +38,6 @@ export default {
         exclude: /node_modules/,
       },
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.less$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          {
-            loader: 'less-loader',
-            options: {
-              lessOptions: {
-                javascriptEnabled: true,
-                math: 'always',
-              },
-            },
-          },
-        ],
-      },
-      {
         test: /\.(png|jpg|gif|svg)$/,
         type: 'asset',
         parser: {
@@ -71,8 +54,9 @@ export default {
     filename: '[name].js',
     publicPath: '/',
     library: {
-      type: 'commonjs2',
+      type: 'umd'
     },
+    globalObject: 'this'
   },
 
   resolve: {

@@ -1,14 +1,18 @@
 /**
- * Build config for electron 'Renderer Process' file
+ * Build config for browser
  */
 
+import { fileURLToPath } from 'url';
 import path from 'path';
 import webpack from 'webpack';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import merge from 'webpack-merge';
+import { merge } from 'webpack-merge';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import baseConfig from './webpack.config.base';
+import baseConfig from './webpack.config.base.mjs';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default merge(baseConfig, {
     devtool: 'cheap-module-source-map',

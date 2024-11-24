@@ -1,4 +1,5 @@
-import {ipcRenderer} from 'electron';
+import electron from 'electron';
+const {ipcRenderer} = electron;
 import EVENT from './remote-events.js';
 
 if (process.type !== 'renderer') {

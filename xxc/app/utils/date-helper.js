@@ -1,6 +1,6 @@
 /** @module date-helper */
 
-const {formatString} = require('./string-helper.js');
+import {formatString} from './string-helper.js';
 
 /**
  * 一天的总毫秒数

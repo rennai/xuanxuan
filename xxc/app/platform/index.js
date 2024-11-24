@@ -1,4 +1,4 @@
-import Platform from "Platform";
+import Platform from './electron/index.js';
 
 /**
  * 平台模块访问类

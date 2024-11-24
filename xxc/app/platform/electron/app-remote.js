@@ -1,10 +1,14 @@
-import electron, {
-    BrowserWindow, app as ElectronApp, Tray, Menu, nativeImage, globalShortcut, ipcMain, dialog, shell
-} from 'electron';
+import electron from 'electron';
+const {
+    BrowserWindow, app: ElectronApp, Tray, Menu, nativeImage, globalShortcut, ipcMain, dialog, shell
+} = electron;
 import EVENT from './remote-events.js';
 import events from './events.js';
 import Lang, {onLangChange} from './lang-remote.js';
-import PKG from '../../package.json' assert { type: "json" };
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+const PKG = require('../../package.json');
 
 if (typeof DEBUG === 'undefined') {
     global.DEBUG = process.env.NODE_ENV === 'debug' || process.env.NODE_ENV === 'development';
@@ -300,7 +304,7 @@ class AppRemote {
 
         this.entryPath = entryPath;
         global.entryPath = entryPath;
-        
+
         // 初始化应用配置
         this.appConfig = {
             pkg: PKG,
@@ -543,7 +547,7 @@ class AppRemote {
     }
 
     /**
-     * 创建应用窗口，所有可用的窗口初始化选项参考 @see https://electronjs.org/docs/api/browser-window#new-browserwindowoptions
+     * 创建应用窗口，所有可用的窗口初始化选项参考 @see https://electronjs.org/docs/api/browser-window#new-browserwindow
      * @param {string} name 窗口名称，用户内部查询窗口实例
      * @param {Object} options Electron 窗口初始化选项
      * @memberof AppRemote
@@ -565,24 +569,35 @@ class AppRemote {
             backgroundColor: '#ffffff',
             show: DEBUG,
             webPreferences: {
-                webSecurity: false,
+                webSecurity: true,
                 nodeIntegration: true,
+                contextIsolation: false,
+                enableRemoteModule: true,
+                allowRunningInsecureContent: false
             }
         }, options);
 
         let browserWindow = this.windows[name];
         if (browserWindow) {
-            throw new Error(`The window with name '${name}' has already be created.`);
+            return browserWindow;
         }
 
-        const windowSetting = Object.assign({}, options);
-        ['url', 'showAfterLoad', 'debug', 'hashRoute', 'onLoad', 'beforeShow', 'afterShow', 'onClosed'].forEach(optionName => {
-            delete windowSetting[optionName];
+        browserWindow = new BrowserWindow(options);
+        browserWindow.name = name;
+
+        // Set Content Security Policy
+        browserWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
+            const csp = process.env.NODE_ENV === 'development' 
+                ? "default-src 'self'; script-src 'self' 'unsafe-inline' http://localhost:*; style-src 'self' 'unsafe-inline' http://localhost:*; img-src 'self' data: https:; connect-src 'self' http://localhost:* https:; font-src 'self' data: http://localhost:*"
+                : "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https:; font-src 'self' data:";
+
+            callback({
+                responseHeaders: {
+                    ...details.responseHeaders,
+                    'Content-Security-Policy': [csp]
+                }
+            });
         });
-        browserWindow = new BrowserWindow(windowSetting);
-        if (DEBUG) {
-            console.log(`>> Create window "${name}" with setting: `, windowSetting);
-        }
 
         this.windows[name] = browserWindow;
         browserWindow.on('closed', () => {

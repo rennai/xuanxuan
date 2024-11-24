@@ -57,17 +57,19 @@ xxc/
 
 ```bash
 npm install
-# 或
-yarn install
 ```
 
-### 开发命令
+### 客户端开发
 
-- 启动开发服务器：`npm start` 或 `yarn start`
-- 热重载开发：`npm run start-hot` 或 `yarn start-hot`
-- 构建应用：`npm run build` 或 `yarn build`
+- 热重载开发：`npm run hot-server`
+- 启动客户端：`npm run start-hot`
 
 ### 打包命令
+
+构建应用
+```bash
+npm run build
+```
 
 - Mac 版本：`npm run package-mac`
 - Windows 版本：`npm run package-win`
@@ -89,8 +91,7 @@ yarn install
 
 ```bash
 npm install
-# 或
-yarn install
+```
 - 打包调试版本：`npm run package-debug`
 
 ## 许可证

@@ -31,6 +31,7 @@ if (isBrowserTarget) {
 
 // 根据 target 参数使用不同的 webpack 配置
 const config = isBrowserTarget ? browserConfig : electronConfig;
+
 const app = express();
 const compiler = webpack(config);
 const PORT = process.env.PORT || 3000;
@@ -42,6 +43,7 @@ const wdm = webpackDevMiddleware(compiler, {
     'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
   },
   publicPath: config.output.publicPath,
+  writeToDisk: true
 });
 
 // 使用 Webpack 开发中间件
@@ -49,6 +51,9 @@ app.use(wdm);
 
 // 使用 Webpack 热更新中间件
 app.use(webpackHotMiddleware(compiler));
+
+// 静态文件服务
+app.use('/dist', express.static(path.join(__dirname, '../app/dist')));
 
 if (isBrowserTarget) {
   app.use(express.static(path.resolve(__dirname, '../app/')));

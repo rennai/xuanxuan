@@ -1,4 +1,5 @@
-import {ipcMain, app} from 'electron';
+import electron from 'electron';
+const {ipcMain, app} = electron;
 import EVENTS from './remote-events.js';
 import LangHelper from '../../utils/lang-helper.js';
 import events from './events.js';

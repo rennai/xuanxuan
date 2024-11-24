@@ -2,20 +2,28 @@
  * Build config for electron 'Main Process' file
  */
 
+import { fileURLToPath } from 'url';
+import path from 'path';
 import webpack from 'webpack';
-import merge from 'webpack-merge';
+import { merge } from 'webpack-merge';
 // import BabiliPlugin from 'babili-webpack-plugin';
-import baseConfig from './webpack.config.base';
+import baseConfig from './webpack.config.base.mjs';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default merge(baseConfig, {
     devtool: 'source-map',
 
-    entry: ['babel-polyfill', './app/main.development'],
+    entry: {
+        main: ['core-js/stable', 'regenerator-runtime/runtime', './app/main.development']
+    },
 
     // 'main.js' in root
     output: {
-        path: __dirname,
-        filename: '../app/main.js'
+        path: path.join(__dirname, '../app'),
+        filename: 'main.js',
+        clean: true
     },
 
     plugins: [
