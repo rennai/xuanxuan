@@ -1,7 +1,7 @@
-import {getChatMessages} from './im-chats';
-import profile from '../profile';
-import API from '../network/api';
-import FileData from '../models/file-data';
+import {getChatMessages} from './im-chats.js';
+import profile from '../profile/index.js';
+import API from '../network/api.js';
+import FileData from '../models/file-data.js';
 
 /**
  * 上传下载进度变更通知最小时间间隔，单位毫秒

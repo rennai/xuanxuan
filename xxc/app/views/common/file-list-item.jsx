@@ -1,18 +1,18 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import getFileIcon from '../../utils/mdi-file-icon';
-import {formatBytes} from '../../utils/string-helper';
-import {formatDate} from '../../utils/date-helper';
-import Icon from '../../components/icon';
-import Avatar from '../../components/avatar';
-import Messager from '../../components/messager';
-import Lang, {isJustLangSwitched} from '../../core/lang';
-import App from '../../core';
-import _UserAvatar from './user-avatar';
-import FileData from '../../core/models/file-data';
-import withReplaceView from '../with-replace-view';
-import platform from '../../platform';
+import {classes} from '../../utils/html-helper.js';
+import getFileIcon from '../../utils/mdi-file-icon.js';
+import {formatBytes} from '../../utils/string-helper.js';
+import {formatDate} from '../../utils/date-helper.js';
+import Icon from '../../components/icon.jsx';
+import Avatar from '../../components/avatar.jsx';
+import Messager from '../../components/messager.jsx';
+import Lang, {isJustLangSwitched} from '../../core/lang.js';
+import App from '../../core/index.js';
+import _UserAvatar from './user-avatar.jsx';
+import FileData from '../../core/models/file-data.js';
+import withReplaceView from '../with-replace-view.js';
+import platform from '../../platform/index.js';
 
 // 从平台功能访问对象获取功能模块对象
 const {dialog, ui: platformUI} = platform.modules;
@@ -37,7 +37,7 @@ const isBrowserPlatform = platform.isType('browser');
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import FileListItem from './file-list-item';
+ * import FileListItem from './file-list-item.jsx';
  * <FileListItem />
  */
 export default class FileListItem extends Component {

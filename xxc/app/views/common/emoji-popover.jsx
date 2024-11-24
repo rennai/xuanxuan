@@ -1,9 +1,9 @@
 import React from 'react';
 import EmojiPicker from 'emojione-picker';
-import Popover from '../../components/popover';
-import Lang from '../../core/lang';
-import profile from '../../core/profile';
-import Emojione from '../../components/emojione';
+import Popover from '../../components/popover.jsx';
+import Lang from '../../core/lang.js';
+import profile from '../../core/profile/index.js';
+import Emojione from '../../components/emojione.js';
 
 /**
  * Emoji 分类信息

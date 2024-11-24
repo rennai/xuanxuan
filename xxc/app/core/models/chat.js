@@ -1,8 +1,8 @@
-import Entity from './entity';
-import Status from '../../utils/status';
-import Lang from '../lang';
-import Pinyin from '../../utils/pinyin';
-import ChatMessage from './chat-message';
+import Entity from './entity.js';
+import Status from '../../utils/status.js';
+import Lang from '../lang.js';
+import Pinyin from '../../utils/pinyin.js';
+import ChatMessage from './chat-message.js';
 
 /**
  * 聊天状态管理器

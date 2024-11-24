@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import App from '../../core';
-import _ChatView from './chat-view';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import App from '../../core/index.js';
+import _ChatView from './chat-view.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * ChatView 可替换组件形式
@@ -18,7 +18,7 @@ const ChatView = withReplaceView(_ChatView);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatsCache from './chats-cache';
+ * import ChatsCache from './chats-cache.jsx';
  * <ChatsCache />
  */
 export default class ChatsCache extends Component {

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import SelectBox from '../../components/select-box';
-import Lang from '../../core/lang';
-import {rem, classes} from '../../utils/html-helper';
-import Config from '../../config';
-import {isNotEmptyString} from '../../utils/string-helper';
+import SelectBox from '../../components/select-box.jsx';
+import Lang from '../../core/lang.js';
+import {rem, classes} from '../../utils/html-helper.js';
+import Config from '../../config/index.js';
+import {isNotEmptyString} from '../../utils/string-helper.js';
 
 /**
  * ChatSendCode 组件 ，显示ChatSendCode界面
@@ -11,7 +11,7 @@ import {isNotEmptyString} from '../../utils/string-helper';
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example @lang jsx
- * import ChatSendCode from './chat-send-code';
+ * import ChatSendCode from './chat-send-code.jsx';
  * <ChatSendCode />
  */
 export default class ChatSendCode extends Component {

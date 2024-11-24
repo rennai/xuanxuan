@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../../utils/html-helper';
-import Icon from '../../components/icon';
-import Avatar from '../../components/avatar';
-import Lang, {isJustLangSwitched} from '../../core/lang';
-import App from '../../core';
-import ROUTES from './routes';
-import _UserAvatar from './user-avatar';
-import _StatusDot from './status-dot';
-import Config from '../../config';
-import withReplaceView from '../with-replace-view';
+import HTML from '../../utils/html-helper.js';
+import Icon from '../../components/icon.jsx';
+import Avatar from '../../components/avatar.jsx';
+import Lang, {isJustLangSwitched} from '../../core/lang.js';
+import App from '../../core/index.js';
+import ROUTES from './routes.js';
+import _UserAvatar from './user-avatar.jsx';
+import _StatusDot from './status-dot.jsx';
+import Config from '../../config/index.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * StatusDot 可替换组件形式
@@ -31,7 +31,7 @@ const UserAvatar = withReplaceView(_UserAvatar);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import MemberProfile from './member-profile';
+ * import MemberProfile from './member-profile.jsx';
  * <MemberProfile />
  */
 export default class MemberProfile extends Component {

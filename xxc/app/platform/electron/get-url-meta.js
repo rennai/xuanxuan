@@ -1,6 +1,6 @@
-import cheerio from 'cheerio';
-import {request, getTextFromResponse} from '../common/network';
-import limitTimePromise from '../../utils/limit-time-promise';
+import { load as cheerio } from 'cheerio';
+import {request, getTextFromResponse} from '../common/network.js';
+import limitTimePromise from '../../utils/limit-time-promise.js';
 
 /**
  * 网址解析类

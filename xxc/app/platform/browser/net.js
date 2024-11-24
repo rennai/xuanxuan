@@ -1,4 +1,4 @@
-import network from '../common/network';
+import network from '../common/network.js';
 
 // 浏览器上下载文件直接在浏览器中打开下载地址即可
 network.downloadFile = (user, file, onProgress) => {

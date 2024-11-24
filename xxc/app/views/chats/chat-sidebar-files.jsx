@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../../utils/html-helper';
-import Lang from '../../core/lang';
-import App from '../../core';
-import Emojione from '../../components/emojione';
-import Spinner from '../../components/spinner';
-import _FileList from '../common/file-list';
-import withReplaceView from '../with-replace-view';
+import HTML from '../../utils/html-helper.js';
+import Lang from '../../core/lang.js';
+import App from '../../core/index.js';
+import Emojione from '../../components/emojione.js';
+import Spinner from '../../components/spinner.jsx';
+import _FileList from '../common/file-list.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * FileList 可替换组件形式
@@ -55,7 +55,7 @@ const renderFileList = files => {
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatSidebarFiles from './chat-sidebar-files';
+ * import ChatSidebarFiles from './chat-sidebar-files.jsx';
  * <ChatSidebarFiles />
  */
 export default class ChatSidebarFiles extends Component {

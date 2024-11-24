@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import SplitPane from 'react-split-pane';
-import {classes} from '../../utils/html-helper';
-import DateHelper from '../../utils/date-helper';
-import Avatar from '../../components/avatar';
-import Lang from '../../core/lang';
-import App from '../../core';
-import _ChatHeader from './chat-header';
-import _ChatMessages from './chat-messages';
-import _ChatSendbox from './chat-sendbox';
-import _ChatSidebar from './chat-sidebar';
-import Config from '../../config';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import DateHelper from '../../utils/date-helper.js';
+import Avatar from '../../components/avatar.jsx';
+import Lang from '../../core/lang.js';
+import App from '../../core/index.js';
+import _ChatHeader from './chat-header.jsx';
+import _ChatMessages from './chat-messages.jsx';
+import _ChatSendbox from './chat-sendbox.jsx';
+import _ChatSidebar from './chat-sidebar.jsx';
+import Config from '../../config/index.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * ChatSidebar 可替换组件形式
@@ -47,7 +47,7 @@ const ChatHeader = withReplaceView(_ChatHeader);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatView from './chat-view';
+ * import ChatView from './chat-view.jsx';
  * <ChatView />
  */
 export default class ChatView extends Component {

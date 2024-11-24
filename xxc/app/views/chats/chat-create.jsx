@@ -1,11 +1,11 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import Avatar from '../../components/avatar';
-import Lang from '../../core/lang';
-import _ChatCreateGroups from './chat-create-groups';
-import _ChatJoinPublic from './chat-join-public';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import Avatar from '../../components/avatar.jsx';
+import Lang from '../../core/lang.js';
+import _ChatCreateGroups from './chat-create-groups.jsx';
+import _ChatJoinPublic from './chat-join-public.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * ChatCreateGroups 可替换组件形式
@@ -27,7 +27,7 @@ const ChatJoinPublic = withReplaceView(_ChatJoinPublic);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatCreate from './chat-create';
+ * import ChatCreate from './chat-create.jsx';
  * <ChatCreate />
  */
 export default class ChatCreateView extends PureComponent {

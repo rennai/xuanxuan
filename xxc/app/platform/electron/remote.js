@@ -1,5 +1,5 @@
 import {ipcRenderer} from 'electron';
-import EVENT from './remote-events';
+import EVENT from './remote-events.js';
 
 if (process.type !== 'renderer') {
     if (DEBUG) console.error('\n>> Can not send event with ipc in main process, you can use AppRemote.sendToWindows method instead.');

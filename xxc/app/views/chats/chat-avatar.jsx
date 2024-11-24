@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import Icon from '../../components/icon';
-import App from '../../core';
-import Chat from '../../core/models/chat';
-import _UserAvatar from '../common/user-avatar';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import Icon from '../../components/icon.jsx';
+import App from '../../core/index.js';
+import Chat from '../../core/models/chat.js';
+import _UserAvatar from '../common/user-avatar.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * UserAvatar 可替换组件形式
@@ -32,7 +32,7 @@ const chatIcons = {
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatAvatar from './chat-avatar';
+ * import ChatAvatar from './chat-avatar.jsx';
  * <ChatAvatar />
  */
 export default class ChatAvatar extends Component {

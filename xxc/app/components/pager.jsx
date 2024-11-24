@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../utils/html-helper';
-import Icon from './icon';
-import Lang from '../core/lang';
+import HTML from '../utils/html-helper.js';
+import Icon from './icon.jsx';
+import Lang from '../core/lang.js';
 
 /**
  * Pager 组件 ，显示一个分页控件

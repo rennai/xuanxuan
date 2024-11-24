@@ -1,4 +1,4 @@
-import limitTimePromise from '../../utils/limit-time-promise';
+import limitTimePromise from '../../utils/limit-time-promise.js';
 
 /**
  * 默认超时时间，单位毫秒

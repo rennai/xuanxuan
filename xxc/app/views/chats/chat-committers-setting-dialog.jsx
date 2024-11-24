@@ -1,9 +1,9 @@
 import React from 'react';
-import Modal from '../../components/modal';
-import _ChatCommittersSetting from './chat-committers-setting';
-import Lang from '../../core/lang';
-import App from '../../core';
-import withReplaceView from '../with-replace-view';
+import Modal from '../../components/modal.jsx';
+import _ChatCommittersSetting from './chat-committers-setting.jsx';
+import Lang from '../../core/lang.js';
+import App from '../../core/index.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * ChatCommittersSetting 可替换组件形式

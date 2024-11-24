@@ -1,10 +1,10 @@
 import Path from 'path';
-import StringHelper from '../utils/string-helper';
-// import ExtensionConfig from './extension-config';
-import timeSequence from '../utils/time-sequence';
-import {matchScore} from '../utils/search-score';
-import PinYin from '../utils/pinyin';
-import Store from '../utils/store';
+import StringHelper from '../utils/string-helper.js';
+// import ExtensionConfig from './extension-config.js';
+import timeSequence from '../utils/time-sequence.js';
+import {matchScore} from '../utils/search-score.js';
+import PinYin from '../utils/pinyin.js';
+import Store from '../utils/store.js';
 
 /**
  * 扩展类型表

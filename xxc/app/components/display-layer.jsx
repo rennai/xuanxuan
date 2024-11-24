@@ -1,9 +1,9 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import Spinner from './spinner';
-import {classes} from '../utils/html-helper';
-import timeSequence from '../utils/time-sequence';
-import Status from '../utils/status';
+import Spinner from './spinner.jsx';
+import {classes} from '../utils/html-helper.js';
+import timeSequence from '../utils/time-sequence.js';
+import Status from '../utils/status.js';
 
 /**
  * Display 状态

@@ -1,13 +1,13 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import {formatKeyDecoration} from '../../utils/shortcut';
-import Icon from '../../components/icon';
-import Lang, {onLangChange} from '../../core/lang';
-import App from '../../core';
-import Config from '../../config';
-import {getMenuItemsForContext} from '../../core/context-menu';
-import events from '../../core/events';
+import {classes} from '../../utils/html-helper.js';
+import {formatKeyDecoration} from '../../utils/shortcut.js';
+import Icon from '../../components/icon.jsx';
+import Lang, {onLangChange} from '../../core/lang.js';
+import App from '../../core/index.js';
+import Config from '../../config/index.js';
+import {getMenuItemsForContext} from '../../core/context-menu.js';
+import events from '../../core/events.js';
 
 /**
  * ChatSendboxToolbar 组件 ，显示聊天发送框工具栏界面
@@ -15,7 +15,7 @@ import events from '../../core/events';
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatSendboxToolbar from './chat-sendbox-toolbar';
+ * import ChatSendboxToolbar from './chat-sendbox-toolbar.jsx';
  * <ChatSendboxToolbar />
  */
 export default class ChatSendboxToolbar extends PureComponent {

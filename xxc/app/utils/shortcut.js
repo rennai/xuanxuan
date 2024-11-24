@@ -1,4 +1,4 @@
-import platform from '../platform';
+import platform from '../platform/index.js';
 
 const {isWindowsOS, isOSX} = platform.access('env');
 

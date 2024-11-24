@@ -1,7 +1,7 @@
-import Member from './models/member';
-import {getCurrentUser, onSwapUser} from './profile';
-import events from './events';
-import Lang from './lang';
+import Member from './models/member.js';
+import {getCurrentUser, onSwapUser} from './profile/index.js';
+import events from './events.js';
+import Lang from './lang.js';
 
 /**
  * 缓存当前用户所有用户信息

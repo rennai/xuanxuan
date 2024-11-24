@@ -1,7 +1,7 @@
 import fse from 'fs-extra';
 import Path from 'path';
-import network, {downloadFile as downloadFileOrigin, uploadFile as uploadFileOrigin} from '../common/network';
-import {createUserDataPath} from './ui';
+import network, {downloadFile as downloadFileOrigin, uploadFile as uploadFileOrigin} from '../common/network.js';
+import {createUserDataPath} from './ui.js';
 
 /**
  * 下载文件

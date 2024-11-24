@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../../utils/html-helper';
-import DateHelper from '../../utils/date-helper';
-import Icon from '../../components/icon';
-import Avatar from '../../components/avatar';
-import Pager from '../../components/pager';
-import Lang from '../../core/lang';
-import App from '../../core';
-import ChatMessage from '../../core/models/chat-message';
-import _ChatTitle from './chat-title';
-import _MessageList from './message-list';
-import _MessageListItem from './message-list-item';
-import withReplaceView from '../with-replace-view';
+import HTML from '../../utils/html-helper.js';
+import DateHelper from '../../utils/date-helper.js';
+import Icon from '../../components/icon.jsx';
+import Avatar from '../../components/avatar.jsx';
+import Pager from '../../components/pager.jsx';
+import Lang from '../../core/lang.js';
+import App from '../../core/index.js';
+import ChatMessage from '../../core/models/chat-message.js';
+import _ChatTitle from './chat-title.jsx';
+import _MessageList from './message-list.jsx';
+import _MessageListItem from './message-list-item.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * MessageListItem 可替换组件形式
@@ -41,7 +41,7 @@ const ChatTitle = withReplaceView(_ChatTitle);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatHistory from './chat-history';
+ * import ChatHistory from './chat-history.jsx';
  * <ChatHistory />
  */
 export default class ChatHistory extends Component {

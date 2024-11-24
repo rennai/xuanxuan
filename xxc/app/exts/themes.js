@@ -1,5 +1,5 @@
-import {getThemeExt, getThemeExts} from './exts';
-import Store from '../utils/store';
+import {getThemeExt, getThemeExts} from './exts.js';
+import Store from '../utils/store.js';
 
 /**
  * 当前主题本地存储键前缀

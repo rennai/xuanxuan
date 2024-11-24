@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import Avatar from '../../components/avatar';
-import App from '../../core';
-import StringHelper from '../../utils/string-helper';
-import Config from '../../config';
+import {classes} from '../../utils/html-helper.js';
+import Avatar from '../../components/avatar.jsx';
+import App from '../../core/index.js';
+import StringHelper from '../../utils/string-helper.js';
+import Config from '../../config/index.js';
 
 /**
  * MessageBroadcast 组件 ，显示广播聊天消息条目
@@ -12,7 +12,7 @@ import Config from '../../config';
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import MessageBroadcast from './message-broadcast';
+ * import MessageBroadcast from './message-broadcast.jsx';
  * <MessageBroadcast />
  */
 export default class MessageBroadcast extends Component {

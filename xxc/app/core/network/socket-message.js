@@ -1,5 +1,5 @@
-import Config from '../../config';
-import Lang from '../lang';
+import Config from '../../config/index.js';
+import Lang from '../lang.js';
 
 /**
  * Socket 服务消息类

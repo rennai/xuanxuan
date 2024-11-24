@@ -1,13 +1,13 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../../utils/html-helper';
-import Lang from '../../core/lang';
-import SearchControl from '../../components/search-control';
-import OpenedApp from '../../exts/opened-app';
-import App from '../../core';
-import Spinner from '../../components/spinner';
-import _FileList from '../common/file-list';
-import withReplaceView from '../with-replace-view';
+import HTML from '../../utils/html-helper.js';
+import Lang from '../../core/lang.js';
+import SearchControl from '../../components/search-control.jsx';
+import OpenedApp from '../../exts/opened-app.js';
+import App from '../../core/index.js';
+import Spinner from '../../components/spinner.jsx';
+import _FileList from '../common/file-list.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * FileList 可替换组件形式
@@ -29,7 +29,7 @@ const MAX_SHOW_FILES_COUNT = 200;
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {PureComponent}
  * @example
- * import AppFiles from './app-files';
+ * import AppFiles from './app-files.jsx';
  * <AppFiles />
  */
 export default class AppFiles extends PureComponent {

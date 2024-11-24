@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../../utils/html-helper';
-import Icon from '../../components/icon';
-import Avatar from '../../components/avatar';
-import Messager from '../../components/messager';
-import SearchControl from '../../components/search-control';
-import Spinner from '../../components/spinner';
-import Lang from '../../core/lang';
-import App from '../../core';
-import ROUTES from '../common/routes';
-import _ChatListItem from './chat-list-item';
-import withReplaceView from '../with-replace-view';
+import HTML from '../../utils/html-helper.js';
+import Icon from '../../components/icon.jsx';
+import Avatar from '../../components/avatar.jsx';
+import Messager from '../../components/messager.jsx';
+import SearchControl from '../../components/search-control.jsx';
+import Spinner from '../../components/spinner.jsx';
+import Lang from '../../core/lang.js';
+import App from '../../core/index.js';
+import ROUTES from '../common/routes.js';
+import _ChatListItem from './chat-list-item.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * ChatListItem 可替换组件形式
@@ -25,7 +25,7 @@ const ChatListItem = withReplaceView(_ChatListItem);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatJoinPublic from './chat-join-public';
+ * import ChatJoinPublic from './chat-join-public.jsx';
  * <ChatJoinPublic />
  */
 export default class ChatJoinPublic extends Component {

@@ -1,13 +1,13 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../../utils/html-helper';
-import Lang from '../../core/lang';
-import AppAvatar from '../../components/app-avatar';
-import SearchControl from '../../components/search-control';
-import Button from '../../components/button';
-import Exts from '../../exts';
-import ROUTES from '../common/routes';
-import App from '../../core';
+import HTML from '../../utils/html-helper.js';
+import Lang from '../../core/lang.js';
+import AppAvatar from '../../components/app-avatar.jsx';
+import SearchControl from '../../components/search-control.jsx';
+import Button from '../../components/button.jsx';
+import Exts from '../../exts/index.js';
+import ROUTES from '../common/routes.js';
+import App from '../../core/index.js';
 
 /**
  * AppHome 组件 ，显示应用“主页”界面
@@ -15,7 +15,7 @@ import App from '../../core';
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {PureComponent}
  * @example
- * import AppHome from './app-home';
+ * import AppHome from './app-home.jsx';
  * <AppHome />
  */
 export default class AppHome extends PureComponent {

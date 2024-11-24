@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../../utils/html-helper';
-import _UserAvatar from './user-avatar';
-import withReplaceView from '../with-replace-view';
+import HTML from '../../utils/html-helper.js';
+import _UserAvatar from './user-avatar.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * UserAvatar 可替换组件形式
@@ -17,7 +17,7 @@ const UserAvatar = withReplaceView(_UserAvatar);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import UserListItem from './user-list-item';
+ * import UserListItem from './user-list-item.jsx';
  * <UserListItem />
  */
 export default class UserListItem extends Component {

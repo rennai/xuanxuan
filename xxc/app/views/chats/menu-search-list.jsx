@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import hotkeys from 'hotkeys-js';
-import {classes} from '../../utils/html-helper';
-import App from '../../core';
-import {showContextMenu} from '../../core/context-menu';
-import _ChatListItem from './chat-list-item';
-import ROUTES from '../common/routes';
-import ListItem from '../../components/list-item';
-import Lang from '../../core/lang';
-import Config from '../../config';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import App from '../../core/index.js';
+import {showContextMenu} from '../../core/context-menu.js';
+import _ChatListItem from './chat-list-item.jsx';
+import ROUTES from '../common/routes.js';
+import ListItem from '../../components/list-item.jsx';
+import Lang from '../../core/lang.js';
+import Config from '../../config/index.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * ChatListItem 可替换组件形式
@@ -24,7 +24,7 @@ const ChatListItem = withReplaceView(_ChatListItem);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import MenuSearchList from './menu-search-list';
+ * import MenuSearchList from './menu-search-list.jsx';
  * <MenuSearchList />
  */
 export default class MenuSearchList extends Component {

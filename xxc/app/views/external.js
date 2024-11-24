@@ -1,9 +1,9 @@
-import chats from './chats/external';
-import common from './common/external';
-import exts from './exts/external';
-import index from './index/external';
-import login from './login/external';
-import main from './main/external';
+import chats from './chats/external.js';
+import common from './common/external.js';
+import exts from './exts/external.js';
+import index from './index/external.js';
+import login from './login/external.js';
+import main from './main/external.js';
 
 export default {
     chats,

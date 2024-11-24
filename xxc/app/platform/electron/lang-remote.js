@@ -1,7 +1,7 @@
 import {ipcMain, app} from 'electron';
-import EVENTS from './remote-events';
-import LangHelper from '../../utils/lang-helper';
-import events from './events';
+import EVENTS from './remote-events.js';
+import LangHelper from '../../utils/lang-helper.js';
+import events from './events.js';
 
 /**
  * 语言访问辅助对象
@@ -22,7 +22,7 @@ ipcMain.on(EVENTS.remote_lang_change, (e, langName, langData) => {
  * @return {Symbol} 使用 `Symbol` 存储的事件 ID，用于取消事件
  * @example
  * import {onLangChange} from './lang-remote.js';
- * import {events} from './events';
+ * import {events} from './events.js';
  *
  * const langChangeHandler = onLangChange(newLang => {
  *     console.log('新语言名称为', newLang.name);

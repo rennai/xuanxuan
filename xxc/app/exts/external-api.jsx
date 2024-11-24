@@ -12,12 +12,12 @@ import hotkeys from 'hotkeys-js';
 import pinyin from 'pinyin';
 import uuid from 'uuid';
 import HTMLParser from 'htmlparser';
-import platform from '../platform';
-import components from '../components';
-import lang from '../core/lang';
-import utils from '../utils';
-import app from '../core';
-import views from '../views/external';
+import platform from '../platform/index.js';
+import components from '../components/index.js';
+import lang from '../core/lang.js';
+import utils from '../utils/index.js';
+import app from '../core/index.js';
+import views from '../views/external.js';
 
 /**
  * 所有第三方 node 模块

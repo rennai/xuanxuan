@@ -1,10 +1,10 @@
 import React from 'react';
-import Display from './display';
-import HTML from '../utils/html-helper';
-import Icon from './icon';
-import timeSequence from '../utils/time-sequence';
-import Lang from '../core/lang';
-import InputControl from './input-control';
+import Display from './display.jsx';
+import HTML from '../utils/html-helper.js';
+import Icon from './icon.jsx';
+import timeSequence from '../utils/time-sequence.js';
+import Lang from '../core/lang.js';
+import InputControl from './input-control.jsx';
 
 /** @module modal */
 

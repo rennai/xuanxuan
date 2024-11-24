@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import App from '../../core';
-import {showContextMenu} from '../../core/context-menu';
-import _MenuContactList from './menu-contact-list';
-import _MenuGroupList from './menu-group-list';
-import _MenuSearchList from './menu-search-list';
-import _MenuRecentList from './menu-recent-list';
-import withReplaceView from '../with-replace-view';
+import App from '../../core/index.js';
+import {showContextMenu} from '../../core/context-menu.js';
+import _MenuContactList from './menu-contact-list.jsx';
+import _MenuGroupList from './menu-group-list.jsx';
+import _MenuSearchList from './menu-search-list.jsx';
+import _MenuRecentList from './menu-recent-list.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * MenuSearchList 可替换组件形式
@@ -42,7 +42,7 @@ const MenuContactList = withReplaceView(_MenuContactList);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import MenuList from './menu-list';
+ * import MenuList from './menu-list.jsx';
  * <MenuList />
  */
 export default class MenuList extends Component {

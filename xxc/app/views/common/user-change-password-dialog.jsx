@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Modal from '../../components/modal';
-import InputControl from '../../components/input-control';
-import Messager from '../../components/messager';
-import App from '../../core';
-import HTML from '../../utils/html-helper';
-import StringHelper from '../../utils/string-helper';
-import Lang from '../../core/lang';
+import Modal from '../../components/modal.jsx';
+import InputControl from '../../components/input-control.jsx';
+import Messager from '../../components/messager.jsx';
+import App from '../../core/index.js';
+import HTML from '../../utils/html-helper.js';
+import StringHelper from '../../utils/string-helper.js';
+import Lang from '../../core/lang.js';
 
 /**
  * UserChangePassword-Dialog 组件 ，显示修改用户密码界面

@@ -1,8 +1,8 @@
-import ContextMenu from '../components/context-menu';
-import timeSquence from '../utils/time-sequence';
-import Lang from './lang';
-import {isWebUrl} from '../utils/html-helper';
-import platform from '../platform';
+import ContextMenu from '../components/context-menu.jsx';
+import timeSquence from '../utils/time-sequence.js';
+import Lang from './lang.js';
+import {isWebUrl} from '../utils/html-helper.js';
+import platform from '../platform/index.js';
 
 /**
  * 平台提供的剪切板功能访问对象

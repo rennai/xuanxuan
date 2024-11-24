@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import Popover from '../../components/popover';
-import Lang from '../../core/lang';
-import profile from '../../core/profile';
-import DelayAction from '../../utils/delay-action';
+import Popover from '../../components/popover.jsx';
+import Lang from '../../core/lang.js';
+import profile from '../../core/profile/index.js';
+import DelayAction from '../../utils/delay-action.js';
 
 /**
  * 默认字体设置

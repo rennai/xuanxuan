@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../utils/html-helper';
-import Icon from './icon';
+import {classes} from '../utils/html-helper.js';
+import Icon from './icon.jsx';
 
 /**
  * Spinner 组件 ，显示一个用于“正在加载中”图标

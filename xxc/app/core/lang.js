@@ -1,9 +1,9 @@
 import LANG_ZH_CN from '../lang/zh-cn.json';
-import platform from '../platform';
-import {setStoreItem, getStoreItem} from '../utils/store';
-import LangHelper from '../utils/lang-helper';
-import events from './events';
-import Config from '../config';
+import platform from '../platform/index.js';
+import {setStoreItem, getStoreItem} from '../utils/store.js';
+import LangHelper from '../utils/lang-helper.js';
+import events from './events.js';
+import Config from '../config/index.js';
 
 /**
  * 语言变更事件名称
@@ -37,7 +37,7 @@ let isJustLangSwitchedFlag = false;
  * @return {Symbol} 使用 `Symbol` 存储的事件 ID，用于取消事件
  * @example
  * import {onLangChange} from './lang.js';
- * import {events} from './events';
+ * import {events} from './events.js';
  *
  * // 绑定语言变更事件
  * const langChangeHandler = onLangChange(newLang => {

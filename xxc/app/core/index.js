@@ -1,13 +1,13 @@
-import profile from './profile';
-import members from './members';
-import im from './im';
-import db from './db';
-import server from './server';
-import notice from './notice';
-import events from './events';
-import ui from './ui';
-import models from './models';
-import todo from './todo';
+import profile from './profile/index.js';
+import members from './members.js';
+import im from './im/index.js';
+import db from './db/index.js';
+import server from './server/index.js';
+import notice from './notice.js';
+import events from './events.js';
+import ui from './ui.js';
+import models from './models/index.js';
+import todo from './todo.js';
 
 const app = {
     profile,
@@ -29,5 +29,18 @@ const app = {
 if (DEBUG) {
     global.$.App = app;
 }
+
+export {
+    profile,
+    members,
+    im,
+    db,
+    server,
+    notice,
+    events,
+    ui,
+    models,
+    todo,
+};
 
 export default app;

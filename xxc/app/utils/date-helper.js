@@ -1,13 +1,13 @@
 /** @module date-helper */
 
-import {formatString} from './string-helper';
+const {formatString} = require('./string-helper.js');
 
 /**
  * 一天的总毫秒数
  * @type {number}
  * @const
  */
-export const TIME_DAY = 24 * 60 * 60 * 1000;
+const TIME_DAY = 24 * 60 * 60 * 1000;
 
 /**
  * 创建一个 Date 对象
@@ -15,7 +15,7 @@ export const TIME_DAY = 24 * 60 * 60 * 1000;
  * @return {Date}
  * @function
  */
-export const createDate = (date = null) => {
+const createDate = (date = null) => {
     if (!date) {
         return new Date();
     }
@@ -34,7 +34,7 @@ export const createDate = (date = null) => {
  * @return {number}
  * @function
  */
-export const createPhpTimestramp = date => {
+const createPhpTimestramp = date => {
     return Math.floor(createDate(date).getTime() / 1000);
 };
 
@@ -45,7 +45,7 @@ export const createPhpTimestramp = date => {
  * @return {boolean}
  * @function
  */
-export const isSameDay = (date1, date2) => {
+const isSameDay = (date1, date2) => {
     if (!date2) {
         date2 = new Date();
     }
@@ -61,7 +61,7 @@ export const isSameDay = (date1, date2) => {
  * @return {boolean}
  * @function
  */
-export const isSameYear = (date1, date2) => {
+const isSameYear = (date1, date2) => {
     if (!date2) {
         date2 = new Date();
     }
@@ -75,7 +75,7 @@ export const isSameYear = (date1, date2) => {
  * @return {boolean}
  * @function
  */
-export const isSameMonth = (date1, date2) => {
+const isSameMonth = (date1, date2) => {
     if (!date2) {
         date2 = new Date();
     }
@@ -91,7 +91,7 @@ export const isSameMonth = (date1, date2) => {
  * @return {boolean}
  * @function
  */
-export const isToday = (date, now = null) => (isSameDay(now || new Date(), date));
+const isToday = (date, now = null) => (isSameDay(now || new Date(), date));
 
 /**
  * 判断指定的日期是否是在昨天
@@ -100,7 +100,7 @@ export const isToday = (date, now = null) => (isSameDay(now || new Date(), date)
  * @return {boolean}
  * @function
  */
-export const isYestoday = (date, now) => (isSameDay((now || new Date()).getTime() - TIME_DAY, date));
+const isYestoday = (date, now) => (isSameDay((now || new Date()).getTime() - TIME_DAY, date));
 
 /**
  * 格式化日期时间值为字符串，所有可用的格式化参数有：
@@ -123,7 +123,7 @@ export const isYestoday = (date, now) => (isSameDay((now || new Date()).getTime(
  * @return {string}
  * @function
  */
-export const formatDate = (date, format = 'yyyy-MM-dd hh:ss') => {
+const formatDate = (date, format = 'yyyy-MM-dd hh:ss') => {
     date = createDate(date);
 
     const dateInfo = {
@@ -155,7 +155,7 @@ export const formatDate = (date, format = 'yyyy-MM-dd hh:ss') => {
  * @return {string}
  * @function
  */
-export const formatSpan = (date1, date2, format) => {
+const formatSpan = (date1, date2, format) => {
     format = Object.assign({
         full: 'yyyy-M-d', month: 'M-d', day: 'd', str: '{0} ~ {1}',
     }, format);
@@ -173,7 +173,7 @@ export const formatSpan = (date1, date2, format) => {
  * @return {number}
  * @function
  */
-export const getTimeBeforeDesc = desc => {
+const getTimeBeforeDesc = desc => {
     const now = new Date().getTime();
     switch (desc) {
     case 'oneWeek':
@@ -193,15 +193,24 @@ export const getTimeBeforeDesc = desc => {
     }
 };
 
-export default {
-    createDate,
+const DateHelper = {
     formatDate,
-    isSameDay,
-    isSameMonth,
-    isSameYear,
+    createPhpTimestramp,
+    createDate,
+    getTimeBeforeDesc,
     isToday,
     isYestoday,
-    formatSpan,
-    getTimeBeforeDesc,
-    createPhpTimestramp
+    isSameDay,
 };
+
+export {
+    formatDate,
+    createPhpTimestramp,
+    createDate,
+    getTimeBeforeDesc,
+    isToday,
+    isYestoday,
+    isSameDay,
+};
+
+export default DateHelper;

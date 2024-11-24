@@ -1,8 +1,8 @@
-import Entity from './entity';
-import Member from './member';
-import Chat from './chat';
-import ChatMessage from './chat-message';
-import EntitySchema from './entity-schema';
+import Entity from './entity.js';
+import Member from './member.js';
+import Chat from './chat.js';
+import ChatMessage from './chat-message.js';
+import EntitySchema from './entity-schema.js';
 
 /**
  * 返回所有可用的数据库存储类

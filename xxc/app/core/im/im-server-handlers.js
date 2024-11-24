@@ -1,12 +1,12 @@
 import {
     updateChatMessages, getChat, updateChats, updatePublicChats, removeChat,
-} from './im-chats';
-import Chat from '../models/chat';
-import profile from '../profile';
-import members from '../members';
-import imServer, {handleReceiveChatMessages, handleInitChats, updateChatHistory} from './im-server';
-import imUI from './im-ui';
-import Config from '../../config';
+} from './im-chats.js';
+import Chat from '../models/chat.js';
+import profile from '../profile/index.js';
+import members from '../members.js';
+import imServer, {handleReceiveChatMessages, handleInitChats, updateChatHistory} from './im-server.js';
+import imUI from './im-ui.js';
+import Config from '../../config/index.js';
 
 /**
  * 处理服务器推送修改聊天名称消息

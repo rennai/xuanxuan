@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../../utils/html-helper';
-import Icon from '../../components/icon';
-import Avatar from '../../components/avatar';
-import Lang from '../../core/lang';
-import App from '../../core';
-import _MessageList from './message-list';
-import _MessageListItem from './message-list-item';
-import withReplaceView from '../with-replace-view';
+import HTML from '../../utils/html-helper.js';
+import Icon from '../../components/icon.jsx';
+import Avatar from '../../components/avatar.jsx';
+import Lang from '../../core/lang.js';
+import App from '../../core/index.js';
+import _MessageList from './message-list.jsx';
+import _MessageListItem from './message-list-item.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * MessageListItem 可替换组件形式
@@ -32,7 +32,7 @@ const MAX_RESULT_COUNT = 500;
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatSearchResult from './chat-search-result';
+ * import ChatSearchResult from './chat-search-result.jsx';
  * <ChatSearchResult />
  */
 export default class ChatSearchResult extends Component {

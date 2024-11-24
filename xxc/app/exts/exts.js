@@ -1,10 +1,10 @@
-import Config from '../config';
-import getBuildIns from './build-in';
-import {createExtension} from './extension';
-import {setOnInstalledExtensionChangeListener, getInstalledExtensions} from './extensions-db';
-import events from '../core/events';
-import {setServerOnChangeListener} from './server';
-import {onLangChange} from '../core/lang';
+import Config from '../config/index.js';
+import getBuildIns from './build-in/index.js';
+import {createExtension} from './extension.js';
+import {setOnInstalledExtensionChangeListener, getInstalledExtensions} from './extensions-db.js';
+import events from '../core/events.js';
+import {setServerOnChangeListener} from './server/index.js';
+import {onLangChange} from '../core/lang.js';
 
 /**
  * 事件名称表

@@ -1,14 +1,14 @@
 import Path from 'path';
 import compareVersions from 'compare-versions';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import extractZip from 'extract-zip';
 import db, {
     removeInstalledExtension, saveInstalledExtension, getInstalledExtension, saveExtensionData,
-} from './extensions-db';
-import {createExtension} from './extension';
-import Modal from '../components/modal';
-import Lang from '../core/lang';
-import platform from '../platform';
+} from './extensions-db.js';
+import {createExtension} from './extension.js';
+import Modal from '../components/modal.jsx';
+import Lang from '../core/lang.js';
+import platform from '../platform/index.js';
 
 /**
  * 平台提供的对话框功能访问对象

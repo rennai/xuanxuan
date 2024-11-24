@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../../utils/html-helper';
-import Member from '../../core/models/member';
-import _MemberListItem from './member-list-item';
-import ListItem from '../../components/list-item';
-import Lang from '../../core/lang';
-import App from '../../core';
-import Config from '../../config';
-import withReplaceView from '../with-replace-view';
+import HTML from '../../utils/html-helper.js';
+import Member from '../../core/models/member.js';
+import _MemberListItem from './member-list-item.jsx';
+import ListItem from '../../components/list-item.jsx';
+import Lang from '../../core/lang.js';
+import App from '../../core/index.js';
+import Config from '../../config/index.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * MemberListItem 可替换组件形式
@@ -22,7 +22,7 @@ const MemberListItem = withReplaceView(_MemberListItem);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import MemberList from './member-list';
+ * import MemberList from './member-list.jsx';
  * <MemberList />
  */
 export default class MemberList extends Component {

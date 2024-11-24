@@ -1,9 +1,9 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {rem, classes} from '../utils/html-helper';
-import Skin from '../utils/skin';
-import Icon from './icon';
-import Image from './image';
+import {rem, classes} from '../utils/html-helper.js';
+import Skin from '../utils/skin.js';
+import Icon from './icon.jsx';
+import Image from './image.jsx';
 
 /**
  * Avatar 组件 ，显示一个头像

@@ -1,12 +1,12 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import Config from '../../config';
-import {classes} from '../../utils/html-helper';
-import Lang from '../../core/lang';
-import _BuildInfo from './build-info'; // eslint-disable-line
-import PoweredInfo from './powered-info';
+import Config from '../../config/index.js';
+import {classes} from '../../utils/html-helper.js';
+import Lang from '../../core/lang.js';
+import _BuildInfo from './build-info.jsx'; // eslint-disable-line
+import PoweredInfo from './powered-info.jsx';
 import pkg from '../../package.json';
-import withReplaceView from '../with-replace-view';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * UserAvatar 可替换组件形式
@@ -21,7 +21,7 @@ const BuildInfo = withReplaceView(_BuildInfo);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {PureComponent}
  * @example
- * import About from './about';
+ * import About from './about.jsx';
  * <About />
  */
 export default class About extends PureComponent {

@@ -1,7 +1,7 @@
-import events from './events';
-import Lang from './lang';
-import Config from '../config';
-import platform from '../platform';
+import events from './events.js';
+import Lang from './lang.js';
+import Config from '../config/index.js';
+import platform from '../platform/index.js';
 
 /**
  * 平台提供的通知功能访问对象

@@ -1,10 +1,10 @@
 import {remote as Remote, nativeImage} from 'electron';
 import Path from 'path';
 import fs from 'fs-extra';
-import env from './env';
-import ui from './ui';
-import {showOpenDialog} from '../common/open-file-button';
-import {downloadFileWithRequest} from './net';
+import env from './env.js';
+import ui from './ui.js';
+import {showOpenDialog} from '../common/open-file-button.js';
+import {downloadFileWithRequest} from './net.js';
 
 /**
  * 上次在文件保存对话框中选择的文件保存位置

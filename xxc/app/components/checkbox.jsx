@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../utils/html-helper';
-import timeSequence from '../utils/time-sequence';
+import {classes} from '../utils/html-helper.js';
+import timeSequence from '../utils/time-sequence.js';
 
 /**
  * Checkbox 组件 ，显示一个复选框

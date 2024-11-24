@@ -1,16 +1,16 @@
 // eslint-disable-next-line import/no-unresolved
 import compareVersions from 'compare-versions';
 import pkg from '../../package.json';
-import Socket from '../network/socket';
-import serverHandlers from './server-handlers';
+import Socket from '../network/socket.js';
+import serverHandlers from './server-handlers.js';
 import {
     onSwapUser, createUser, setCurrentUser, getCurrentUser,
-} from '../profile';
-import {requestServerInfo} from '../network/api';
-import notice from '../notice';
-import events from '../events';
-import limitTimePromise from '../../utils/limit-time-promise';
-import platform from '../../platform';
+} from '../profile/index.js';
+import {requestServerInfo} from '../network/api.js';
+import notice from '../notice.js';
+import events from '../events.js';
+import limitTimePromise from '../../utils/limit-time-promise.js';
+import platform from '../../platform/index.js';
 
 /**
  * 判定服务器请求超时时间，单位毫秒

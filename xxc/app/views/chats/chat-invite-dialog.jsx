@@ -1,8 +1,8 @@
 import React from 'react';
-import Modal from '../../components/modal';
-import _ChatInvite from './chat-invite';
-import Lang from '../../core/lang';
-import withReplaceView from '../with-replace-view';
+import Modal from '../../components/modal.jsx';
+import _ChatInvite from './chat-invite.jsx';
+import Lang from '../../core/lang.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * ChatInvite 可替换组件形式

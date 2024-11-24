@@ -1,8 +1,8 @@
 // eslint-disable-next-line import/no-unresolved
 import path from 'path';
-import platform from '../../platform';
-import Config from '../../config';
-import Lang from '../../core/lang';
+import platform from '../../platform/index.js';
+import Config from '../../config/index.js';
+import Lang from '../../core/lang.js';
 
 export default () => {
     /**

@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import {getKeyDecoration} from '../../utils/shortcut';
-import Emojione from '../../components/emojione';
-import Lang from '../../core/lang';
-import App from '../../core';
-import _DraftEditor from '../common/draft-editor';
-import _ChatSendboxToolbar from './chat-sendbox-toolbar';
-import MessagesPreivewDialog from './messages-preview-dialog';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import {getKeyDecoration} from '../../utils/shortcut.js';
+import Emojione from '../../components/emojione.js';
+import Lang from '../../core/lang.js';
+import App from '../../core/index.js';
+import _DraftEditor from '../common/draft-editor.jsx';
+import _ChatSendboxToolbar from './chat-sendbox-toolbar.jsx';
+import MessagesPreivewDialog from './messages-preview-dialog.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * DraftEditor 可替换组件形式
@@ -30,7 +30,7 @@ const ChatSendboxToolbar = withReplaceView(_ChatSendboxToolbar);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatSendbox from './chat-sendbox';
+ * import ChatSendbox from './chat-sendbox.jsx';
  * <ChatSendbox />
  */
 export default class ChatSendbox extends Component {

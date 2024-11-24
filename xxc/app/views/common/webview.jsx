@@ -1,13 +1,13 @@
 /* eslint-disable indent */
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import timeSequence from '../../utils/time-sequence';
-import {openUrl, onUpdateViewStyle, requestUpdateViewStyle} from '../../core/ui';
-import events from '../../core/events';
-import {formatString} from '../../utils/string-helper';
-import Spinner from '../../components/spinner';
-import platform from '../../platform';
+import {classes} from '../../utils/html-helper.js';
+import timeSequence from '../../utils/time-sequence.js';
+import {openUrl, onUpdateViewStyle, requestUpdateViewStyle} from '../../core/ui.js';
+import events from '../../core/events.js';
+import {formatString} from '../../utils/string-helper.js';
+import Spinner from '../../components/spinner.jsx';
+import platform from '../../platform/index.js';
 
 /**
  * 获取当前平台是否为 Electron 平台
@@ -56,7 +56,7 @@ const defaultInjectJS = [
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import Webview from './webview';
+ * import Webview from './webview.jsx';
  * <Webview />
  */
 export default class WebView extends PureComponent {

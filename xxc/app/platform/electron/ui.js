@@ -2,15 +2,15 @@ import {
     shell,
     remote as Remote,
 } from 'electron';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import Path from 'path';
-import EVENT from './remote-events';
+import EVENT from './remote-events.js';
 import {
     onRequestQuit as onMainRequestQuit, callRemote, ipcSend, onRequestOpenUrl
-} from './remote';
-import shortcut from './shortcut';
-import env from './env';
-import getUrlMeta from './get-url-meta';
+} from './remote.js';
+import shortcut from './shortcut.js';
+import env from './env.js';
+import getUrlMeta from './get-url-meta.js';
 
 /**
  * 当前窗口名称

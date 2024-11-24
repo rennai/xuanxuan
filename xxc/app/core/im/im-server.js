@@ -1,24 +1,24 @@
-import Config, {getSpecialVersionName} from '../../config'; // eslint-disable-line
-import {socket} from '../server';
-import imServerHandlers from './im-server-handlers';
-import events from '../events';
-import profile from '../profile';
-import members from '../members';
+import Config, {getSpecialVersionName} from '../../config/index.js'; // eslint-disable-line
+import {socket} from '../server/index.js';
+import imServerHandlers from './im-server-handlers.js';
+import events from '../events.js';
+import profile from '../profile/index.js';
+import members from '../members.js';
 import PKG from '../../package.json';
-import Chat from '../models/chat';
-import Messager from '../../components/messager';
-import {formatBytes} from '../../utils/string-helper';
-import {createPhpTimestramp} from '../../utils/date-helper';
-import ChatMessage from '../models/chat-message';
-import Lang from '../lang';
-import {getImageInfo} from '../../utils/image';
-import FileData from '../models/file-data';
-import {checkUploadFileSize, uploadFile} from './im-files';
-import {isWebUrl} from '../../utils/html-helper';
+import Chat from '../models/chat.js';
+import Messager from '../../components/messager.jsx';
+import {formatBytes} from '../../utils/string-helper.js';
+import {createPhpTimestramp} from '../../utils/date-helper.js';
+import ChatMessage from '../models/chat-message.js';
+import Lang from '../lang.js';
+import {getImageInfo} from '../../utils/image.js';
+import FileData from '../models/file-data.js';
+import {checkUploadFileSize, uploadFile} from './im-files.js';
+import {isWebUrl} from '../../utils/html-helper.js';
 import {
     updateChatMessages, getChat, queryChats, initChats,
-} from './im-chats';
-import platform from '../../platform';
+} from './im-chats.js';
+import platform from '../../platform/index.js';
 
 /**
  * 适合使用 Base64 格式发送图片的最大文件大小

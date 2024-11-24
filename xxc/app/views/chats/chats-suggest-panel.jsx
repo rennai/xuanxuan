@@ -1,13 +1,13 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import Config from '../../config';
-import {classes} from '../../utils/html-helper';
-import App from '../../core';
-import FileData from '../../core/models/file-data';
-import ImageHolder from '../../components/image-holder';
-import Button from '../../components/button';
-import Lang from '../../core/lang';
-import ClickOutsideWrapper from '../../components/click-outside-wrapper';
+import Config from '../../config/index.js';
+import {classes} from '../../utils/html-helper.js';
+import App from '../../core/index.js';
+import FileData from '../../core/models/file-data.js';
+import ImageHolder from '../../components/image-holder.jsx';
+import Button from '../../components/button.jsx';
+import Lang from '../../core/lang.js';
+import ClickOutsideWrapper from '../../components/click-outside-wrapper.jsx';
 
 /**
  * ChatsSuggestPanel 组件 ，显示向聊天发送建议内容提示面板界面
@@ -15,7 +15,7 @@ import ClickOutsideWrapper from '../../components/click-outside-wrapper';
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {PureComponent}
  * @example
- * import ChatsSuggestPanel from './chats-suggest-panel';
+ * import ChatsSuggestPanel from './chats-suggest-panel.jsx';
  * <ChatsSuggestPanel />
  */
 export default class ChatsSuggestPanel extends PureComponent {

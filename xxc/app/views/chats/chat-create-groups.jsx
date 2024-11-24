@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes, rem} from '../../utils/html-helper';
-import Lang from '../../core/lang';
-import App from '../../core';
-import Icon from '../../components/icon';
-import Avatar from '../../components/avatar';
-import SearchControl from '../../components/search-control';
-import Messager from '../../components/messager';
-import _MemberListItem from '../common/member-list-item';
-import ROUTES from '../common/routes';
-import _MemberList from '../common/member-list';
-import withReplaceView from '../with-replace-view';
+import {classes, rem} from '../../utils/html-helper.js';
+import Lang from '../../core/lang.js';
+import App from '../../core/index.js';
+import Icon from '../../components/icon.jsx';
+import Avatar from '../../components/avatar.jsx';
+import SearchControl from '../../components/search-control.jsx';
+import Messager from '../../components/messager.jsx';
+import _MemberListItem from '../common/member-list-item.jsx';
+import ROUTES from '../common/routes.js';
+import _MemberList from '../common/member-list.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * MemberList 可替换组件形式
@@ -31,7 +31,7 @@ const MemberListItem = withReplaceView(_MemberListItem);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatCreateGroups from './chat-create-groups';
+ * import ChatCreateGroups from './chat-create-groups.jsx';
  * <ChatCreateGroups />
  */
 export default class ChatCreateGroups extends Component {

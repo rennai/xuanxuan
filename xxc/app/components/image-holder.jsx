@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import Icon from './icon';
-import Avatar from './avatar';
-import {classes} from '../utils/html-helper';
+import Icon from './icon.jsx';
+import Avatar from './avatar.jsx';
+import {classes} from '../utils/html-helper.js';
 
 /**
  * ImageHolder 组件 ，显示一个图片占位元素

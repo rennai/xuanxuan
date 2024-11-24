@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import ImageCutter from '../../components/image-cutter';
-import {getSearchParam} from '../../utils/html-helper';
-import platform from '../../platform';
+import ImageCutter from '../../components/image-cutter.jsx';
+import {getSearchParam} from '../../utils/html-helper.js';
+import platform from '../../platform/index.js';
 
 /**
  * AppImageCutter 组件 ，显示图片剪切应用界面（用于在截图窗口中单独显示）
@@ -9,7 +9,7 @@ import platform from '../../platform';
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import AppImageCutter from './app-image-cutter';
+ * import AppImageCutter from './app-image-cutter.jsx';
  * <AppImageCutter />
  */
 export default class ImageCutterApp extends Component {

@@ -1,5 +1,5 @@
-import crypto from './crypto';
-import Status from '../../utils/status';
+import crypto from './crypto.js';
+import Status from '../../utils/status.js';
 
 /**
  * Socket 连接状态管理器

@@ -1,9 +1,9 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {classes, rem} from '../../utils/html-helper';
-import {STATUS} from '../../core/models/member';
-import Lang from '../../core/lang';
-import App from '../../core';
+import {classes, rem} from '../../utils/html-helper.js';
+import {STATUS} from '../../core/models/member.js';
+import Lang from '../../core/lang.js';
+import App from '../../core/index.js';
 
 /**
  * 状态颜色表
@@ -25,7 +25,7 @@ const statusColors = {
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {PureComponent}
  * @example
- * import StatusDot from './status-dot';
+ * import StatusDot from './status-dot.jsx';
  * <StatusDot />
  */
 export default class StatusDot extends PureComponent {

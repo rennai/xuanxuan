@@ -1,6 +1,6 @@
-import UUID from 'uuid/v4';
-import Schema from './entity-schema';
-import timeSequence from '../../utils/time-sequence';
+import { v4 as UUID } from 'uuid';
+import Schema from './entity-schema.js';
+import timeSequence from '../../utils/time-sequence.js';
 
 /**
  * 集成实体存储类

@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import ReactChatView from 'react-chatview';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import _MessageListItem from './message-list-item'; // eslint-disable-line
-import App from '../../core';
-import platform from '../../platform';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import _MessageListItem from './message-list-item.jsx'; // eslint-disable-line
+import App from '../../core/index.js';
+import platform from '../../platform/index.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * MessageListItem 可替换组件形式
@@ -35,7 +35,7 @@ const isFirefox = isBrowser && window.navigator.userAgent.includes('Firefox');
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import MessageList from './message-list';
+ * import MessageList from './message-list.jsx';
  * <MessageList />
  */
 export default class MessageList extends Component {

@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react';
-import Lang, {getAllLangList, loadLanguage, onLangChange} from '../../core/lang';
-import Button from '../../components/button';
-import {classes} from '../../utils/html-helper';
-import events from '../../core/events';
+import Lang, {getAllLangList, loadLanguage, onLangChange} from '../../core/lang.js';
+import Button from '../../components/button.jsx';
+import {classes} from '../../utils/html-helper.js';
+import events from '../../core/events.js';
 
 /**
  * BuildInfo 组件 ，显示构建信息
@@ -10,7 +10,7 @@ import events from '../../core/events';
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {PureComponent}
  * @example
- * import BuildInfo from './build-info';
+ * import BuildInfo from './build-info.jsx';
  * <BuildInfo />
  */
 export default class LanguageSwitcher extends PureComponent {

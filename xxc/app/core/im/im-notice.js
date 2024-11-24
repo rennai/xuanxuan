@@ -1,12 +1,12 @@
-import {saveChatMessages, onChatMessages, forEachChat} from './im-chats';
-import {isActiveChat, renderChatMessageContent, getcurrentActiveChat} from './im-ui';
-import DelayAction from '../../utils/delay-action';
-import {isMatchWindowCondition, updateNotice} from '../notice';
-import Lang from '../lang';
-import profile from '../profile';
-import members from '../members';
-import Config from '../../config';
-import platform from '../../platform';
+import {saveChatMessages, onChatMessages, forEachChat} from './im-chats.js';
+import {isActiveChat, renderChatMessageContent, getcurrentActiveChat} from './im-ui.js';
+import DelayAction from '../../utils/delay-action.js';
+import {isMatchWindowCondition, updateNotice} from '../notice.js';
+import Lang from '../lang.js';
+import profile from '../profile/index.js';
+import members from '../members.js';
+import Config from '../../config/index.js';
+import platform from '../../platform/index.js';
 
 /**
  * 平台提供的通用界面交互访问对象

@@ -1,7 +1,7 @@
-import Config from '../../config';
-import ChatMessage from './chat-message';
-import Member from './member';
-import {isNotEmptyString} from '../../utils/string-helper';
+import Config from '../../config/index.js';
+import ChatMessage from './chat-message.js';
+import Member from './member.js';
+import {isNotEmptyString} from '../../utils/string-helper.js';
 
 /**
  * 通知消息类

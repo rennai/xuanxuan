@@ -2,10 +2,10 @@ import RecordRTC from 'recordrtc';
 import {
     desktopCapturer, screen as Screen, remote as Remote, clipboard,
 } from 'electron';
-import ui from './ui';
-import {saveImage, createFromPath} from './image';
-import env from './env';
-import RemoteEvents, {ipcOnce} from './remote';
+import ui from './ui.js';
+import {saveImage, createFromPath} from './image.js';
+import env from './env.js';
+import RemoteEvents, {ipcOnce} from './remote.js';
 
 /* This is NEEDED because RecordRTC is badly written */
 global.html2canvas = (canvas, obj) => {

@@ -1,16 +1,16 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import Config from '../../config';
-import {classes} from '../../utils/html-helper';
-import _LoginForm from './form'; // eslint-disable-line
-import _BuildInfo from '../common/build-info'; // eslint-disable-line
-import PoweredInfo from '../common/powered-info';
-import App from '../../core';
-import withReplaceView from '../with-replace-view';
+import Config from '../../config/index.js';
+import {classes} from '../../utils/html-helper.js';
+import _LoginForm from './form.jsx'; // eslint-disable-line
+import _BuildInfo from '../common/build-info.jsx'; // eslint-disable-line
+import PoweredInfo from '../common/powered-info.jsx';
+import App from '../../core/index.js';
+import withReplaceView from '../with-replace-view.js';
 import pkg from '../../package.json';
-import AboutDialog from '../common/about-dialog';
-import {getLangDisplayName} from '../../core/lang';
-import Icon from '../../components/icon';
+import AboutDialog from '../common/about-dialog.jsx';
+import {getLangDisplayName} from '../../core/lang.js';
+import Icon from '../../components/icon.jsx';
 
 /**
  * LoginForm 可替换组件形式
@@ -32,7 +32,7 @@ const BuildInfo = withReplaceView(_BuildInfo);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {PureComponent}
  * @example
- * import LoginIndex from './index';
+ * import LoginIndex from './index.jsx';
  * <LoginIndex />
  */
 export default class LoginIndex extends PureComponent {

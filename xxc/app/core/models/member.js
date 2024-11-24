@@ -1,8 +1,8 @@
-import Entity from './entity';
-import Pinyin from '../../utils/pinyin';
-import Status from '../../utils/status';
-import {matchScore} from '../../utils/search-score';
-import Lang, {isJustLangSwitched} from '../lang';
+import Entity from './entity.js';
+import Pinyin from '../../utils/pinyin.js';
+import Status from '../../utils/status.js';
+import {matchScore} from '../../utils/search-score.js';
+import Lang, {isJustLangSwitched} from '../lang.js';
 
 /**
  * 搜索匹配分值表

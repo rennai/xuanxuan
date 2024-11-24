@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import InputControl from './input-control';
-import {classes} from '../utils/html-helper';
-import {getKeyDecoration, formatKeyDecoration, isOnlyModifyKeys} from '../utils/shortcut';
+import InputControl from './input-control.jsx';
+import {classes} from '../utils/html-helper.js';
+import {getKeyDecoration, formatKeyDecoration, isOnlyModifyKeys} from '../utils/shortcut.js';
 
 /**
  * HotkeyInputControl 组件 ，显示一个快捷键输入框

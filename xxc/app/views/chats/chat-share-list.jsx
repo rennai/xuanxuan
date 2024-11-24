@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ChatListItem from './chat-list-item';
-import GroupList from '../../components/group-list';
-import App from '../../core';
-import withReplaceView from '../with-replace-view';
-import Lang from '../../core/lang';
-import Icon from '../../components/icon';
-import {classes} from '../../utils/html-helper';
+import _ChatListItem from './chat-list-item.jsx';
+import GroupList from '../../components/group-list.jsx';
+import App from '../../core/index.js';
+import withReplaceView from '../with-replace-view.js';
+import Lang from '../../core/lang.js';
+import Icon from '../../components/icon.jsx';
+import {classes} from '../../utils/html-helper.js';
 
 /**
  * ChatListItem 可替换组件形式

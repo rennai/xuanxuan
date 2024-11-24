@@ -1,9 +1,9 @@
 import Marked from 'marked';
 import HighlightJS from 'highlight.js';
 import HTMLParser from 'htmlparser';
-import Config from '../config';
-import Lang from '../core/lang';
-import {strip} from './html-helper';
+import Config from '../config/index.js';
+import Lang from '../core/lang.js';
+import {strip} from './html-helper.js';
 
 /**
  * Marked 渲染实例

@@ -1,12 +1,12 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../utils/html-helper';
-import InputControl from './input-control';
-import Icon from './icon';
-import StringHelper from '../utils/string-helper';
-import DelayAction from '../utils/delay-action';
-import Lang, {onLangChange} from '../core/lang';
-import events from '../core/events';
+import HTML from '../utils/html-helper.js';
+import InputControl from './input-control.jsx';
+import Icon from './icon.jsx';
+import StringHelper from '../utils/string-helper.js';
+import DelayAction from '../utils/delay-action.js';
+import Lang, {onLangChange} from '../core/lang.js';
+import events from '../core/events.js';
 
 /**
  * SearchControl 组件 ，显示一个搜索框

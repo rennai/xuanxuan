@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../../utils/html-helper';
-import StringHelper from '../../utils/string-helper';
-import SearchControl from '../../components/search-control';
-import Messager from '../../components/messager';
-import Lang from '../../core/lang';
-import App from '../../core';
-import _MemberList from '../common/member-list';
-import ROUTES from '../common/routes';
-import withReplaceView from '../with-replace-view';
+import HTML from '../../utils/html-helper.js';
+import StringHelper from '../../utils/string-helper.js';
+import SearchControl from '../../components/search-control.jsx';
+import Messager from '../../components/messager.jsx';
+import Lang from '../../core/lang.js';
+import App from '../../core/index.js';
+import _MemberList from '../common/member-list.jsx';
+import ROUTES from '../common/routes.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * MemberList 可替换组件形式
@@ -23,7 +23,7 @@ const MemberList = withReplaceView(_MemberList);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatInvite from './chat-invite';
+ * import ChatInvite from './chat-invite.jsx';
  * <ChatInvite />
  */
 export default class ChatInvite extends Component {

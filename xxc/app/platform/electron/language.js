@@ -1,9 +1,9 @@
 import path from 'path';
 import fse from 'fs-extra';
 import {remote} from 'electron';
-import env from './env';
-import {ipcSend, remoteOn} from './remote';
-import EVENTS from './remote-events';
+import env from './env.js';
+import {ipcSend, remoteOn} from './remote.js';
+import EVENTS from './remote-events.js';
 
 /**
  * 获取语言表数据

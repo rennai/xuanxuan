@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../utils/html-helper';
-import timeSequence from '../utils/time-sequence';
-import Radio from './radio';
+import HTML from '../utils/html-helper.js';
+import timeSequence from '../utils/time-sequence.js';
+import Radio from './radio.jsx';
 
 /**
  * RadioGroup 组件 ，显示一个单选组

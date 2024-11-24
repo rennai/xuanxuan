@@ -1,14 +1,14 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../../utils/html-helper';
-import Lang from '../../core/lang';
-import SearchControl from '../../components/search-control';
-import Icon from '../../components/icon';
-import Avatar from '../../components/avatar';
-import OpenedApp from '../../exts/opened-app';
-import Exts from '../../exts';
-import App from '../../core';
-import Skin from '../../utils/skin';
+import HTML from '../../utils/html-helper.js';
+import Lang from '../../core/lang.js';
+import SearchControl from '../../components/search-control.jsx';
+import Icon from '../../components/icon.jsx';
+import Avatar from '../../components/avatar.jsx';
+import OpenedApp from '../../exts/opened-app.js';
+import Exts from '../../exts/index.js';
+import App from '../../core/index.js';
+import Skin from '../../utils/skin.js';
 
 /**
  * AppThemes 组件 ，显示应用“主题”界面
@@ -16,7 +16,7 @@ import Skin from '../../utils/skin';
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {PureComponent}
  * @example
- * import AppThemes from './app-themes';
+ * import AppThemes from './app-themes.jsx';
  * <AppThemes />
  */
 export default class AppThemes extends PureComponent {

@@ -1,4 +1,4 @@
-import {getSearchParam} from '../utils/html-helper';
+import {getSearchParam} from '../utils/html-helper.js';
 
 /**
  * 用于保存命令的公共上下文参数数据

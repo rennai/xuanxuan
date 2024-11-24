@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import DisplayContainer from './display-container';
+import DisplayContainer from './display-container.jsx';
 
 /**
  * 弹出层管理组件 ID

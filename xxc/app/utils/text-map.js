@@ -1,4 +1,4 @@
-import {formatString} from './string-helper';
+import {formatString} from './string-helper.js';
 
 /**
  * 文本表类

@@ -1,5 +1,5 @@
 import Emojione from 'emojione';
-import Config from '../config';
+import Config from '../config/index.js';
 
 /**
  * 设置 Emojione 图片资源路径

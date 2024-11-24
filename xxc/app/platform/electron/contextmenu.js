@@ -1,5 +1,5 @@
 import {remote} from 'electron';
-import {browserWindow} from './ui';
+import {browserWindow} from './ui.js';
 
 /**
  * 语言文本访问对象

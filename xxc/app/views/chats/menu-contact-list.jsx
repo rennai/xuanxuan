@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import App from '../../core';
-import Lang from '../../core/lang';
-import {showContextMenu} from '../../core/context-menu';
-import Icon from '../../components/icon';
-import GroupList from '../../components/group-list';
-import Button from '../../components/button';
-import _ChatListItem from './chat-list-item';
-import _MemberListItem from '../common/member-list-item';
-import UserProfileDialog from '../common/user-profile-dialog';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import App from '../../core/index.js';
+import Lang from '../../core/lang.js';
+import {showContextMenu} from '../../core/context-menu.js';
+import Icon from '../../components/icon.jsx';
+import GroupList from '../../components/group-list.jsx';
+import Button from '../../components/button.jsx';
+import _ChatListItem from './chat-list-item.jsx';
+import _MemberListItem from '../common/member-list-item.jsx';
+import UserProfileDialog from '../common/user-profile-dialog.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * ChatListItem 可替换组件形式
@@ -32,7 +32,7 @@ const MemberListItem = withReplaceView(_MemberListItem);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import MenuContactList from './menu-contact-list';
+ * import MenuContactList from './menu-contact-list.jsx';
  * <MenuContactList />
  */
 export default class MenuContactList extends Component {
@@ -374,7 +374,7 @@ export default class MenuContactList extends Component {
      * @see https://react.docschina.org/docs/components-and-props.html
      * @extends {Component}
      * @example
-     * import MenuContactList from './menu-contact-list';
+     * import MenuContactList from './menu-contact-list.jsx';
      * <MenuContactList />
      */
     render() {

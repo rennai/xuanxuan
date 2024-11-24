@@ -1,4 +1,4 @@
-import TextMap from './text-map';
+import TextMap from './text-map.js';
 
 /**
  * 语言访问辅助类

@@ -1,12 +1,12 @@
 // eslint-disable-next-line import/no-unresolved
 import Md5 from 'md5';
-import Member from '../models/member';
-import UserConfig from './user-config';
-import DelayAction from '../../utils/delay-action';
-import {isSameDay, isToday} from '../../utils/date-helper';
-import events from '../events';
-import Config from '../../config';
-import {saveUserToStore} from './user-store';
+import Member from '../models/member.js';
+import UserConfig from './user-config.js';
+import DelayAction from '../../utils/delay-action.js';
+import {isSameDay, isToday} from '../../utils/date-helper.js';
+import events from '../events.js';
+import Config from '../../config/index.js';
+import {saveUserToStore} from './user-store.js';
 
 /**
  * 用户密码 MD5 存储前缀

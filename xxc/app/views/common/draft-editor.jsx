@@ -10,10 +10,10 @@ import {
     CompositeDecorator,
     Modifier
 } from 'draft-js';
-import Emojione from '../../components/emojione';
-import App from '../../core';
-import timeSequence from '../../utils/time-sequence';
-import Lang from '../../core/lang';
+import Emojione from '../../components/emojione.js';
+import App from '../../core/index.js';
+import timeSequence from '../../utils/time-sequence.js';
+import Lang from '../../core/lang.js';
 
 /**
  * DraftJS Atomic 组件
@@ -123,7 +123,7 @@ const draftDecorator = new CompositeDecorator([{
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example @lang jsx
- * import DraftEditor from './draft-editor';
+ * import DraftEditor from './draft-editor.jsx';
  * <DraftEditor />
  */
 export default class DraftEditor extends PureComponent {

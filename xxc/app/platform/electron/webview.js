@@ -1,4 +1,4 @@
-import {showInputContextMenu, showSelectionContextMenu} from './contextmenu';
+import {showInputContextMenu, showSelectionContextMenu} from './contextmenu.js';
 
 /**
  * 初始化 WebView 上的右键菜单

@@ -1,21 +1,21 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {NavLink, Redirect} from 'react-router-dom';
-import {classes} from '../../utils/html-helper';
-import Lang from '../../core/lang';
-import ROUTES from '../common/routes';
-import Icon from '../../components/icon';
-import Avatar from '../../components/avatar';
-import Messager from '../../components/messager';
-import Exts from '../../exts';
-import _WebApp from './web-app';
-import _AppHome from './app-home';
-import _AppExtensions from './app-extensions';
-import _AppFiles from './app-files';
-import _AppThemes from './app-themes';
-import App from '../../core';
-import {ifEmptyStringThen} from '../../utils/string-helper';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import Lang from '../../core/lang.js';
+import ROUTES from '../common/routes.js';
+import Icon from '../../components/icon.jsx';
+import Avatar from '../../components/avatar.jsx';
+import Messager from '../../components/messager.jsx';
+import Exts from '../../exts/index.js';
+import _WebApp from './web-app.jsx';
+import _AppHome from './app-home.jsx';
+import _AppExtensions from './app-extensions.jsx';
+import _AppFiles from './app-files.jsx';
+import _AppThemes from './app-themes.jsx';
+import App from '../../core/index.js';
+import {ifEmptyStringThen} from '../../utils/string-helper.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * WebApp 可替换组件形式
@@ -70,7 +70,7 @@ const buildInView = {
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ExtsIndex from './index';
+ * import ExtsIndex from './index.jsx';
  * <ExtsIndex />
  */
 export default class ExtsIndex extends Component {

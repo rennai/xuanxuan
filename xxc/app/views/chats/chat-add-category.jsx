@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import {getChatCategories} from '../../core/im/im-chats';
-import Lang from '../../core/lang';
-import InputControl from '../../components/input-control';
-import Radio from '../../components/radio';
-import RadioGroup from '../../components/radio-group';
-import SelectBox from '../../components/select-box';
+import {classes} from '../../utils/html-helper.js';
+import {getChatCategories} from '../../core/im/im-chats.js';
+import Lang from '../../core/lang.js';
+import InputControl from '../../components/input-control.jsx';
+import Radio from '../../components/radio.jsx';
+import RadioGroup from '../../components/radio-group.jsx';
+import SelectBox from '../../components/select-box.jsx';
 
 /**
  * ChatAddCategory 组件 ，显示一个添加聊天分类界面
@@ -14,7 +14,7 @@ import SelectBox from '../../components/select-box';
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example <caption>组件类调用方式</caption>
- * import ChatAddCategory from './chat-add-category';
+ * import ChatAddCategory from './chat-add-category.jsx';
  * <ChatAddCategory />
  */
 export default class ChatAddCategory extends Component {

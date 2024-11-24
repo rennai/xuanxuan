@@ -1,5 +1,5 @@
-import Status from './status';
-import timeSequence from './time-sequence';
+import Status from './status.js';
+import timeSequence from './time-sequence.js';
 
 const STATUS = new Status({
     wait: 0,

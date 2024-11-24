@@ -1,7 +1,7 @@
-import members from '../members';
-import Lang from '../lang';
-import Member from '../models/member';
-import events from '../events';
+import members from '../members.js';
+import Lang from '../lang.js';
+import Member from '../models/member.js';
+import events from '../events.js';
 
 /**
  * 事件表

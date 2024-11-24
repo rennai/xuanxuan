@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import _WebView from './webview';
-import Avatar from '../../components/avatar';
-import Icon from '../../components/icon';
-import {openUrlInBrowser} from '../../core/ui';
-import Config from '../../config';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import _WebView from './webview.jsx';
+import Avatar from '../../components/avatar.jsx';
+import Icon from '../../components/icon.jsx';
+import {openUrlInBrowser} from '../../core/ui.js';
+import Config from '../../config/index.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * WebView 可替换组件形式
@@ -21,7 +21,7 @@ const WebView = withReplaceView(_WebView);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import WebviewFrame from './webview-frame';
+ * import WebviewFrame from './webview-frame.jsx';
  * <WebviewFrame />
  */
 export default class WebViewFrame extends Component {

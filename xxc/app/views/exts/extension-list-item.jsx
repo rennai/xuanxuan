@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import Avatar from '../../components/avatar';
-import Button from '../../components/button';
-import Icon from '../../components/icon';
-import Lang from '../../core/lang';
-import Exts from '../../exts';
-import App from '../../core';
-import DateHelper from '../../utils/date-helper';
+import {classes} from '../../utils/html-helper.js';
+import Avatar from '../../components/avatar.jsx';
+import Button from '../../components/button.jsx';
+import Icon from '../../components/icon.jsx';
+import Lang from '../../core/lang.js';
+import Exts from '../../exts/index.js';
+import App from '../../core/index.js';
+import DateHelper from '../../utils/date-helper.js';
 
 export default class ExtensionListItem extends Component {
     /**

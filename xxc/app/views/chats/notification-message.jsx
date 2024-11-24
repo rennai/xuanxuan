@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import App from '../../core';
-import Button from '../../components/button';
-import Lang, {isJustLangSwitched} from '../../core/lang';
-import Config from '../../config';
+import {classes} from '../../utils/html-helper.js';
+import App from '../../core/index.js';
+import Button from '../../components/button.jsx';
+import Lang, {isJustLangSwitched} from '../../core/lang.js';
+import Config from '../../config/index.js';
 
 /**
  * NotificationMessage 组件 ，显示通知消息界面
@@ -12,7 +12,7 @@ import Config from '../../config';
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import NotificationMessage from './notification-message';
+ * import NotificationMessage from './notification-message.jsx';
  * <NotificationMessage />
  */
 export default class NotificationMessage extends Component {

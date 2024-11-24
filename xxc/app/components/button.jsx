@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../utils/html-helper';
-import Skin from '../utils/skin';
-import Icon from './icon';
+import {classes} from '../utils/html-helper.js';
+import Skin from '../utils/skin.js';
+import Icon from './icon.jsx';
 
 /**
  * Button 组件 ，显示一个按钮

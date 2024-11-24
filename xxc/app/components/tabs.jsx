@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../utils/html-helper';
-import TabPane from './tab-pane';
+import {classes} from '../utils/html-helper.js';
+import TabPane from './tab-pane.jsx';
 
 /**
  * Tabs 组件 ，显示一个标签页控件

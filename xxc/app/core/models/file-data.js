@@ -1,9 +1,9 @@
 import UUID from 'uuid';
 import md5 from 'md5';
-import Entity from './entity';
-import Member from './member';
-import {matchScore} from '../../utils/search-score';
-import {createDate} from '../../utils/date-helper';
+import Entity from './entity.js';
+import Member from './member.js';
+import {matchScore} from '../../utils/search-score.js';
+import {createDate} from '../../utils/date-helper.js';
 
 /**
  * 将 data uri 数据转换为 Blob 对象

@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import App from '../../core';
-import _ChatListItem from './chat-list-item';
-import {showContextMenu} from '../../core/context-menu';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import App from '../../core/index.js';
+import _ChatListItem from './chat-list-item.jsx';
+import {showContextMenu} from '../../core/context-menu.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * ChatListItem 可替换组件形式
@@ -19,7 +19,7 @@ const ChatListItem = withReplaceView(_ChatListItem);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import MenuRecentList from './menu-recent-list';
+ * import MenuRecentList from './menu-recent-list.jsx';
  * <MenuRecentList />
  */
 export default class MenuRecentList extends Component {

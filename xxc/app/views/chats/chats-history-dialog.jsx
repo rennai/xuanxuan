@@ -1,7 +1,7 @@
 import React from 'react';
-import Modal from '../../components/modal';
-import _ChatsHistory from './chats-history';
-import withReplaceView from '../with-replace-view';
+import Modal from '../../components/modal.jsx';
+import _ChatsHistory from './chats-history.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * ChatsHistory 可替换组件形式

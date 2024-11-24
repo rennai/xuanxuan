@@ -1,7 +1,7 @@
 import React from 'react';
-import Modal from './modal';
-import timeSequence from '../utils/time-sequence';
-import AdvanceImageViewer from './advance-image-viewer';
+import Modal from './modal.jsx';
+import timeSequence from '../utils/time-sequence.js';
+import AdvanceImageViewer from './advance-image-viewer.jsx';
 
 /** @module image-viewer */
 

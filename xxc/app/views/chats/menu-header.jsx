@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../../utils/html-helper';
-import SearchControl from '../../components/search-control';
-import Icon from '../../components/icon';
-import Lang from '../../core/lang';
-import ChatCreateDialog from './chat-create-dialog';
+import HTML from '../../utils/html-helper.js';
+import SearchControl from '../../components/search-control.jsx';
+import Icon from '../../components/icon.jsx';
+import Lang from '../../core/lang.js';
+import ChatCreateDialog from './chat-create-dialog.jsx';
 
 /**
  * MenuHeader 组件 ，显示聊天菜单头部界面
@@ -12,7 +12,7 @@ import ChatCreateDialog from './chat-create-dialog';
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import MenuHeader from './menu-header';
+ * import MenuHeader from './menu-header.jsx';
  * <MenuHeader />
  */
 export default class MenuHeader extends Component {

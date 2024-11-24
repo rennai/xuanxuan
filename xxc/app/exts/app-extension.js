@@ -1,6 +1,6 @@
 import Path from 'path';
-import Extension from './base-extension';
-import {isWebUrl} from '../utils/html-helper';
+import Extension from './base-extension.js';
+import {isWebUrl} from '../utils/html-helper.js';
 
 /**
  * 应用扩展类型

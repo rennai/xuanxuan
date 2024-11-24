@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import _FileListItem from '../common/file-list-item';
-import withReplaceView from '../with-replace-view';
-import {isJustLangSwitched} from '../../core/lang';
+import {classes} from '../../utils/html-helper.js';
+import _FileListItem from '../common/file-list-item.jsx';
+import withReplaceView from '../with-replace-view.js';
+import {isJustLangSwitched} from '../../core/lang.js';
 
 /**
  * FileListItem 可替换组件形式
@@ -18,7 +18,7 @@ const FileListItem = withReplaceView(_FileListItem);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import MessageContentFile from './message-content-file';
+ * import MessageContentFile from './message-content-file.jsx';
  * <MessageContentFile />
  */
 export default class MessageContentFile extends Component {

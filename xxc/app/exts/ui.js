@@ -1,15 +1,15 @@
 // eslint-disable-next-line import/no-unresolved
 import Path from 'path';
-import {getDefaultApp, getAppExt} from './exts';
-import OpenedApp from './opened-app';
-import Lang from '../core/lang';
+import {getDefaultApp, getAppExt} from './exts.js';
+import OpenedApp from './opened-app.js';
+import Lang from '../core/lang.js';
 import {
     setExtensionDisabled, openInstallExtensionDialog, uninstallExtension, saveExtensionData,
-} from './manager';
-import Modal from '../components/modal';
-import Messager from '../components/messager';
-import ExtensionDetailDialog from '../views/exts/extension-detail-dialog';
-import platform from '../platform';
+} from './manager.js';
+import Modal from '../components/modal.jsx';
+import Messager from '../components/messager.jsx';
+import ExtensionDetailDialog from '../views/exts/extension-detail-dialog.jsx';
+import platform from '../platform/index.js';
 
 // 从平台功能访问对象获取功能模块对象
 const {clipboard, ui: platformUI} = platform.modules;

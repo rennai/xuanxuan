@@ -1,9 +1,10 @@
 import electron, {
     BrowserWindow, app as ElectronApp, Tray, Menu, nativeImage, globalShortcut, ipcMain, dialog, shell
 } from 'electron';
-import EVENT from './remote-events';
-import events from './events';
-import Lang, {onLangChange} from './lang-remote';
+import EVENT from './remote-events.js';
+import events from './events.js';
+import Lang, {onLangChange} from './lang-remote.js';
+import PKG from '../../package.json' assert { type: "json" };
 
 if (typeof DEBUG === 'undefined') {
     global.DEBUG = process.env.NODE_ENV === 'debug' || process.env.NODE_ENV === 'development';
@@ -299,6 +300,12 @@ class AppRemote {
 
         this.entryPath = entryPath;
         global.entryPath = entryPath;
+        
+        // 初始化应用配置
+        this.appConfig = {
+            pkg: PKG,
+            entryPath
+        };
     }
 
     /**

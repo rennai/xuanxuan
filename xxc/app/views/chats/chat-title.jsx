@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Platform from '../../platform';
-import {classes} from '../../utils/html-helper';
-import Icon from '../../components/icon';
-import Lang, {isJustLangSwitched} from '../../core/lang';
-import App from '../../core';
-import _ChatAvatar from './chat-avatar';
-import _StatusDot from '../common/status-dot';
-import MemberProfileDialog from '../common/member-profile-dialog';
-import Config from '../../config';
-import withReplaceView from '../with-replace-view';
+import Platform from '../../platform/index.js';
+import {classes} from '../../utils/html-helper.js';
+import Icon from '../../components/icon.jsx';
+import Lang, {isJustLangSwitched} from '../../core/lang.js';
+import App from '../../core/index.js';
+import _ChatAvatar from './chat-avatar.jsx';
+import _StatusDot from '../common/status-dot.jsx';
+import MemberProfileDialog from '../common/member-profile-dialog.jsx';
+import Config from '../../config/index.js';
+import withReplaceView from '../with-replace-view.js';
 
 
 /**
@@ -33,7 +33,7 @@ const StatusDot = withReplaceView(_StatusDot);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatTitle from './chat-title';
+ * import ChatTitle from './chat-title.jsx';
  * <ChatTitle />
  */
 export default class ChatTitle extends Component {

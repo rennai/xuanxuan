@@ -1,6 +1,6 @@
 import removeMarkdown from 'remove-markdown';
-import {socket} from '../server';
-import Markdown from '../../utils/markdown';
+import {socket} from '../server/index.js';
+import Markdown from '../../utils/markdown.js';
 
 /**
  * 将待办存储对象提交到服务器进行存储

@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../utils/html-helper';
-import Icon from './icon';
-import Avatar from './avatar';
+import {classes} from '../utils/html-helper.js';
+import Icon from './icon.jsx';
+import Avatar from './avatar.jsx';
 
 /**
  * Heading 组件 ，显示一个支持带头像或操作的标题

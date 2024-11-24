@@ -3,7 +3,7 @@ import media from 'Config/media.json'; // eslint-disable-line
 import ui from 'Config/ui.json'; // eslint-disable-line
 import lang from 'Config/lang.json'; // eslint-disable-line
 import pkg from '../package.json';
-import platform from '../platform';
+import platform from '../platform/index.js';
 
 /**
  * 应用运行时配置

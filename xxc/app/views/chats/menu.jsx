@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes, getSearchParam} from '../../utils/html-helper';
-import _MenuHeader from './menu-header';
-import _MenuList from './menu-list';
-import withReplaceView from '../with-replace-view';
+import {classes, getSearchParam} from '../../utils/html-helper.js';
+import _MenuHeader from './menu-header.jsx';
+import _MenuList from './menu-list.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * MenuList 可替换组件形式
@@ -25,7 +25,7 @@ const MenuHeader = withReplaceView(_MenuHeader);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import Menu from './menu';
+ * import Menu from './menu.jsx';
  * <Menu />
  */
 export default class Menu extends Component {

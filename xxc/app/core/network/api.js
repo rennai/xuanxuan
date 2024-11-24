@@ -1,6 +1,6 @@
-import Config from '../../config';
-import Lang from '../lang';
-import platform from '../../platform';
+import Config from '../../config/index.js';
+import Lang from '../lang.js';
+import platform from '../../platform/index.js';
 
 /**
  * 平台提供的网络功能访问对象

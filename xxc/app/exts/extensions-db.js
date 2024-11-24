@@ -1,5 +1,5 @@
-import Store from '../utils/store';
-import {createExtension} from './extension';
+import Store from '../utils/store.js';
+import {createExtension} from './extension.js';
 
 /** 扩展数据库管理 */
 

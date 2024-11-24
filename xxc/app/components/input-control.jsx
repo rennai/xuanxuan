@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import hotkeys from 'hotkeys-js';
-import {classes} from '../utils/html-helper';
-import timeSequence from '../utils/time-sequence';
+import {classes} from '../utils/html-helper.js';
+import timeSequence from '../utils/time-sequence.js';
 
 // 设置输入框快捷键事件
 hotkeys.filter = event => {

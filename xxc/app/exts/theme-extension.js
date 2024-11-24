@@ -1,5 +1,5 @@
-import Extension from './base-extension';
-import Theme from './theme';
+import Extension from './base-extension.js';
+import Theme from './theme.js';
 
 /**
  * 主题扩展类

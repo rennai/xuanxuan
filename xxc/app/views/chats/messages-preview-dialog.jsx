@@ -1,8 +1,8 @@
 import React from 'react';
-import Modal from '../../components/modal';
-import Lang from '../../core/lang';
-import _MessageList from './message-list';
-import withReplaceView from '../with-replace-view';
+import Modal from '../../components/modal.jsx';
+import Lang from '../../core/lang.js';
+import _MessageList from './message-list.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * MessageList 可替换组件形式

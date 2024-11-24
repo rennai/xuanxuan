@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Config from '../../config';
-import {classes} from '../../utils/html-helper';
-import {formatKeyDecoration} from '../../utils/shortcut';
-import HotkeyInputControl from '../../components/hotkey-input-control';
-import Lang from '../../core/lang';
-import Checkbox from '../../components/checkbox';
-import SelectBox from '../../components/select-box';
-import timeSequence from '../../utils/time-sequence';
-import platform from '../../platform';
+import Config from '../../config/index.js';
+import {classes} from '../../utils/html-helper.js';
+import {formatKeyDecoration} from '../../utils/shortcut.js';
+import HotkeyInputControl from '../../components/hotkey-input-control.jsx';
+import Lang from '../../core/lang.js';
+import Checkbox from '../../components/checkbox.jsx';
+import SelectBox from '../../components/select-box.jsx';
+import timeSequence from '../../utils/time-sequence.js';
+import platform from '../../platform/index.js';
 
 /**
  * 当前平台是否是浏览器
@@ -53,7 +53,7 @@ const isWindowNotificationOff = state => {
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import UserSetting from './user-setting';
+ * import UserSetting from './user-setting.jsx';
  * <UserSetting />
  */
 export default class UserSetting extends Component {

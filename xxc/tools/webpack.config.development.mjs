@@ -8,7 +8,7 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import webpack from 'webpack';
 import { merge } from 'webpack-merge';
-import baseConfig from './webpack.config.base.js';
+import baseConfig from './webpack.config.base.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -47,36 +47,13 @@ export default merge(baseConfig, {
         generator: {
           filename: 'fonts/[name][ext]'
         }
-      },
-      {
-        test: /\.less$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true,
-              importLoaders: 1
-            }
-          },
-          {
-            loader: 'less-loader',
-            options: {
-              sourceMap: true,
-              lessOptions: {
-                strictMath: true,
-                noIeCompat: true
-              }
-            }
-          }
-        ]
       }
     ]
   },
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    
+
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
       DEBUG: true

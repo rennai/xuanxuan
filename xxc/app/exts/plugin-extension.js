@@ -1,4 +1,4 @@
-import Extension from './base-extension';
+import Extension from './base-extension.js';
 
 /**
  * 插件扩展类

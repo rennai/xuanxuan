@@ -1,15 +1,15 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import {getUrlMeta} from '../../core/ui';
-import _MessageContentCard from './message-content-card';
-import _WebView from '../common/webview';
-import Lang from '../../core/lang';
-import Button from '../../components/button';
-import {showContextMenu, getMenuItemsForContext} from '../../core/context-menu';
-import ContextMenu from '../../components/context-menu';
-import withReplaceView from '../with-replace-view';
-import ChatShareDialog from './chat-share-dialog';
+import {classes} from '../../utils/html-helper.js';
+import {getUrlMeta} from '../../core/ui.js';
+import _MessageContentCard from './message-content-card.jsx';
+import _WebView from '../common/webview.jsx';
+import Lang from '../../core/lang.js';
+import Button from '../../components/button.jsx';
+import {showContextMenu, getMenuItemsForContext} from '../../core/context-menu.js';
+import ContextMenu from '../../components/context-menu.jsx';
+import withReplaceView from '../with-replace-view.js';
+import ChatShareDialog from './chat-share-dialog.jsx';
 
 /**
  * MessageContentCard 可替换组件形式
@@ -31,7 +31,7 @@ const WebView = withReplaceView(_WebView);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {PureComponent}
  * @example
- * import MessageContentUrl from './message-content-url';
+ * import MessageContentUrl from './message-content-url.jsx';
  * <MessageContentUrl />
  */
 export default class MessageContentUrl extends PureComponent {

@@ -1,9 +1,9 @@
 import React from 'react';
-import Modal from '../../components/modal';
-import ChatCode from './chat-send-code';
-import Lang from '../../core/lang';
-import App from '../../core';
-import {isEmptyString} from '../../utils/string-helper';
+import Modal from '../../components/modal.jsx';
+import ChatCode from './chat-send-code.jsx';
+import Lang from '../../core/lang.js';
+import App from '../../core/index.js';
+import {isEmptyString} from '../../utils/string-helper.js';
 
 /**
  * 处理发送代码按钮点击事件

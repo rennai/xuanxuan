@@ -1,20 +1,20 @@
-import Config from '../config'; // eslint-disable-line
-import Server from './server';
-import MemberProfileDialog from '../views/common/member-profile-dialog';
-import Messager from '../components/messager';
-import ContextMenu from '../components/context-menu';
-import modal from '../components/modal';
-import {isWebUrl, getSearchParam} from '../utils/html-helper';
-import Lang, {onLangChange} from './lang';
-import events from './events';
-import profile from './profile';
-import Notice from './notice';
-import ImageViewer from '../components/image-viewer';
-import Store from '../utils/store';
-import {executeCommandLine, registerCommand, executeCommand} from './commander';
-import WebViewDialog from '../views/common/webview-dialog';
-import {addContextMenuCreator, showContextMenu} from './context-menu';
-import platform from '../platform';
+import Config from '../config/index.js'; // eslint-disable-line
+import Server from './server/index.js';
+import MemberProfileDialog from '../views/common/member-profile-dialog.jsx';
+import Messager from '../components/messager.jsx';
+import ContextMenu from '../components/context-menu.jsx';
+import modal from '../components/modal.jsx';
+import {isWebUrl, getSearchParam} from '../utils/html-helper.js';
+import Lang, {onLangChange} from './lang.js';
+import events from './events.js';
+import profile from './profile/index.js';
+import Notice from './notice.js';
+import ImageViewer from '../components/image-viewer.jsx';
+import Store from '../utils/store.js';
+import {executeCommandLine, registerCommand, executeCommand} from './commander.js';
+import WebViewDialog from '../views/common/webview-dialog.jsx';
+import {addContextMenuCreator, showContextMenu} from './context-menu.js';
+import platform from '../platform/index.js';
 
 /**
  * 平台提供的剪切板功能访问对象

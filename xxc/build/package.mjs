@@ -7,15 +7,21 @@
 /* eslint-disable no-extend-native */
 
 import chalk from 'chalk';
-import program from 'commander';
+import {Command} from 'commander';
+const program = new Command();
 import {spawn} from 'child_process';
 import path from 'path';
 import os from 'os';
 import cpx from 'cpx';
 import archiver from 'archiver';
 import fse from 'fs-extra';
-import pkg from '../package.json';
-import {formatDate} from '../app/utils/date-helper';
+import {fileURLToPath} from 'url';
+import {dirname} from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+import pkg from '../package.json' assert { type: 'json' };
+import dateHelper from '../app/utils/date-helper.js';
+const {formatDate} = dateHelper;
 
 // 所支持的平台类型
 const PLATFORMS = new Set(['win', 'mac', 'linux', 'browser']);

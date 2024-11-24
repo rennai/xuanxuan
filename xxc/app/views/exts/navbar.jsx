@@ -1,11 +1,11 @@
 import React, {PureComponent} from 'react';
-import Exts from '../../exts';
-import App from '../../core';
-import Avatar from '../../components/avatar';
-import ROUTES from '../common/routes';
-import Config from '../../config';
-import {classes} from '../../utils/html-helper';
-import Lang from '../../core/lang';
+import Exts from '../../exts/index.js';
+import App from '../../core/index.js';
+import Avatar from '../../components/avatar.jsx';
+import ROUTES from '../common/routes.js';
+import Config from '../../config/index.js';
+import {classes} from '../../utils/html-helper.js';
+import Lang from '../../core/lang.js';
 
 /**
  * ExtsNavbarView 组件 ，显示扩展应用导航
@@ -13,7 +13,7 @@ import Lang from '../../core/lang';
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {PureComponent}
  * @example
- * import ExtsNavbarView from './app-home';
+ * import ExtsNavbarView from './app-home.jsx';
  * <ExtsNavbarView />
  */
 export default class ExtsNavbarView extends PureComponent {

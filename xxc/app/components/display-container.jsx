@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import timeSequence from '../utils/time-sequence';
-import DisplayLayer from './display-layer';
-import events from '../core/events';
+import timeSequence from '../utils/time-sequence.js';
+import DisplayLayer from './display-layer.jsx';
+import events from '../core/events.js';
 
 /**
  * DisplayContainer 组件 ，显示一个弹出层容器组件，用于管理界面上一个或多个弹出层

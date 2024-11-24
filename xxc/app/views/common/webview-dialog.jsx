@@ -1,8 +1,8 @@
 import React from 'react';
-import Modal from '../../components/modal';
-import _WebViewFrame from './webview-frame';
-import timeSequence from '../../utils/time-sequence';
-import withReplaceView from '../with-replace-view';
+import Modal from '../../components/modal.jsx';
+import _WebViewFrame from './webview-frame.jsx';
+import timeSequence from '../../utils/time-sequence.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * WebViewFrame 可替换组件形式

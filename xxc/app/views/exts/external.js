@@ -1,11 +1,11 @@
-import AppExtensions from './app-extensions';
-import ExtensionListItem from './extension-list-item';
-import AppFiles from './app-files';
-import AppHome from './app-home';
-import Index from './index';
-import ExtensionDetailDialog from './extension-detail-dialog';
-import WebApp from './web-app';
-import ExtensionDetail from './extension-detail';
+import AppExtensions from './app-extensions.jsx';
+import ExtensionListItem from './extension-list-item.jsx';
+import AppFiles from './app-files.jsx';
+import AppHome from './app-home.jsx';
+import Index from './index.jsx';
+import ExtensionDetailDialog from './extension-detail-dialog.jsx';
+import WebApp from './web-app.jsx';
+import ExtensionDetail from './extension-detail.jsx';
 
 export default {
     AppExtensions,

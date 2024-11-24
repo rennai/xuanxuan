@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../../utils/html-helper';
-import Icon from '../../components/icon';
-import Lang from '../../core/lang';
-import App from '../../core';
-import Member from '../../core/models/member';
-import _MemberList from '../common/member-list';
-import ChatInviteDialog from './chat-invite-dialog';
-import {showContextMenu} from '../../core/context-menu';
-import withReplaceView from '../with-replace-view';
+import HTML from '../../utils/html-helper.js';
+import Icon from '../../components/icon.jsx';
+import Lang from '../../core/lang.js';
+import App from '../../core/index.js';
+import Member from '../../core/models/member.js';
+import _MemberList from '../common/member-list.jsx';
+import ChatInviteDialog from './chat-invite-dialog.jsx';
+import {showContextMenu} from '../../core/context-menu.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * MemberList 可替换组件形式
@@ -33,7 +33,7 @@ const handleMemberItemClick = member => {
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatSidebarPeoples from './chat-sidebar-peoples';
+ * import ChatSidebarPeoples from './chat-sidebar-peoples.jsx';
  * <ChatSidebarPeoples />
  */
 export default class ChatSidebarPeoples extends Component {

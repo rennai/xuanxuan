@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../../utils/html-helper';
-import App from '../../core';
-import _MemberProfile from '../common/member-profile';
-import withReplaceView from '../with-replace-view';
-import {isJustLangSwitched} from '../../core/lang';
+import HTML from '../../utils/html-helper.js';
+import App from '../../core/index.js';
+import _MemberProfile from '../common/member-profile.jsx';
+import withReplaceView from '../with-replace-view.js';
+import {isJustLangSwitched} from '../../core/lang.js';
 
 /**
  * MemberProfile 可替换组件形式
@@ -19,7 +19,7 @@ const MemberProfile = withReplaceView(_MemberProfile);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatSidebarProfile from './chat-sidebar-profile';
+ * import ChatSidebarProfile from './chat-sidebar-profile.jsx';
  * <ChatSidebarProfile />
  */
 export default class ChatSidebarProfile extends Component {

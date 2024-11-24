@@ -1,6 +1,6 @@
-import Entity from './entity';
-import Status from '../../utils/status';
-import Member from './member';
+import Entity from './entity.js';
+import Status from '../../utils/status.js';
+import Member from './member.js';
 
 /**
  * 聊天消息状态管理器

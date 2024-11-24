@@ -1,4 +1,4 @@
-import Store from '../utils/store';
+import Store from '../utils/store.js';
 
 const KEY_EXT_PREFIX = 'EXTENSION::';
 

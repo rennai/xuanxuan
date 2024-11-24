@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react';
-import App from '../../core';
-import _LoginIndex from '../login';
-import _MainIndex from '../main';
-import withReplaceView from '../with-replace-view';
+import App from '../../core/index.js';
+import _LoginIndex from '../login/index.jsx';
+import _MainIndex from '../main/index.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * MainIndex 可替换组件形式
@@ -24,7 +24,7 @@ const LoginIndex = withReplaceView(_LoginIndex);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {PureComponent}
  * @example
- * import AppView from './app-view';
+ * import AppView from './app-view.jsx';
  * <AppView />
  */
 export default class AppView extends PureComponent {

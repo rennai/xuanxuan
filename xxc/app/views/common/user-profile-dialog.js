@@ -1,5 +1,5 @@
-import {profile} from '../../core';
-import MemberProfileDialog from './member-profile-dialog';
+import {profile} from '../../core/index.js';
+import MemberProfileDialog from './member-profile-dialog.jsx';
 
 /**
  * 显示个人资料对话框

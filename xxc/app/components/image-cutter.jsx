@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import hotkeys from 'hotkeys-js';
-import AreaSelector from './area-selector';
-import Icon from './icon';
-import Avatar from './avatar';
-import timeSequence from '../utils/time-sequence';
-import ImageHelper from '../utils/image';
+import AreaSelector from './area-selector.jsx';
+import Icon from './icon.jsx';
+import Avatar from './avatar.jsx';
+import timeSequence from '../utils/time-sequence.js';
+import ImageHelper from '../utils/image.js';
 
 /**
  * ImageCutter 组件 ，显示一个图片剪切控件

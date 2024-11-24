@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Avatar from '../../components/avatar';
-import Icon from '../../components/icon';
-import Image from '../../components/image';
-import {classes} from '../../utils/html-helper';
-import App from '../../core';
-import _StatusDot from './status-dot';
-import withReplaceView from '../with-replace-view';
+import Avatar from '../../components/avatar.jsx';
+import Icon from '../../components/icon.jsx';
+import Image from '../../components/image.jsx';
+import {classes} from '../../utils/html-helper.js';
+import App from '../../core/index.js';
+import _StatusDot from './status-dot.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * StatusDot 可替换组件形式
@@ -21,7 +21,7 @@ const StatusDot = withReplaceView(_StatusDot);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import UserAvatar from './user-avatar';
+ * import UserAvatar from './user-avatar.jsx';
  * <UserAvatar />
  */
 export default class UserAvatar extends Component {

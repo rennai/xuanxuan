@@ -1,4 +1,4 @@
-import Color from './color';
+import Color from './color.js';
 
 /**
  * 默认皮肤选项

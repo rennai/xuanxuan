@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
-import {rem} from '../../utils/html-helper';
-import SearchControl from '../../components/search-control';
+import {rem} from '../../utils/html-helper.js';
+import SearchControl from '../../components/search-control.jsx';
 import PropTypes from 'prop-types';
-import Lang from '../../core/lang';
-import App from '../../core';
-import ChatShareList from './chat-share-list';
-import _ChatListItem from './chat-list-item';
-import Messager from '../../components/messager';
-import withReplaceView from '../with-replace-view';
-import timeSequence from '../../utils/time-sequence';
+import Lang from '../../core/lang.js';
+import App from '../../core/index.js';
+import ChatShareList from './chat-share-list.jsx';
+import _ChatListItem from './chat-list-item.jsx';
+import Messager from '../../components/messager.jsx';
+import withReplaceView from '../with-replace-view.js';
+import timeSequence from '../../utils/time-sequence.js';
 
 /**
  * ChatListItem 可替换组件形式
@@ -23,7 +23,7 @@ const ChatListItem = withReplaceView(_ChatListItem);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example @lang jsx
- * import ChatShare from './chat-share';
+ * import ChatShare from './chat-share.jsx';
  * <ChatShare />
  */
 export default class ChatShare extends Component {

@@ -1,4 +1,4 @@
-import platform from '../platform';
+import platform from '../platform/index.js';
 
 /**
  * 事件名称表

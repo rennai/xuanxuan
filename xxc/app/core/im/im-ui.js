@@ -1,35 +1,35 @@
-import events from '../events';
-import profile from '../profile';
-import chats from './im-chats';
-import Lang from '../lang';
-import Server from './im-server';
-import members from '../members';
-import StringHelper from '../../utils/string-helper';
-import DateHelper from '../../utils/date-helper';
-import Modal from '../../components/modal';
-import ContextMenu from '../../components/context-menu';
-import ChatCommittersSettingDialog from '../../views/chats/chat-committers-setting-dialog';
-import ChatsHistoryDialog from '../../views/chats/chats-history-dialog';
-import ChatInviteDialog from '../../views/chats/chat-invite-dialog';
-import ChatTipPopover from '../../views/chats/chat-tip-popover';
-import ChatShareDialog from '../../views/chats/chat-share-dialog';
-import EmojiPopover from '../../views/common/emoji-popover';
-import HotkeySettingDialog from '../../views/common/hotkey-setting-dialog';
-import Markdown from '../../utils/markdown';
-import Emojione from '../../components/emojione';
-import ChatChangeFontPopover from '../../views/chats/chat-change-font-popover';
-import db from '../db';
-import ChatAddCategoryDialog from '../../views/chats/chat-add-category-dialog';
-import TodoEditorDialog from '../../views/todo/todo-editor-dialog';
-import {createTodoFromMessage} from '../todo';
-import {strip, linkify, escape} from '../../utils/html-helper';
+import events from '../events.js';
+import profile from '../profile/index.js';
+import chats from './im-chats.js';
+import Lang from '../lang.js';
+import Server from './im-server.js';
+import members from '../members.js';
+import StringHelper from '../../utils/string-helper.js';
+import DateHelper from '../../utils/date-helper.js';
+import Modal from '../../components/modal.jsx';
+import ContextMenu from '../../components/context-menu.jsx';
+import ChatCommittersSettingDialog from '../../views/chats/chat-committers-setting-dialog.jsx';
+import ChatsHistoryDialog from '../../views/chats/chats-history-dialog.jsx';
+import ChatInviteDialog from '../../views/chats/chat-invite-dialog.jsx';
+import ChatTipPopover from '../../views/chats/chat-tip-popover.jsx';
+import ChatShareDialog from '../../views/chats/chat-share-dialog.jsx';
+import EmojiPopover from '../../views/common/emoji-popover.jsx';
+import HotkeySettingDialog from '../../views/common/hotkey-setting-dialog.jsx';
+import Markdown from '../../utils/markdown.js';
+import Emojione from '../../components/emojione.js';
+import ChatChangeFontPopover from '../../views/chats/chat-change-font-popover.jsx';
+import db from '../db/index.js';
+import ChatAddCategoryDialog from '../../views/chats/chat-add-category-dialog.jsx';
+import TodoEditorDialog from '../../views/todo/todo-editor-dialog.jsx';
+import {createTodoFromMessage} from '../todo.js';
+import {strip, linkify, escape} from '../../utils/html-helper.js';
 import {
     addContextMenuCreator, getMenuItemsForContext, tryAddDividerItem, tryRemoveLastDivider
-} from '../context-menu';
-import ui from '../ui';
-import {registerCommand, executeCommandLine} from '../commander';
-import Config from '../../config';
-import platform from '../../platform';
+} from '../context-menu.js';
+import ui from '../ui.js';
+import {registerCommand, executeCommandLine} from '../commander.js';
+import Config from '../../config/index.js';
+import platform from '../../platform/index.js';
 
 /**
  * 当前激活的聊天实例 ID

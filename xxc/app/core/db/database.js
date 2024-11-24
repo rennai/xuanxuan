@@ -1,5 +1,5 @@
 import Dexie from 'dexie';
-import Message from '../models/chat-message';
+import Message from '../models/chat-message.js';
 
 /**
  * 数据库版本

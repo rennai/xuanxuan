@@ -1,4 +1,4 @@
-import {showOpenDialog} from '../common/open-file-button';
+import {showOpenDialog} from '../common/open-file-button.js';
 
 /**
  * 显示文件保存对话框

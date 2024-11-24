@@ -1,19 +1,19 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import Icon from '../../components/icon';
-import ClickOutsideWrapper from '../../components/click-outside-wrapper';
-import Lang from '../../core/lang';
-import App from '../../core';
-import _StatusDot from '../common/status-dot';
-import User from '../../core/profile/user';
-import UserProfileDialog from '../common/user-profile-dialog';
-import AboutDialog from '../common/about-dialog';
-import UserSettingDialog from '../common/user-setting-dialog';
-import UserChangePasswordDialog from '../common/user-change-password-dialog';
-import platform from '../../platform';
-import {showLanguageSwitchDialog} from '../common/language-switch-dialog';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import Icon from '../../components/icon.jsx';
+import ClickOutsideWrapper from '../../components/click-outside-wrapper.jsx';
+import Lang from '../../core/lang.js';
+import App from '../../core/index.js';
+import _StatusDot from '../common/status-dot.jsx';
+import User from '../../core/profile/user.js';
+import UserProfileDialog from '../common/user-profile-dialog.js';
+import AboutDialog from '../common/about-dialog.jsx';
+import UserSettingDialog from '../common/user-setting-dialog.jsx';
+import UserChangePasswordDialog from '../common/user-change-password-dialog.jsx';
+import platform from '../../platform/index.js';
+import {showLanguageSwitchDialog} from '../common/language-switch-dialog.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * StatusDot 可替换组件形式

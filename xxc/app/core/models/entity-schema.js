@@ -1,4 +1,4 @@
-import {isNotEmptyString} from '../../utils/string-helper';
+import {isNotEmptyString} from '../../utils/string-helper.js';
 
 /**
  * 默认类型表

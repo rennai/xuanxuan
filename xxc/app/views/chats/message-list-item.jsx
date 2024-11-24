@@ -1,23 +1,23 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import {formatDate, isSameDay, isToday} from '../../utils/date-helper';
-import App from '../../core';
-import Lang, {isJustLangSwitched} from '../../core/lang';
-import Icon from '../../components/icon';
-import MemberProfileDialog from '../common/member-profile-dialog';
-import _UserAvatar from '../common/user-avatar';
-import _MessageDivider from './message-divider';
-import _MessageContentFile from './message-content-file';
-import _MessageContentImage from './message-content-image';
-import _MessageContentText from './message-content-text';
-import _MessageBroadcast from './message-broadcast';
-import _NotificationMessage from './notification-message';
-import _MessageContentUrl from './message-content-url';
-import ChatMessage from '../../core/models/chat-message';
-import {showContextMenu} from '../../core/context-menu';
-import Config from '../../config';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import {formatDate, isSameDay, isToday} from '../../utils/date-helper.js';
+import App from '../../core/index.js';
+import Lang, {isJustLangSwitched} from '../../core/lang.js';
+import Icon from '../../components/icon.jsx';
+import MemberProfileDialog from '../common/member-profile-dialog.jsx';
+import _UserAvatar from '../common/user-avatar.jsx';
+import _MessageDivider from './message-divider.jsx';
+import _MessageContentFile from './message-content-file.jsx';
+import _MessageContentImage from './message-content-image.jsx';
+import _MessageContentText from './message-content-text.jsx';
+import _MessageBroadcast from './message-broadcast.jsx';
+import _NotificationMessage from './notification-message.jsx';
+import _MessageContentUrl from './message-content-url.jsx';
+import ChatMessage from '../../core/models/chat-message.js';
+import {showContextMenu} from '../../core/context-menu.js';
+import Config from '../../config/index.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * MessageDivider 可替换组件形式
@@ -88,7 +88,7 @@ const showTimeLabelInterval = 1000 * 60 * 5;
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import MessageListItem from './message-list-item';
+ * import MessageListItem from './message-list-item.jsx';
  * <MessageListItem />
  */
 export default class MessageListItem extends Component {

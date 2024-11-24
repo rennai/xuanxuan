@@ -1,12 +1,12 @@
 /* eslint-disable react/sort-comp */
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../utils/html-helper';
-import Icon from './icon';
-import Heading from './heading';
-import ListItem from './list-item';
-import Config from '../config';
-import {formatString} from '../utils/string-helper';
+import {classes} from '../utils/html-helper.js';
+import Icon from './icon.jsx';
+import Heading from './heading.jsx';
+import ListItem from './list-item.jsx';
+import Config from '../config/index.js';
+import {formatString} from '../utils/string-helper.js';
 
 /**
  * GroupList 组件 ，显示一个分组列表

@@ -1,4 +1,4 @@
-import EventEmitter from './event-emitter';
+import EventEmitter from './event-emitter.js';
 
 /**
  * Electron 事件管理类

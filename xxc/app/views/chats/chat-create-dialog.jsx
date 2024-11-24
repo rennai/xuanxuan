@@ -1,8 +1,8 @@
 import React from 'react';
-import Modal from '../../components/modal';
-import _ChatCreateView from './chat-create';
-import Lang from '../../core/lang';
-import withReplaceView from '../with-replace-view';
+import Modal from '../../components/modal.jsx';
+import _ChatCreateView from './chat-create.jsx';
+import Lang from '../../core/lang.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * UserAvatar 可替换组件形式

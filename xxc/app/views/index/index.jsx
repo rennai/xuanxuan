@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
-import ImageCutterApp from './app-image-cutter';
-import _AppView from './app-view';
-import withReplaceView from '../with-replace-view';
+import ImageCutterApp from './app-image-cutter.jsx';
+import _AppView from './app-view.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * AppView 可替换组件形式
@@ -17,7 +17,7 @@ const AppView = withReplaceView(_AppView);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {PureComponent}
  * @example
- * import HomeIndex from './index';
+ * import HomeIndex from './index.jsx';
  * <HomeIndex />
  */
 export default class HomeIndex extends PureComponent {

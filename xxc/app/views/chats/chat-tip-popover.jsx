@@ -1,8 +1,8 @@
 import React from 'react';
-import Config from '../../config';
-import Popover from '../../components/popover';
-import Icon from '../../components/icon';
-import profile from '../../core/profile';
+import Config from '../../config/index.js';
+import Popover from '../../components/popover.jsx';
+import Icon from '../../components/icon.jsx';
+import profile from '../../core/profile/index.js';
 
 /**
  * 显示聊天功能提示面板

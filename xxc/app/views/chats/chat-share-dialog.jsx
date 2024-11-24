@@ -1,7 +1,7 @@
 import React from 'react';
-import Modal from '../../components/modal';
-import ChatShare from './chat-share';
-import Lang from '../../core/lang';
+import Modal from '../../components/modal.jsx';
+import ChatShare from './chat-share.jsx';
+import Lang from '../../core/lang.js';
 
 /**
  * 显示转发消息对话框界面

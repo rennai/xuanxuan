@@ -1,14 +1,14 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../../utils/html-helper';
-import StringHelper from '../../utils/string-helper';
-import DateHelper from '../../utils/date-helper';
-import Lang from '../../core/lang';
-import InputControl from '../../components/input-control';
-import SelectBox from '../../components/select-box';
-import Button from '../../components/button';
-import {createTodo} from '../../core/todo';
-import {showMessager} from '../../components/messager';
+import HTML from '../../utils/html-helper.js';
+import StringHelper from '../../utils/string-helper.js';
+import DateHelper from '../../utils/date-helper.js';
+import Lang from '../../core/lang.js';
+import InputControl from '../../components/input-control.jsx';
+import SelectBox from '../../components/select-box.jsx';
+import Button from '../../components/button.jsx';
+import {createTodo} from '../../core/todo.js';
+import {showMessager} from '../../components/messager.jsx';
 
 /**
  * 将时间字符串转换为秒数
@@ -32,7 +32,7 @@ const timeToInt = time => {
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {PureComponent}
  * @example
- * import TodoEditer from './todo-editer';
+ * import TodoEditer from './todo-editer.jsx';
  * <TodoEditer />
  */
 export default class TodoEditor extends PureComponent {

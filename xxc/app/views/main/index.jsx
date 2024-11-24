@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Route, Redirect} from 'react-router-dom';
-import {classes} from '../../utils/html-helper';
-import ROUTES from '../common/routes';
-import App from '../../core';
-import _Navbar from './navbar';
-import _GlobalMessage from './global-message';
-import _CacheContainer from './cache-container';
-import withReplaceView from '../with-replace-view';
-import {onLangChange} from '../../core/lang';
-import events from '../../core/events';
+import {classes} from '../../utils/html-helper.js';
+import ROUTES from '../common/routes.js';
+import App from '../../core/index.js';
+import _Navbar from './navbar.jsx';
+import _GlobalMessage from './global-message.jsx';
+import _CacheContainer from './cache-container.jsx';
+import withReplaceView from '../with-replace-view.js';
+import {onLangChange} from '../../core/lang.js';
+import events from '../../core/events.js';
 
 /**
  * GlobalMessage 可替换组件形式
@@ -38,7 +38,7 @@ const Navbar = withReplaceView(_Navbar);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import Index from './index';
+ * import Index from './index.jsx';
  * <Index />
  */
 export default class MainIndex extends Component {

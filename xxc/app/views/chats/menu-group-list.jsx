@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import App from '../../core';
-import Lang from '../../core/lang';
-import {showContextMenu} from '../../core/context-menu';
-import Icon from '../../components/icon';
-import GroupList from '../../components/group-list';
-import _ChatListItem from './chat-list-item';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import App from '../../core/index.js';
+import Lang from '../../core/lang.js';
+import {showContextMenu} from '../../core/context-menu.js';
+import Icon from '../../components/icon.jsx';
+import GroupList from '../../components/group-list.jsx';
+import _ChatListItem from './chat-list-item.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * ChatListItem 可替换组件形式
@@ -22,7 +22,7 @@ const ChatListItem = withReplaceView(_ChatListItem);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import MenuGroupList from './menu-group-list';
+ * import MenuGroupList from './menu-group-list.jsx';
  * <MenuGroupList />
  */
 export default class MenuGroupList extends Component {

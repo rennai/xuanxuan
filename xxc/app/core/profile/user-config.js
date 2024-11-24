@@ -1,8 +1,8 @@
 import md5 from 'md5';
-import Config from '../../config';
-import DEFAULT from './user-default-config';
-import DelayAction from '../../utils/delay-action';
-import timeSequence from '../../utils/time-sequence';
+import Config from '../../config/index.js';
+import DEFAULT from './user-default-config.js';
+import DelayAction from '../../utils/delay-action.js';
+import timeSequence from '../../utils/time-sequence.js';
 
 /**
  * 用户配置管理类

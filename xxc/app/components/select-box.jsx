@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../utils/html-helper';
-import StringHelper from '../utils/string-helper';
+import {classes} from '../utils/html-helper.js';
+import StringHelper from '../utils/string-helper.js';
 
 /**
  * SelectBox 组件 ，显示一个选择框

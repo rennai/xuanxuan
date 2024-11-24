@@ -1,12 +1,12 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import Icon from '../../components/icon';
-import Lang from '../../core/lang';
-import members from '../../core/members';
-import Chat from '../../core/models/chat';
-import SelectBox from '../../components/select-box';
-import Checkbox from '../../components/checkbox';
+import {classes} from '../../utils/html-helper.js';
+import Icon from '../../components/icon.jsx';
+import Lang from '../../core/lang.js';
+import members from '../../core/members.js';
+import Chat from '../../core/models/chat.js';
+import SelectBox from '../../components/select-box.jsx';
+import Checkbox from '../../components/checkbox.jsx';
 
 /**
  * ChatCommittersSetting 组件 ，显示设置聊天白名单界面
@@ -14,7 +14,7 @@ import Checkbox from '../../components/checkbox';
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {PureComponent}
  * @example
- * import ChatCommittersSetting from './chat-committers-setting';
+ * import ChatCommittersSetting from './chat-committers-setting.jsx';
  * <ChatCommittersSetting />
  */
 export default class ChatCommittersSetting extends PureComponent {

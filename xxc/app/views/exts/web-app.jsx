@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import OpenedApp from '../../exts/opened-app';
-import _WebView from '../common/webview';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import OpenedApp from '../../exts/opened-app.js';
+import _WebView from '../common/webview.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * WebView 可替换组件形式
@@ -18,7 +18,7 @@ const WebView = withReplaceView(_WebView);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import WebApp from './web-app';
+ * import WebApp from './web-app.jsx';
  * <WebApp />
  */
 export default class WebApp extends Component {

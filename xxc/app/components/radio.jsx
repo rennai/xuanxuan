@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../utils/html-helper';
-import timeSequence from '../utils/time-sequence';
+import HTML from '../utils/html-helper.js';
+import timeSequence from '../utils/time-sequence.js';
 
 /**
  * Radio 组件 ，显示一个单选控件

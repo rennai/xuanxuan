@@ -1,7 +1,7 @@
 import Path from 'path';
-import StringHelper from '../utils/string-helper';
-import PinYin from '../utils/pinyin';
-import {matchScore} from '../utils/search-score';
+import StringHelper from '../utils/string-helper.js';
+import PinYin from '../utils/pinyin.js';
+import {matchScore} from '../utils/search-score.js';
 
 /**
  * 主题样式表注入类型：

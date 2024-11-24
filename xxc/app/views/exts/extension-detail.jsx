@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../../utils/html-helper';
-import Skin from '../../utils/skin';
-import Avatar from '../../components/avatar';
-import Button from '../../components/button';
-import Icon from '../../components/icon';
-import Spinner from '../../components/spinner';
-import Lang from '../../core/lang';
-import Exts from '../../exts';
-import Markdown from '../../utils/markdown';
-import Emojione from '../../components/emojione';
-import App from '../../core';
+import HTML from '../../utils/html-helper.js';
+import Skin from '../../utils/skin.js';
+import Avatar from '../../components/avatar.jsx';
+import Button from '../../components/button.jsx';
+import Icon from '../../components/icon.jsx';
+import Spinner from '../../components/spinner.jsx';
+import Lang from '../../core/lang.js';
+import Exts from '../../exts/index.js';
+import Markdown from '../../utils/markdown.js';
+import Emojione from '../../components/emojione.js';
+import App from '../../core/index.js';
 
 /**
  * ExtensionDetail 组件 ，显示扩展详情界面
@@ -18,7 +18,7 @@ import App from '../../core';
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ExtensionDetail from './extension-detail';
+ * import ExtensionDetail from './extension-detail.jsx';
  * <ExtensionDetail />
  */
 export default class ExtensionDetail extends Component {
@@ -185,7 +185,7 @@ export default class ExtensionDetail extends Component {
             extension,
             className,
             onRequestClose,
-            ...other,
+            ...other
         } = this.props;
 
         const buttons = [];

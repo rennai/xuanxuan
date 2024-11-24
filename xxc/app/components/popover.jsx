@@ -1,7 +1,7 @@
 import React from 'react';
-import Display from './display';
-import {classes} from '../utils/html-helper';
-import timeSequence from '../utils/time-sequence';
+import Display from './display.jsx';
+import {classes} from '../utils/html-helper.js';
+import timeSequence from '../utils/time-sequence.js';
 
 /** @module popover */
 

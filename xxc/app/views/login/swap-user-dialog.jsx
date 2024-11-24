@@ -1,8 +1,8 @@
 import React from 'react';
-import Modal from '../../components/modal';
-import _SwapUser from './swap-user';
-import Lang from '../../core/lang';
-import withReplaceView from '../with-replace-view';
+import Modal from '../../components/modal.jsx';
+import _SwapUser from './swap-user.jsx';
+import Lang from '../../core/lang.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * SwapUser 可替换组件形式

@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Route, Link} from 'react-router-dom';
-import Config from '../../config';
-import {rem, classes} from '../../utils/html-helper';
-import Lang from '../../core/lang';
-import Avatar from '../../components/avatar';
-import App from '../../core';
-import ROUTES from '../common/routes';
-import UserSettingDialog from '../common/user-setting-dialog';
-import _UserAvatar from '../common/user-avatar';
-import _StatusDot from '../common/status-dot';
-import _UserMenu from './user-menu';
-import withReplaceView from '../with-replace-view';
+import Config from '../../config/index.js';
+import {rem, classes} from '../../utils/html-helper.js';
+import Lang from '../../core/lang.js';
+import Avatar from '../../components/avatar.jsx';
+import App from '../../core/index.js';
+import ROUTES from '../common/routes.js';
+import UserSettingDialog from '../common/user-setting-dialog.jsx';
+import _UserAvatar from '../common/user-avatar.jsx';
+import _StatusDot from '../common/status-dot.jsx';
+import _UserMenu from './user-menu.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * UserMenu 可替换组件形式
@@ -40,7 +40,7 @@ const StatusDot = withReplaceView(_StatusDot);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import Navbar from './navbar';
+ * import Navbar from './navbar.jsx';
  * <Navbar />
  */
 export default class Navbar extends Component {

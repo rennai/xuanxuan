@@ -1,17 +1,17 @@
-import Xext from './external-api';
+import Xext from './external-api.jsx';
 import Exts, {
     forEachExtension, getExt, getExts, initExtensions
-} from './exts';
-import {initThemes} from './themes';
-import {showExtensionDetailDialog, openAppWithUrl, initUI} from './ui';
-import {reloadDevExtension} from './manager';
-import App from '../core';
-import {setExtensionUser} from './extension';
-import {registerCommand, executeCommand, createCommandObject} from '../core/commander';
-import {fetchServerExtensions, detachServerExtensions, getEntryVisitUrl} from './server';
-import ExtsView from '../views/exts/index';
-import _ExtsNavbarView from '../views/exts/navbar';
-import withReplaceView from '../views/with-replace-view';
+} from './exts.js';
+import {initThemes} from './themes.js';
+import {showExtensionDetailDialog, openAppWithUrl, initUI} from './ui.js';
+import {reloadDevExtension} from './manager.js';
+import App from '../core/index.js';
+import {setExtensionUser} from './extension.js';
+import {registerCommand, executeCommand, createCommandObject} from '../core/commander.js';
+import {fetchServerExtensions, detachServerExtensions, getEntryVisitUrl} from './server/index.js';
+import ExtsView from '../views/exts/index.jsx';
+import _ExtsNavbarView from '../views/exts/navbar.jsx';
+import withReplaceView from '../views/with-replace-view.js';
 
 /**
  * ExtsNavbarView 可替换组件形式

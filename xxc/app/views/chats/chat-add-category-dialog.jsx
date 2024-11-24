@@ -1,9 +1,9 @@
 import React from 'react';
-import Modal from '../../components/modal';
-import _ChatAddCategory from './chat-add-category';
-import Lang from '../../core/lang';
-import {setChatCategory} from '../../core/im/im-server';
-import withReplaceView from '../with-replace-view';
+import Modal from '../../components/modal.jsx';
+import _ChatAddCategory from './chat-add-category.jsx';
+import Lang from '../../core/lang.js';
+import {setChatCategory} from '../../core/im/im-server.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * ChatAddCategory 可替换组件形式

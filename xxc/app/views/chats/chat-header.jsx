@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import Icon from '../../components/icon';
-import App from '../../core';
-import _ChatTitle from './chat-title';
-import {getMenuItemsForContext} from '../../core/context-menu';
-import Config from '../../config';
-import withReplaceView from '../with-replace-view';
-import {isJustLangSwitched} from '../../core/lang';
+import {classes} from '../../utils/html-helper.js';
+import Icon from '../../components/icon.jsx';
+import App from '../../core/index.js';
+import _ChatTitle from './chat-title.jsx';
+import {getMenuItemsForContext} from '../../core/context-menu.js';
+import Config from '../../config/index.js';
+import withReplaceView from '../with-replace-view.js';
+import {isJustLangSwitched} from '../../core/lang.js';
 
 /**
  * ChatTitle 可替换组件形式
@@ -22,7 +22,7 @@ const ChatTitle = withReplaceView(_ChatTitle);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatHeader from './chat-header';
+ * import ChatHeader from './chat-header.jsx';
  * <ChatHeader />
  */
 export default class ChatHeader extends Component {

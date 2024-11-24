@@ -1,10 +1,10 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../../utils/html-helper';
-import App from '../../core';
-import Lang from '../../core/lang';
-import Member from '../../core/models/member';
-import Avatar from '../../components/avatar';
+import HTML from '../../utils/html-helper.js';
+import App from '../../core/index.js';
+import Lang from '../../core/lang.js';
+import Member from '../../core/models/member.js';
+import Avatar from '../../components/avatar.jsx';
 
 
 /**
@@ -20,7 +20,7 @@ const CONNECT_TIME_TICK = 5;
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {PureComponent}
  * @example
- * import GlobalMessage from './global-message';
+ * import GlobalMessage from './global-message.jsx';
  * <GlobalMessage />
  */
 export default class GlobalMessage extends PureComponent {

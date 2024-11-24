@@ -1,7 +1,7 @@
 import React from 'react';
-import Modal from '../../components/modal';
-import _ExtensionDetail from './extension-detail';
-import withReplaceView from '../with-replace-view';
+import Modal from '../../components/modal.jsx';
+import _ExtensionDetail from './extension-detail.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * ExtensionDetail 可替换组件形式

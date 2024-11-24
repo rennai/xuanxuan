@@ -1,8 +1,8 @@
 import React from 'react';
-import Modal from '../../components/modal';
-import HotkeyInputControl from '../../components/hotkey-input-control';
-import {enableGlobalShortcut, disableGlobalShortcut} from '../../core/ui';
-import Lang from '../../core/lang';
+import Modal from '../../components/modal.jsx';
+import HotkeyInputControl from '../../components/hotkey-input-control.jsx';
+import {enableGlobalShortcut, disableGlobalShortcut} from '../../core/ui.js';
+import Lang from '../../core/lang.js';
 
 /**
  * 显示快捷键设置对话框

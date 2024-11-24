@@ -1,5 +1,5 @@
-import Database from './database';
-import {onSwapUser} from '../profile';
+import Database from './database.js';
+import {onSwapUser} from '../profile/index.js';
 
 /**
  * 当前数据库实例

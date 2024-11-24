@@ -1,7 +1,7 @@
-import ui from './ui';
-import remote from './remote';
-import {showNotification} from '../common/notification';
-import {playSound} from '../common/sound';
+import ui from './ui.js';
+import remote from './remote.js';
+import {showNotification} from '../common/notification.js';
+import {playSound} from '../common/sound.js';
 
 /**
  * 请求获取桌面用户注意

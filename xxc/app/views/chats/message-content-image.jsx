@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'; // eslint-disable-line
-import {classes} from '../../utils/html-helper';
-import App from '../../core';
-import Lang, {isJustLangSwitched} from '../../core/lang';
-import Emojione from '../../components/emojione';
-import ImageViewer from '../../components/image-viewer';
-import ImageHolder from '../../components/image-holder';
-import FileData from '../../core/models/file-data';
-import {showContextMenu} from '../../core/context-menu';
-import platform from '../../platform';
+import {classes} from '../../utils/html-helper.js';
+import App from '../../core/index.js';
+import Lang, {isJustLangSwitched} from '../../core/lang.js';
+import Emojione from '../../components/emojione.js';
+import ImageViewer from '../../components/image-viewer.jsx';
+import ImageHolder from '../../components/image-holder.jsx';
+import FileData from '../../core/models/file-data.js';
+import {showContextMenu} from '../../core/context-menu.js';
+import platform from '../../platform/index.js';
 
 /**
  * 当前是否为浏览器平台
@@ -23,7 +23,7 @@ const isBrowser = platform.isType('browser');
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import MessageContentImage from './message-content-image';
+ * import MessageContentImage from './message-content-image.jsx';
  * <MessageContentImage />
  */
 export default class MessageContentImage extends Component {

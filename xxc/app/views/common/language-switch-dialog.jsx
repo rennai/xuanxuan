@@ -1,7 +1,7 @@
 import React from 'react';
-import Modal from '../../components/modal';
-import LanguageSwitcher from './language-switcher';
-import {registerCommand} from '../../core/commander';
+import Modal from '../../components/modal.jsx';
+import LanguageSwitcher from './language-switcher.jsx';
+import {registerCommand} from '../../core/commander.js';
 
 /**
  * 显示快捷键设置对话框

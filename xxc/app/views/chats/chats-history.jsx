@@ -1,19 +1,19 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../../utils/html-helper';
-import Icon from '../../components/icon';
-import Avatar from '../../components/avatar';
-import SearchControl from '../../components/search-control';
-import SelectBox from '../../components/select-box';
-import Lang from '../../core/lang';
-import App from '../../core';
-import _ChatListItem from './chat-list-item';
-import _ChatHistory from './chat-history';
-import _ChatSearchResult from './chat-search-result';
-import {getTimeBeforeDesc} from '../../utils/date-helper';
-import ListItem from '../../components/list-item';
-import Config from '../../config';
-import withReplaceView from '../with-replace-view';
+import HTML from '../../utils/html-helper.js';
+import Icon from '../../components/icon.jsx';
+import Avatar from '../../components/avatar.jsx';
+import SearchControl from '../../components/search-control.jsx';
+import SelectBox from '../../components/select-box.jsx';
+import Lang from '../../core/lang.js';
+import App from '../../core/index.js';
+import _ChatListItem from './chat-list-item.jsx';
+import _ChatHistory from './chat-history.jsx';
+import _ChatSearchResult from './chat-search-result.jsx';
+import {getTimeBeforeDesc} from '../../utils/date-helper.js';
+import ListItem from '../../components/list-item.jsx';
+import Config from '../../config/index.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * ChatSearchResult 可替换组件形式
@@ -42,7 +42,7 @@ const ChatHistory = withReplaceView(_ChatHistory);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatsHistory from './chats-history';
+ * import ChatsHistory from './chats-history.jsx';
  * <ChatsHistory />
  */
 export default class ChatsHistory extends Component {

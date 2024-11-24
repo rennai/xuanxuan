@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import {formatDate, isToday, isYestoday} from '../../utils/date-helper';
-import Lang from '../../core/lang';
+import {classes} from '../../utils/html-helper.js';
+import {formatDate, isToday, isYestoday} from '../../utils/date-helper.js';
+import Lang from '../../core/lang.js';
 
 /**
  * MessageDivider 组件 ，显示聊天列表分隔线界面
@@ -10,7 +10,7 @@ import Lang from '../../core/lang';
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {PureComponent}
  * @example
- * import MessageDivider from './message-divider';
+ * import MessageDivider from './message-divider.jsx';
  * <MessageDivider />
  */
 export default class MessageDivider extends PureComponent {

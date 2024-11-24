@@ -1,7 +1,7 @@
-import Extension, {TYPES} from './base-extension';
-import AppExtension from './app-extension';
-import PluginExtension from './plugin-extension';
-import ThemeExtension from './theme-extension';
+import Extension, {TYPES} from './base-extension.js';
+import AppExtension from './app-extension.js';
+import PluginExtension from './plugin-extension.js';
+import ThemeExtension from './theme-extension.js';
 
 /**
  * 创建一个扩展类实例

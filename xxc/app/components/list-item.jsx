@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../utils/html-helper';
-import Icon from './icon';
-import Avatar from './avatar';
+import HTML from '../utils/html-helper.js';
+import Icon from './icon.jsx';
+import Avatar from './avatar.jsx';
 
 /**
  * ListItem 组件 ，显示一个列表项

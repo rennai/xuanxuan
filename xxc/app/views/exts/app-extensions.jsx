@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../../utils/html-helper';
-import Lang from '../../core/lang';
-import SearchControl from '../../components/search-control';
-import Icon from '../../components/icon';
-import Button from '../../components/button';
-import Exts from '../../exts';
-import OpenedApp from '../../exts/opened-app';
-import App from '../../core';
-import _ExtensionListItem from './extension-list-item';
-import withReplaceView from '../with-replace-view';
+import HTML from '../../utils/html-helper.js';
+import Lang from '../../core/lang.js';
+import SearchControl from '../../components/search-control.jsx';
+import Icon from '../../components/icon.jsx';
+import Button from '../../components/button.jsx';
+import Exts from '../../exts/index.js';
+import OpenedApp from '../../exts/opened-app.js';
+import App from '../../core/index.js';
+import _ExtensionListItem from './extension-list-item.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * ExtensionListItem 可替换组件形式
@@ -24,7 +24,7 @@ const ExtensionListItem = withReplaceView(_ExtensionListItem);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import AppExtensions from './app-extensions';
+ * import AppExtensions from './app-extensions.jsx';
  * <AppExtensions />
  */
 export default class AppExtensions extends Component {

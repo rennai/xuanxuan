@@ -1,7 +1,7 @@
-import all from './exts';
-import ui from './ui';
-import manager from './manager';
-import themes from './themes';
+import all from './exts.js';
+import ui from './ui.js';
+import manager from './manager.js';
+import themes from './themes.js';
 
 export default {
     all,

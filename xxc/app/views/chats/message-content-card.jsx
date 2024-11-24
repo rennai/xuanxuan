@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import {openUrl} from '../../core/ui';
-import Button from '../../components/button';
-import Avatar from '../../components/avatar';
-import StringHelper from '../../utils/string-helper';
-import Lang from '../../core/lang';
-import _WebView from '../common/webview';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import {openUrl} from '../../core/ui.js';
+import Button from '../../components/button.jsx';
+import Avatar from '../../components/avatar.jsx';
+import StringHelper from '../../utils/string-helper.js';
+import Lang from '../../core/lang.js';
+import _WebView from '../common/webview.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * WebView 可替换组件形式
@@ -52,7 +52,7 @@ const handleMenuIconClick = (menuItem, e) => {
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import MessageContentCard from './message-content-card';
+ * import MessageContentCard from './message-content-card.jsx';
  * <MessageContentCard />
  */
 export default class MessageContentCard extends Component {

@@ -1,11 +1,11 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import {formatBytes} from '../../utils/string-helper';
-import Lang from '../../core/lang';
-import App from '../../core';
-import {checkUploadFileSize} from '../../core/network/api';
-import Emojione from '../../components/emojione';
+import {classes} from '../../utils/html-helper.js';
+import {formatBytes} from '../../utils/string-helper.js';
+import Lang from '../../core/lang.js';
+import App from '../../core/index.js';
+import {checkUploadFileSize} from '../../core/network/api.js';
+import Emojione from '../../components/emojione.js';
 
 /**
  * ChatsDndContainer 组件 ，显示聊天拖放功能交互容器
@@ -13,7 +13,7 @@ import Emojione from '../../components/emojione';
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatsDndContainer from './chats-dnd-container';
+ * import ChatsDndContainer from './chats-dnd-container.jsx';
  * <ChatsDndContainer />
  */
 export default class ChatsDndContainer extends PureComponent {

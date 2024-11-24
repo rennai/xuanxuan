@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import Icon from '../../components/icon';
-import {Tabs, TabPane} from '../../components/tabs';
-import Lang, {isJustLangSwitched} from '../../core/lang';
-import App from '../../core';
-import _ChatSidebarPeoples from './chat-sidebar-peoples';
-import _ChatSidebarFiles from './chat-sidebar-files';
-import _ChatSidebarProfile from './chat-sidebar-profile';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import Icon from '../../components/icon.jsx';
+import {Tabs, TabPane} from '../../components/tabs.jsx';
+import Lang, {isJustLangSwitched} from '../../core/lang.js';
+import App from '../../core/index.js';
+import _ChatSidebarPeoples from './chat-sidebar-peoples.jsx';
+import _ChatSidebarFiles from './chat-sidebar-files.jsx';
+import _ChatSidebarProfile from './chat-sidebar-profile.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * ChatSidebarProfile 可替换组件形式
@@ -37,7 +37,7 @@ const ChatSidebarFiles = withReplaceView(_ChatSidebarFiles);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatSidebar from './chat-sidebar';
+ * import ChatSidebar from './chat-sidebar.jsx';
  * <ChatSidebar />
  */
 export default class ChatSidebar extends Component {

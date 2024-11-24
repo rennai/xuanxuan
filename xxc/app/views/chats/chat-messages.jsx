@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import App from '../../core';
-import _MessageList from './message-list';
-import Spinner from '../../components/spinner';
-import Lang, {isJustLangSwitched} from '../../core/lang';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import App from '../../core/index.js';
+import _MessageList from './message-list.jsx';
+import Spinner from '../../components/spinner.jsx';
+import Lang, {isJustLangSwitched} from '../../core/lang.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * MessageList 可替换组件形式
@@ -20,7 +20,7 @@ const MessageList = withReplaceView(_MessageList);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatMessages from './chat-messages';
+ * import ChatMessages from './chat-messages.jsx';
  * <ChatMessages />
  */
 export default class ChatMessages extends Component {

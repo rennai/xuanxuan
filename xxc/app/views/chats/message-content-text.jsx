@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import App from '../../core';
-import Config from '../../config';
+import {classes} from '../../utils/html-helper.js';
+import App from '../../core/index.js';
+import Config from '../../config/index.js';
 
 /**
  * MessageContentText 组件 ，显示聊天消息文本内容界面
@@ -10,7 +10,7 @@ import Config from '../../config';
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import MessageContentText from './message-content-text';
+ * import MessageContentText from './message-content-text.jsx';
  * <MessageContentText />
  */
 export default class MessageContentText extends Component {

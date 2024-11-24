@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Route, Redirect} from 'react-router-dom';
 import SplitPane from 'react-split-pane';
-import {classes} from '../../utils/html-helper';
-import App from '../../core';
-import _Menu from './menu';
-import _ChatsCache from './chats-cache';
-import _ChatsDndContainer from './chats-dnd-container';
-import _ChatsSuggestPanel from './chats-suggest-panel';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import App from '../../core/index.js';
+import _Menu from './menu.jsx';
+import _ChatsCache from './chats-cache.jsx';
+import _ChatsDndContainer from './chats-dnd-container.jsx';
+import _ChatsSuggestPanel from './chats-suggest-panel.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * Menu 可替换组件形式
@@ -44,7 +44,7 @@ const ChatsCache = withReplaceView(_ChatsCache);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatsIndex from './index';
+ * import ChatsIndex from './index.jsx';
  * <ChatsIndex />
  */
 export default class ChatsIndex extends Component {

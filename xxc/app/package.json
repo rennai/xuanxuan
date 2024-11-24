@@ -5,6 +5,7 @@
     "version": "2.3.0",
     "description": "企业即时通讯平台",
     "main": "./main.js",
+    "type": "module",
     "author": {
         "name": "easysoft",
         "email": "sunhao@cnezsoft.com"

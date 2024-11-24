@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {classes, rem} from '../utils/html-helper';
+import {classes, rem} from '../utils/html-helper.js';
 
 /**
  * Icon 组件 ，显示一个图标，目前支持 materialdesign 内的所有图标

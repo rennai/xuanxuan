@@ -1,7 +1,7 @@
 import os from 'os';
 import {remote as Remote} from 'electron';
 import path from 'path';
-import {getSearchParam} from '../../utils/html-helper';
+import {getSearchParam} from '../../utils/html-helper.js';
 
 
 /**

@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {classes} from '../../utils/html-helper';
-import Icon from '../../components/icon';
-import Lang, {isJustLangSwitched} from '../../core/lang';
-import ROUTES from '../common/routes';
-import _ChatAvatar from './chat-avatar';
-import App from '../../core';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import Icon from '../../components/icon.jsx';
+import Lang, {isJustLangSwitched} from '../../core/lang.js';
+import ROUTES from '../common/routes.js';
+import _ChatAvatar from './chat-avatar.jsx';
+import App from '../../core/index.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * ChatAvatar 可替换组件形式
@@ -22,7 +22,7 @@ const ChatAvatar = withReplaceView(_ChatAvatar);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import ChatListItem from './chat-list-item';
+ * import ChatListItem from './chat-list-item.jsx';
  * <ChatListItem />
  */
 export default class ChatListItem extends Component {

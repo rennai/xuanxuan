@@ -1,8 +1,8 @@
 import React from 'react';
-import Modal from '../../components/modal';
-import _About from './about';
-import Lang from '../../core/lang';
-import withReplaceView from '../with-replace-view';
+import Modal from '../../components/modal.jsx';
+import _About from './about.jsx';
+import Lang from '../../core/lang.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * UserAvatar 可替换组件形式

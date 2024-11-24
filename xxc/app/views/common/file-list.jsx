@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import HTML from '../../utils/html-helper';
-import _FileListItem from './file-list-item';
-import ListItem from '../../components/list-item';
-import Lang from '../../core/lang';
-import Config from '../../config';
-import withReplaceView from '../with-replace-view';
+import HTML from '../../utils/html-helper.js';
+import _FileListItem from './file-list-item.jsx';
+import ListItem from '../../components/list-item.jsx';
+import Lang from '../../core/lang.js';
+import Config from '../../config/index.js';
+import withReplaceView from '../with-replace-view.js';
 /**
  * FileListItem 可替换组件形式
  * @type {Class<FileListItem>}
@@ -19,7 +19,7 @@ const FileListItem = withReplaceView(_FileListItem);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import FileList from './file-list';
+ * import FileList from './file-list.jsx';
  * <FileList />
  */
 export default class FileList extends Component {

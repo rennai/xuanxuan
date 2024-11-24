@@ -1,20 +1,20 @@
 // eslint-disable-next-line import/no-unresolved
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import Config from '../../config';
-import InputControl from '../../components/input-control';
-import Checkbox from '../../components/checkbox';
-import Modal from '../../components/modal';
-import Icon from '../../components/icon';
-import Lang, {onLangChange} from '../../core/lang';
-import {classes} from '../../utils/html-helper';
-import {isNotEmptyString} from '../../utils/string-helper';
-import App from '../../core';
-import SwapUserDialog from './swap-user-dialog';
-import Button from '../../components/button';
-import User, {isPasswordWithMD5Flag} from '../../core/profile/user';
-import platform from '../../platform';
-import events from '../../core/events';
+import Config from '../../config/index.js';
+import InputControl from '../../components/input-control.jsx';
+import Checkbox from '../../components/checkbox.jsx';
+import Modal from '../../components/modal.jsx';
+import Icon from '../../components/icon.jsx';
+import Lang, {onLangChange} from '../../core/lang.js';
+import {classes} from '../../utils/html-helper.js';
+import {isNotEmptyString} from '../../utils/string-helper.js';
+import App from '../../core/index.js';
+import SwapUserDialog from './swap-user-dialog.jsx';
+import Button from '../../components/button.jsx';
+import User, {isPasswordWithMD5Flag} from '../../core/profile/user.js';
+import platform from '../../platform/index.js';
+import events from '../../core/events.js';
 
 // 从平台访问对象获取模块功能
 const {ui: platformUI} = platform.modules;
@@ -50,7 +50,7 @@ const simpleServerUrl = serverUrl => {
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {PureComponent}
  * @example
- * import Form from './form';
+ * import Form from './form.jsx';
  * <Form />
  */
 export default class LoginForm extends PureComponent {

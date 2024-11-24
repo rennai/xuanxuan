@@ -1,9 +1,9 @@
 import extractZip from 'extract-zip';
 import Path from 'path';
-import server, {socket} from '../../core/server';
-import {createExtension} from '../extension';
-import timeSequence from '../../utils/time-sequence';
-import platform from '../../platform';
+import server, {socket} from '../../core/server/index.js';
+import {createExtension} from '../extension.js';
+import timeSequence from '../../utils/time-sequence.js';
+import platform from '../../platform/index.js';
 
 // 从平台功能访问对象获取功能模块对象
 const {fs, net, ui: platformUI} = platform.modules;

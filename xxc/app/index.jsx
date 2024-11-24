@@ -6,13 +6,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './style/app.less';
-import './utils/debug';
-import './utils/react-debug';
-import _HomeIndex from './views/index';
-import {ready} from './core/runtime';
-import {triggerReady} from './core/ui';
-import withReplaceView from './views/with-replace-view';
-import registerDialogCommands from './views/register-dialogs-commands';
+import './utils/debug.js';
+import './utils/react-debug.js';
+import _HomeIndex from './views/index/index.jsx';
+import {ready} from './core/runtime.js';
+import {triggerReady} from './core/ui.js';
+import withReplaceView from './views/with-replace-view.js';
+import registerDialogCommands from './views/register-dialogs-commands.js';
 
 /**
  * HomeIndex 可替换组件形式

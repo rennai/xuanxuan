@@ -1,18 +1,18 @@
 import Md5 from 'md5';
-import Config from '../../config';
-import Chat from '../models/chat';
-import ChatMessage from '../models/chat-message';
-import NotificationMessage from '../models/notification-message';
-import profile from '../profile';
-import Events from '../events';
-import members from '../members';
-import db from '../db';
-import StringHelper from '../../utils/string-helper';
-import {getTimeBeforeDesc} from '../../utils/date-helper';
-import TaskQueue from '../../utils/task-queue';
-import timeSequence from '../../utils/time-sequence';
-import Lang from '../lang';
-import Server from '../server';
+import Config from '../../config/index.js';
+import Chat from '../models/chat.js';
+import ChatMessage from '../models/chat-message.js';
+import NotificationMessage from '../models/notification-message.js';
+import profile from '../profile/index.js';
+import Events from '../events.js';
+import members from '../members.js';
+import db from '../db/index.js';
+import StringHelper from '../../utils/string-helper.js';
+import {getTimeBeforeDesc} from '../../utils/date-helper.js';
+import TaskQueue from '../../utils/task-queue.js';
+import timeSequence from '../../utils/time-sequence.js';
+import Lang from '../lang.js';
+import Server from '../server/index.js';
 
 /**
  * 从运行时配置读取默认每次加载聊天记录条目的数目

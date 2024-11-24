@@ -4,7 +4,8 @@
 
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { dependencies as externals } from '../app/package.json';
+import appPkg from '../app/package.json' assert { type: "json" };
+const externals = appPkg.dependencies || {};
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -21,6 +22,14 @@ export default {
           loader: 'babel-loader',
           options: {
             cacheDirectory: true,
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-react'
+            ],
+            plugins: [
+              '@babel/plugin-proposal-class-properties',
+              '@babel/plugin-transform-runtime'
+            ]
           },
         },
         exclude: /node_modules/,
@@ -28,6 +37,22 @@ export default {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.less$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'less-loader',
+            options: {
+              lessOptions: {
+                javascriptEnabled: true,
+                math: 'always',
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.(png|jpg|gif|svg)$/,

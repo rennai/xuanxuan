@@ -1,5 +1,5 @@
-import Store from '../../utils/store';
-import plainObject from '../../utils/plain';
+import Store from '../../utils/store.js';
+import plainObject from '../../utils/plain.js';
 
 /**
  * 用户对象在本地存储中存储键值前缀

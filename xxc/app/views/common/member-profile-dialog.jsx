@@ -1,8 +1,8 @@
 import React from 'react';
-import Modal from '../../components/modal';
-import App from '../../core';
-import _MemberProfile from './member-profile';
-import withReplaceView from '../with-replace-view';
+import Modal from '../../components/modal.jsx';
+import App from '../../core/index.js';
+import _MemberProfile from './member-profile.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * MemberProfile 可替换组件形式

@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../utils/html-helper';
-import Avatar from './avatar';
+import {classes} from '../utils/html-helper.js';
+import Avatar from './avatar.jsx';
 
 /**
 * AppAvatar 组件 ，显示一个应用图标

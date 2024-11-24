@@ -1,4 +1,4 @@
-import Config, {getSpecialVersionName} from '../config';
+import Config, {getSpecialVersionName} from '../config/index.js';
 
 /**
  * 是否为类浏览器环境

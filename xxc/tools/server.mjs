@@ -14,8 +14,8 @@ import { spawn } from 'child_process';
 import minimist from 'minimist';
 import open from 'open';
 
-import electronConfig from './webpack.config.development.js';
-import browserConfig from './webpack.config.browser.development.js';
+import electronConfig from './webpack.config.development.mjs';
+import browserConfig from './webpack.config.browser.development.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -77,13 +77,13 @@ compiler.hooks.done.tap('ServerJS', stats => {
 
   if (!hasErrors && !hasWarnings && isFirstCompile) {
     console.log('First compilation completed successfully.');
-    
+
     if (isBrowserTarget) {
       open(`http://localhost:${PORT}`);
     } else {
       onCompilationComplete();
     }
-    
+
     isFirstCompile = false;
   }
 });

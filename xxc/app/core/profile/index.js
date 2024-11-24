@@ -1,9 +1,9 @@
 // eslint-disable-next-line import/no-unresolved
-import events from '../events';
-import User from './user';
-import Lang from '../lang';
-import notice from '../notice';
-import {getUserFromStore} from './user-store';
+import events from '../events.js';
+import User from './user.js';
+import Lang from '../lang.js';
+import notice from '../notice.js';
+import {getUserFromStore} from './user-store.js';
 
 /**
  * 事件表

@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import _UserAvatar from './user-avatar';
-import _StatusDot from './status-dot';
-import Member from '../../core/models/member';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import _UserAvatar from './user-avatar.jsx';
+import _StatusDot from './status-dot.jsx';
+import Member from '../../core/models/member.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * StatusDot 可替换组件形式
@@ -26,7 +26,7 @@ const UserAvatar = withReplaceView(_UserAvatar);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import MemberListItem from './member-list-item';
+ * import MemberListItem from './member-list-item.jsx';
  * <MemberListItem />
  */
 export default class MemberListItem extends Component {

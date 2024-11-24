@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
-import Config, {getSpecialVersionName} from '../../config';
-import DateHelper from '../../utils/date-helper';
-import platform from '../../platform';
+import Config, {getSpecialVersionName} from '../../config/index.js';
+import DateHelper from '../../utils/date-helper.js';
+import platform from '../../platform/index.js';
 
 /**
  * package.json 内容
@@ -16,7 +16,7 @@ const PKG = Config.pkg;
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {PureComponent}
  * @example
- * import BuildInfo from './build-info';
+ * import BuildInfo from './build-info.jsx';
  * <BuildInfo />
  */
 export default class BuildInfo extends PureComponent {

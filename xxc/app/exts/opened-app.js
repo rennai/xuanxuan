@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-unresolved
-import {ifEmptyStringThen} from '../utils/string-helper';
-import {getSearchParam} from '../utils/html-helper';
-import platform from '../platform';
+import {ifEmptyStringThen} from '../utils/string-helper.js';
+import {getSearchParam} from '../utils/html-helper.js';
+import platform from '../platform/index.js';
 
 /**
  * 用户打开的扩展应用类

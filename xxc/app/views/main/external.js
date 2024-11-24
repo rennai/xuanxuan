@@ -1,8 +1,8 @@
-import Navbar from './navbar';
-import CacheContainer from './cache-container';
-import GlobalMessage from './global-message';
-import Index from './index';
-import UserMenu from './user-menu';
+import Navbar from './navbar.jsx';
+import CacheContainer from './cache-container.jsx';
+import GlobalMessage from './global-message.jsx';
+import Index from './index.jsx';
+import UserMenu from './user-menu.jsx';
 
 export default {
     Navbar,

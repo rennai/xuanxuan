@@ -1,10 +1,10 @@
 // eslint-disable-next-line import/no-unresolved
 import md5 from 'md5';
-import SocketMessage from './socket-message';
-import events from '../events';
-import Lang from '../lang';
-import Config from '../../config';
-import platform from '../../platform';
+import SocketMessage from './socket-message.js';
+import events from '../events.js';
+import Lang from '../lang.js';
+import Config from '../../config/index.js';
+import platform from '../../platform/index.js';
 
 const Socket = platform.access('Socket');
 

@@ -1,4 +1,4 @@
-import {getJSON} from '../common/network';
+import {getJSON} from '../common/network.js';
 
 /**
  * 获取语言表数据

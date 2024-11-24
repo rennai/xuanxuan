@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import lang from '../../core/lang';
+import lang from '../../core/lang.js';
 
 /**
  * PoweredInfo 组件 ，显示构建信息
@@ -7,7 +7,7 @@ import lang from '../../core/lang';
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {PureComponent}
  * @example
- * import PoweredInfo from './build-info';
+ * import PoweredInfo from './build-info.jsx';
  * <PoweredInfo />
  */
 export default class PoweredInfo extends PureComponent {

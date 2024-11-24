@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classes} from '../../utils/html-helper';
-import Icon from '../../components/icon';
-import Lang from '../../core/lang';
-import User from '../../core/profile/user';
-import _UserListItem from '../common/user-list-item';
-import {getUserListFromStore, removeUserFromStore} from '../../core/profile/user-store';
-import withReplaceView from '../with-replace-view';
+import {classes} from '../../utils/html-helper.js';
+import Icon from '../../components/icon.jsx';
+import Lang from '../../core/lang.js';
+import User from '../../core/profile/user.js';
+import _UserListItem from '../common/user-list-item.jsx';
+import {getUserListFromStore, removeUserFromStore} from '../../core/profile/user-store.js';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * UserListItem 可替换组件形式
@@ -21,7 +21,7 @@ const UserListItem = withReplaceView(_UserListItem);
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import SwapUser from './swap-user';
+ * import SwapUser from './swap-user.jsx';
  * <SwapUser />
  */
 export default class SwapUser extends Component {

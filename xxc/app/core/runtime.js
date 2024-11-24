@@ -1,8 +1,8 @@
 import ExtsRuntime from 'ExtsRuntime'; // eslint-disable-line
-import events from './events';
-import lang, {initLang} from './lang';
-import config from '../config';
-import platform from '../platform';
+import events from './events.js';
+import lang, {initLang} from './lang.js';
+import config from '../config/index.js';
+import platform from '../platform/index.js';
 
 /**
  * 运行时事件表

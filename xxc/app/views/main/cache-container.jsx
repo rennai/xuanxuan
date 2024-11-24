@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import ExtsView from 'ExtsView';
-import ROUTES from '../common/routes';
-import _ChatsIndex from '../chats';
-import withReplaceView from '../with-replace-view';
+import ExtsView from '../exts/index.jsx';
+import ROUTES from '../common/routes.js';
+import _ChatsIndex from '../chats/index.jsx';
+import withReplaceView from '../with-replace-view.js';
 
 /**
  * ChatsIndex 可替换组件形式
@@ -32,7 +32,7 @@ if (ExtsView) {
  * @see https://react.docschina.org/docs/components-and-props.html
  * @extends {Component}
  * @example
- * import CacheContainer from './cache-container';
+ * import CacheContainer from './cache-container.jsx';
  * <CacheContainer />
  */
 export default class CacheContainer extends Component {
