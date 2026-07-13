@@ -68,7 +68,9 @@ export default class Socket {
             connent: true,
             userToken: '',
             cipherIV: '',
-            encryptEnable: true
+            // [upgrade] 浏览器 mock 基线暂关闭 AES 加密（mock server 未实现加解密）；
+            // mock 补 AES 后改回 true。仅改默认值，不改信封协议。
+            encryptEnable: false
         }, options);
 
         this.options = options;
@@ -339,7 +341,7 @@ export default class Socket {
      * @return {void}
      */
     send(rawdata, callback) {
-        let data = null;
+        let data = rawdata;
         if (this.options && this.options.encryptEnable) {
             data = crypto.encrypt(rawdata, this.options.userToken, this.options.cipherIV);
             // if (DEBUG) {

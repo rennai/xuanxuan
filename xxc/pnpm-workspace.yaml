@@ -1,0 +1,4 @@
+allowBuilds:
+  esbuild: true # postinstall 下载平台二进制，必需
+  highlight.js: true # postinstall 仅打印弃用提示，安全
+  nodejieba: false # 原生 C++ 分词模块；浏览器用 pinyin 的 web-pinyin.js，不需要构建
