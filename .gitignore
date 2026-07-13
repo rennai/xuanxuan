@@ -79,3 +79,4 @@ docs/*/*-convert.md
 docs/**/*.md
 docs/**/*.md
 docs/
+.omo/run-continuation/
