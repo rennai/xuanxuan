@@ -1,5 +1,10 @@
 # AGENTS.md
 
+> ⚠️ **重构进行中**：`xxc/` 客户端正从 Webpack 4 + Electron 4 + React 16 迁移到 Vite 8 + pnpm 浏览器开发基线。
+> 完整计划与阶段划分见 [`doc/upgrade/xxc-upgrade-plan.md`](doc/upgrade/xxc-upgrade-plan.md)。
+> 下方「客户端」章节中的 npm / webpack / electron 旧命令多为旧工具链命令、大部分已失效；`xxd/`、`xxb/`、`ranzhi/` 章节不受影响。
+> 新工具链命令在对应阶段跑通后会补充到本文档（不预写未验证命令）。
+
 本文件为在此仓库工作的 AI agent 提供项目级上岗说明。仅记录从代码不易直接看出的项目专属事实。
 
 ## 项目简介
@@ -68,6 +73,7 @@ Go 依赖需手动 `go get`：`github.com/Unknwon/goconfig`、`github.com/gorill
 - **国际化**：界面文案集中在 `xxc/app/lang/{en,zh-cn,zh-tw}.json`，另有 `xxc/app/config/lang.json`。新增用户可见文案需三语同步。
 - **生成产物勿手改**：`xxc/app/main.js`、`bundle.js`、`style.css`、`xxc/app/dist`、`xxc/release` 等均为构建产物并被 gitignore。
 - **配置与密钥**：`xxc/build/build-config.*.json`、`electron-builder.json`、`xxd/certificate`、`xxd/log`、`xxd/tmpfile` 均为本地/敏感产物，已 gitignore，不要提交。
+- **依赖管理**：在 `xxc/` 子项目里增删依赖一律通过 pnpm 命令（在 `xxc/` 目录下执行 `pnpm add` / `pnpm remove` / `pnpm install` 等），不要直接手动编辑 `xxc/package.json` 的 `dependencies` / `devDependencies` 字段，避免与 `pnpm-lock.yaml` 不同步。
 
 ## 改动前应先读的文档
 
