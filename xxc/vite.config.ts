@@ -89,7 +89,6 @@ export default defineConfig(({command}) => ({
       // 浏览器不支持扩展，指向 false 存根（不指向 exts/runtime.js，避免拖入 Node import）
       {find: 'ExtsRuntime', replacement: path.resolve(__dirname, 'app/platform/browser/exts.js')},
       {find: 'ExtsView', replacement: path.resolve(__dirname, 'app/platform/browser/exts.js')},
-      {find: 'ion-sound', replacement: path.resolve(__dirname, 'shims/ion-sound.js')},
       // htmlparser@1.7.7 用 `this.Tautologistics` 依赖顶层 this=global，Vite ESM 下崩溃；
       // 用浏览器原生 DOMParser 的最小 shim 替代（markdown.js 仅用 Parser/DefaultHandler）
       {find: 'htmlparser', replacement: path.resolve(__dirname, 'shims/htmlparser.js')},

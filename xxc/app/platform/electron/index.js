@@ -24,7 +24,7 @@ if (process.type !== 'renderer') {
 
 export const init = ({config, lang}) => {
     if (config) {
-        // 初始化 ion-sound 声音播放模块
+        // 初始化声音播放模块（HTML5 Audio）
         sound.init(config.media['sound.path']);
 
         // 初始化界面交互功能模块
