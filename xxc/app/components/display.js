@@ -1,7 +1,8 @@
 /** @module display */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {createRoot} from 'react-dom/client';
+import {flushSync} from 'react-dom';
 import DisplayContainer from './display-container';
 
 /**
@@ -30,7 +31,12 @@ if (!container) {
  * @private
  */
 let displayContainer = null;
-ReactDOM.render(<DisplayContainer ref={e => {displayContainer = e;}} />, container);
+// React 18：ReactDOM.render 已废弃，改用 createRoot。此处为模块加载时即渲染的弹出层
+// 容器，用 flushSync 同步提交以保证 ref 立即赋值，行为与旧版 ReactDOM.render 一致。
+const displayRoot = createRoot(container);
+flushSync(() => {
+    displayRoot.render(<DisplayContainer ref={e => {displayContainer = e;}} />);
+});
 
 /**
  * 显示弹出层
