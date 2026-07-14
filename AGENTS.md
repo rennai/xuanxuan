@@ -66,7 +66,14 @@ Go 依赖需手动 `go get`：`github.com/Unknwon/goconfig`、`github.com/gorill
 - **xxd 只转发**：不要在 `xxd/` 增加业务数据存储逻辑；新数据接口应由业务后端（`xxb/` 或 `ranzhi/`）实现，`xxd` 仅转发。
 - **扩展系统仅限桌面端**：扩展（plugin / app / theme）只支持 Electron，浏览器端不支持。扩展逻辑集中在 `xxc/app/exts/`，打包格式与 `xext` 配置见 `doc/extension.md`。
 
-## 编码与构建约定
+## 回归验证策略
+
+重构期间不引入独立测试框架（项目历史上零测试）。回归验证统一用：
+
+- **截图视觉对照**：基线截图在 `doc/upgrade/screenshots/`，每个 goal 的验收项要求"与截图一致"。
+- **`agent-browser` 技能**：AI agent 在浏览器开发基线（Vite dev server + mock server）下，用 `agent-browser` 按需导航、截图、填表单、验证渲染，对照基线截图判断回归。无需维护 spec 文件。
+
+升级完成后如需补充自动化测试，另行评估。
 
 - **Lint**：airbnb 规则集，4 空格缩进，`object-curly-spacing: never`（花括号内无空格），JSX 允许 `.js`/`.jsx`。改动 `xxc/app` 前后都跑 `npm run eslint`。
 - **全局变量**：lint 已声明 `DEBUG` 和 `Pace` 为全局；DEBUG 模式下会把 `$platform` / `$Platform` 挂到 global 便于调试。
