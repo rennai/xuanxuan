@@ -1,7 +1,7 @@
 # Goal 2.1：前端依赖批量升级 + ESLint 恢复 + 死配置清理
 
 > **依赖**：Goal 2 完成（需要 React 18 + 浏览器基线 + mock server 作为验证环境）
-> **后续**：Goal 2.2（测试框架）和 Goal 3 依赖本 goal 产出的稳定依赖基线
+> **后续**：Goal 3 依赖本 goal 产出的稳定依赖基线
 > **对应计划**：`doc/upgrade/xxc-upgrade-plan.md` 阶段 3 补充
 
 ## 为什么插在 Goal 3 之前（goal-2.1）
