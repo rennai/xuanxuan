@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactSplitPane from 'react-split-pane';
-import EmojionePicker from 'emojione-picker';
+import ReactSplitPane from '../components/split-pane';
+import EmojiMartPicker from '@emoji-mart/react';
+import data from '@emoji-mart/data';
 import marked from 'marked';
 import md5 from 'md5';
 import extractZip from 'extract-zip';
-import emojione from 'emojione';
+import emojione from '../components/emojione';
 import DraftJs from 'draft-js';
 import compareVersions from 'compare-versions';
 import hotkeys from 'hotkeys-js';
@@ -27,7 +28,9 @@ const nodeModules = {
     React,
     ReactDOM,
     ReactSplitPane,
-    EmojionePicker,
+    // 保留原导出名 EmojionePicker 以兼容旧扩展代码，同时新增 EmojiMartPicker 别名
+    EmojionePicker: props => <EmojiMartPicker data={data} {...props} />,
+    EmojiMartPicker: props => <EmojiMartPicker data={data} {...props} />,
     marked,
     md5,
     fs: platform.access('fs'),
