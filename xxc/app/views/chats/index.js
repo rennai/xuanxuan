@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Route, Redirect} from 'react-router-dom';
-import SplitPane from 'react-split-pane';
+import SplitPane from '../../components/split-pane';
 import {classes} from '../../utils/html-helper';
 import App from '../../core';
 import _Menu from './menu';

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import SplitPane from 'react-split-pane';
+import SplitPane from '../../components/split-pane';
 import {classes} from '../../utils/html-helper';
 import DateHelper from '../../utils/date-helper';
 import Avatar from '../../components/avatar';
