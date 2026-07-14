@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import ReactChatView from 'react-chatview';
 import PropTypes from 'prop-types';
 import {classes} from '../../utils/html-helper';
 import _MessageListItem from './message-list-item'; // eslint-disable-line
@@ -20,14 +19,6 @@ const MessageListItem = withReplaceView(_MessageListItem);
  * @private
  */
 const isBrowser = platform.isType('browser');
-
-/**
- * 是否为火狐浏览器
- * 因为火狐 bug，导致滚动条消失，所以需要判断是否为火狐浏览器 https://github.com/philipwalton/flexbugs/issues/108
- * @type {boolean}
- * @private
- */
-const isFirefox = isBrowser && window.navigator.userAgent.includes('Firefox');
 
 /**
  * MessageList 组件 ，显示聊天消息列表界面
@@ -203,13 +194,6 @@ export default class MessageList extends Component {
      * @return {void}
      */
     handleScroll = e => {
-        if (isFirefox) {
-            const {onScroll} = this.props;
-            if (onScroll) {
-                onScroll({isAtTop: true}, e);
-            }
-            return;
-        }
         const {target} = e;
         if (!target.classList.contains('app-message-list')) {
             return;
@@ -268,26 +252,10 @@ export default class MessageList extends Component {
             messages.forEach(message => {
                 const messageListItem = listItemCreator ? listItemCreator(message, lastMessage) : <MessageListItem id={`message-${message.gid}`} staticUI={staticUI} font={font} showDateDivider={showDateDivider} lastMessage={lastMessage} key={message.gid} message={message} {...listItemProps} sleepUrlCard={sleepUrlCard} />;
                 lastMessage = message;
-                if (isFirefox) {
-                    messagesView.push(messageListItem);
-                } else {
-                    messagesView.unshift(messageListItem);
-                }
+                // column-reverse 布局下，DOM 数组首项显示在底部（最新消息），
+                // 故用 unshift 把最新消息放到数组开头。
+                messagesView.unshift(messageListItem);
             });
-        }
-
-        if (isFirefox) {
-            return (
-                <ReactChatView
-                    flipped
-                    className={classes('app-message-list flex column single', className, {'app-message-list-static': staticUI})}
-                    ref={e => {this.element = e;}}
-                    onInfiniteLoad={this.handleScroll}
-                >
-                    {messagesView}
-                    {header}
-                </ReactChatView>
-            );
         }
 
         return (
