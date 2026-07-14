@@ -155,8 +155,9 @@ export default class ChatHistory extends Component {
     }
 
     /**
-     * React 组件生命周期函数：`componentWillUpdate`
+     * React 组件生命周期函数：`UNSAFE_componentWillUpdate`
      * 当接收到新属性或状态时，UNSAFE_componentWillUpdate()为在渲染前被立即调用。
+     * React 18 下旧名 `componentWillUpdate` 会触发 deprecation warning，故加 `UNSAFE_` 前缀。
      *
      * @param {Object} nextProps 即将更新的属性值",
      * @param {Object} nextState 即将更新的状态值",
@@ -164,9 +165,8 @@ export default class ChatHistory extends Component {
      * @private
      * @memberof ChatHistory
      * @return {void}
-     * @todo 考虑使用 `UNSAFE_componentWillUpdate` 替换 `componentWillUpdate`
      */
-    componentWillUpdate(nextProps, nextState) {
+    UNSAFE_componentWillUpdate(nextProps, nextState) {
         if (nextProps.searchKeys !== this.props.searchKeys) {
             if (nextProps.searchKeys) {
                 this.contentConvertPattern = new RegExp(`(${nextProps.searchKeys.split(' ').join('|')})(?![^<]*>)`, 'gi');

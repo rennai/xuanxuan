@@ -145,17 +145,17 @@ export default class MenuSearchList extends Component {
     }
 
     /**
-     * React 组件生命周期函数：`componentWillReceiveProps`
+     * React 组件生命周期函数：`UNSAFE_componentWillReceiveProps`
      * 在装配了的组件接收到新属性前调用。若你需要更新状态响应属性改变（例如，重置它），你可能需对比this.props和nextProps并在该方法中使用this.setState()处理状态改变。
+     * React 18 下旧名 `componentWillReceiveProps` 会触发 deprecation warning，故加 `UNSAFE_` 前缀。
      *
      * @param {Object} nextProps 即将更新的属性值
      * @see https://doc.react-china.org/docs/react-component.html#unsafe_componentwillreceiveprops
      * @private
      * @memberof MenuSearchList
      * @return {void}
-     * @todo 考虑使用 `UNSAFE_componentWillReceiveProps` 替换 `componentWillReceiveProps`
      */
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         const {search} = this.props;
         if (nextProps.search !== search) {
             this.setState({select: ''});
