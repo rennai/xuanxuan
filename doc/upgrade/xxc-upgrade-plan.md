@@ -4,16 +4,18 @@
 > **分支**：`upgrade`
 > **最后更新**：基于 2026-07-13 代码现状实测
 
-## 执行入口（4 个 /goal，按顺序执行）
+## 执行入口（5 个 /goal，按顺序执行）
 
-本计划已拆分为 4 个独立的 `/goal`，每个是一段可直接粘贴执行的命令。本文档是它们的共享参考（调查数据、必改清单、风险表）。
+本计划已拆分为 5 个独立的 `/goal`，每个是一段可直接粘贴执行的命令。本文档是它们的共享参考（调查数据、必改清单、风险表）。
 
 - **Goal 1**：`doc/upgrade/goal-1-bootstrap.md` — Vite 基线 + 浏览器视觉基线 + Mock Server（任务 0 + 阶段 1 + 阶段 2）
 - **Goal 2**：`doc/upgrade/goal-2-react18.md` — React 16 → 18 + 老依赖替换（阶段 3）
+- **Goal 2.1**：`doc/upgrade/goal-2.1-deps-upgrade.md` — 前端依赖批量升级 + ESLint 恢复 + 死配置清理（react-router-dom、marked、dexie、pinyin、hotkeys-js、uuid 等）（阶段 3 补充）
+- **Goal 2.2**：`doc/upgrade/goal-2.2-test-framework.md` — 测试框架引入（vitest + Playwright E2E）（阶段 3 补充）
 - **Goal 3**：`doc/upgrade/goal-3-electron-security.md` — Electron 安全模型迁移，preload + contextIsolation（阶段 4）
 - **Goal 4**：`doc/upgrade/goal-4-upgrade-platforms.md` — Electron + Node 升级 + 三平台构建（阶段 5）
 
-**依赖链**：Goal 1 → Goal 2 → Goal 3 → Goal 4，必须按顺序执行。每个 goal 的 Done-when 都依赖前一个 goal 的产物（尤其 Goal 1 的截图基线和 mock server）。
+**依赖链**：Goal 1 → Goal 2 → Goal 2.1 → Goal 2.2 → Goal 3 → Goal 4，必须按顺序执行。每个 goal 的 Done-when 都依赖前一个 goal 的产物（尤其 Goal 1 的截图基线和 mock server）。Goal 2.1 在浏览器基线上验证依赖升级并恢复 ESLint，为后续所有 goal 提供 lint 把关。Goal 2.2 引入测试框架，为 Goal 3+ 的回归提供自动化验证。
 
 ## 目标
 
