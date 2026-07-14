@@ -1,6 +1,6 @@
 # Goal 3：Electron 安全模型迁移（preload + contextIsolation）
 
-> **依赖**：Goal 2 完成（需要 React 18 稳定界面作为迁移后的功能验证基准）
+> **依赖**：Goal 2.2 完成（需要 React 18 + 稳定依赖基线 + ESLint 把关作为迁移后的功能验证基准）
 > **对应计划**：`doc/upgrade/xxc-upgrade-plan.md` 的阶段 4
 
 以下为可直接粘贴到 `/goal` 命令的完整内容：
