@@ -54,15 +54,29 @@ let idSeed = Date.now() + Math.floor(Math.random() * 100000);
 
 /**
  * 调用主进程方法（复用 app-remote.js ipcMain.on(EVENT.remote) 反射 RPC）
- * @param {string} method AppRemote 方法名
+ * @param {string} method AppRemote 方法名（须在主进程白名单内）
  * @param  {...any} args 调用参数
- * @returns {Promise} 主进程返回结果
+ * @returns {Promise} 主进程返回结果；出错或超时则 reject
  */
-const callRemote = (method, ...args) => new Promise((resolve) => {
+const callRemote = (method, ...args) => new Promise((resolve, reject) => {
     const callBackEventName = `${EVENT.remote}.${idSeed++}`;
-    ipcRenderer.once(callBackEventName, (e, remoteResult) => {
-        resolve(remoteResult);
-    });
+    const handler = (e, remoteResult) => {
+        if (timer) clearTimeout(timer);
+        // [upgrade] 主进程回送 {__error, message} 表示调用失败
+        if (remoteResult && remoteResult.__error) {
+            reject(new Error(remoteResult.message));
+        } else {
+            resolve(remoteResult);
+        }
+    };
+    // [upgrade] dialog_* 等待用户交互（翻目录、选择文件），无固定上限，不设超时；
+    // 其余调用 30s 超时防止消息丢失导致永久挂起。
+    const isInteractive = method.startsWith('dialog_');
+    const timer = isInteractive ? null : setTimeout(() => {
+        ipcRenderer.removeListener(callBackEventName, handler);
+        reject(new Error(`Remote call timeout: ${method}`));
+    }, 30000);
+    ipcRenderer.once(callBackEventName, handler);
     ipcRenderer.send(EVENT.remote, method, callBackEventName, ...args);
 });
 
@@ -171,11 +185,21 @@ const onRequestOpenUrl = listener => ipcOn(EVENT.open_url, listener);
  * @param  {...any} args 参数
  * @returns {Promise} 结果
  */
-const callWindow = (method, ...args) => new Promise((resolve) => {
+const callWindow = (method, ...args) => new Promise((resolve, reject) => {
     const callBackEventName = `${WIN_CHANNEL}.${method}.${idSeed++}`;
-    ipcRenderer.once(callBackEventName, (e, result) => {
-        resolve(result);
-    });
+    const handler = (e, result) => {
+        clearTimeout(timer);
+        if (result && result.__error) {
+            reject(new Error(result.message));
+        } else {
+            resolve(result);
+        }
+    };
+    const timer = setTimeout(() => {
+        ipcRenderer.removeListener(callBackEventName, handler);
+        reject(new Error(`Window call timeout: ${method}`));
+    }, 30000);
+    ipcRenderer.once(callBackEventName, handler);
     ipcRenderer.send(WIN_CHANNEL, method, callBackEventName, ...args);
 });
 
@@ -260,7 +284,8 @@ const buildInExtensions = readJsonSafe(nodePath.join(buildInBasePath, 'extension
 // ─── 文件操作（经 IPC 到主进程，白名单方法） ───────────────────
 
 const fs = {
-    outputFile: (file, data) => callRemote('fs_outputFile', file, data instanceof Uint8Array ? Array.from(data) : data),
+    // [upgrade] Uint8Array 经 contextBridge 结构化克隆直传，无需 Array.from（避免大文件内存放大 8-10x）
+    outputFile: (file, data) => callRemote('fs_outputFile', file, data),
     copy: (src, dest) => callRemote('fs_copy', src, dest),
     pathExists: (p) => callRemote('fs_pathExists', p),
     ensureDir: (p) => callRemote('fs_ensureDir', p),
@@ -289,23 +314,25 @@ contextBridge.exposeInMainWorld('electron', {
     onRequestOpenUrl,
 
     // 当前窗口控制
+    // [upgrade] fire-and-forget 方法内部吞掉 reject，避免窗口销毁竞态下 unhandled rejection；
+    // 值返回方法（isFocused/isMinimized/isVisible）保留 Promise 供调用方 await。
     window: {
-        show: () => callWindow('show'),
-        hide: () => callWindow('hide'),
-        minimize: () => callWindow('minimize'),
-        restore: () => callWindow('restore'),
-        focus: () => callWindow('focus'),
-        close: () => callWindow('close'),
-        reload: () => callWindow('reload'),
-        setTitle: (title) => callWindow('setTitle', title),
-        setSkipTaskbar: (skip) => callWindow('setSkipTaskbar', skip),
-        flashFrame: (flag) => callWindow('flashFrame', flag),
+        show: () => callWindow('show').catch(() => {}),
+        hide: () => callWindow('hide').catch(() => {}),
+        minimize: () => callWindow('minimize').catch(() => {}),
+        restore: () => callWindow('restore').catch(() => {}),
+        focus: () => callWindow('focus').catch(() => {}),
+        close: () => callWindow('close').catch(() => {}),
+        reload: () => callWindow('reload').catch(() => {}),
+        setTitle: (title) => callWindow('setTitle', title).catch(() => {}),
+        setSkipTaskbar: (skip) => callWindow('setSkipTaskbar', skip).catch(() => {}),
+        flashFrame: (flag) => callWindow('flashFrame', flag).catch(() => {}),
         isFocused: () => callWindow('isFocused'),
         isMinimized: () => callWindow('isMinimized'),
         isVisible: () => callWindow('isVisible'),
-        openDevTools: (mode) => callWindow('openDevTools', mode),
-        copy: () => callWindow('copy'),
-        selectAll: () => callWindow('selectAll'),
+        openDevTools: (mode) => callWindow('openDevTools', mode).catch(() => {}),
+        copy: () => callWindow('copy').catch(() => {}),
+        selectAll: () => callWindow('selectAll').catch(() => {}),
         on: (event, listener) => ipcOn(`${WIN_CHANNEL}.${event}`, listener),
     },
 
