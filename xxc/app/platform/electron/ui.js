@@ -2,7 +2,7 @@ import {
     shell,
     remote as Remote,
 } from 'electron';
-import uuid from 'uuid/v4';
+import {v4 as uuid} from 'uuid';
 import Path from 'path';
 import EVENT from './remote-events';
 import {

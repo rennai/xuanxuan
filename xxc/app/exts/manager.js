@@ -1,6 +1,6 @@
 import Path from 'path';
-import compareVersions from 'compare-versions';
-import uuid from 'uuid/v4';
+import {compareVersions} from 'compare-versions';
+import {v4 as uuid} from 'uuid';
 import extractZip from 'extract-zip';
 import db, {
     removeInstalledExtension, saveInstalledExtension, getInstalledExtension, saveExtensionData,

@@ -8,10 +8,10 @@ import md5 from 'md5';
 import extractZip from 'extract-zip';
 import emojione from '../components/emojione';
 import DraftJs from 'draft-js';
-import compareVersions from 'compare-versions';
+import {compareVersions} from 'compare-versions';
 import hotkeys from 'hotkeys-js';
-import pinyin from 'pinyin';
-import uuid from 'uuid';
+import {pinyin} from 'pinyin';
+import {v4 as uuidV4, v1 as uuidV1} from 'uuid';
 import HTMLParser from 'htmlparser';
 import platform from '../platform';
 import components from '../components';
@@ -19,6 +19,11 @@ import lang from '../core/lang';
 import utils from '../utils';
 import app from '../core';
 import views from '../views/external';
+
+// 还原 uuid v3 默认导出形态（可调用 + .v1/.v4），保持扩展经 nodeModules.uuid 调用的向后兼容
+const uuid = (...args) => uuidV4(...args);
+uuid.v1 = uuidV1;
+uuid.v4 = uuidV4;
 
 /**
  * 所有第三方 node 模块
