@@ -301,10 +301,12 @@ addContextMenuCreator('chat.sendbox.toolbar', context => {
         icon: 'mdi-emoticon',
         label: Lang.string('chat.sendbox.toolbar.emoticon'),
         click: e => {
+            const target = e.currentTarget || e.target;
             EmojiPopover.show({
-                x: e.pageX, y: e.pageY, target: e.target, placement: 'top'
+                target,
+                placement: 'top'
             }, emoji => {
-                sendContentToChat(`${Emojione.convert(emoji.unicode || Emojione.emojioneList[emoji.shortname].uc_base)} `);
+                sendContentToChat(`${emoji.unicode} `, 'text', null, false);
             });
         }
     }];
