@@ -18,7 +18,7 @@
 
 ## 四大子系统目录
 
-- `xxc/`：客户端。Webpack 4 + Electron 4 + React 16 + Babel 6。这是日常前端开发的主要落点。
+- `xxc/`：客户端。浏览器开发基线为 Vite 8 + React 18 + pnpm（Electron 桌面端尚未恢复）。这是日常前端开发的主要落点。
 - `xxd/`：Go 中转服务器，提供 WebSocket 和 HTTPS 接口。入口 `xxd/main.go`。
 - `xxb/`：独立业务后端（基于 ZDoo / PHP 框架），不依赖然之协同。通过根目录 `Makefile` 构建（需 `zdoo/` 源）。
 - `ranzhi/`：然之协同服务器端扩展（PHP），作为另一种业务后端。
@@ -30,17 +30,18 @@
 ### 客户端（在 `xxc/` 下执行）
 
 ```bash
-npm install              # 安装依赖；首次较慢，见下方镜像提示
+pnpm install             # 安装依赖；见下方镜像提示
 npm run hot-server       # 启动 React 热更新 dev server（保持运行）
 npm run start-hot        # 另开窗口：启动 Electron 开发客户端
 npm run start-hot-fast   # 同上，但跳过自动安装 React DevTools
-npm run eslint           # 对 ./app 做 lint（airbnb 规则集，必跑）
+pnpm lint               # 对 app/ 做 lint（ESLint 9 flat config，必跑）
+pnpm lint:fix           # 同上，自动修复可修复项
 npm run build            # 生产构建（main + renderer）
 npm run package          # 打包当前平台安装包
 npm run package-mac      # 其它：package-win / package-win-32 / package-linux / package-browser / package-debug / package-all
 ```
 
-`devEngines` 要求 Node >= 8.x、npm >= 5.x（开发者基准为 Node 8.11.3）。依赖较老，国内网络建议配置淘宝 npm 镜像与 `ELECTRON_MIRROR`，详见 `doc/client-developer.md`。
+Vite 8 要求 Node `^20.19.0 || >=22.12.0`（开发者基准 Node 20 LTS）。国内网络建议配置淘宝 npm 镜像与 `ELECTRON_MIRROR`，详见 `doc/client-developer.md`。
 
 ### xxd 服务器（Go，GOPATH 模式）
 
@@ -60,8 +61,8 @@ Go 依赖需手动 `go get`：`github.com/Unknwon/goconfig`、`github.com/gorill
 
 ## 架构边界与改动规则
 
-- **平台抽象层不可绕过**：`xxc/app/platform/{electron,browser,common}` 通过 webpack 别名 `Platform` 注入（桌面默认指向 `platform/electron/index.js`，浏览器构建切换为 `platform/browser`）。访问系统能力（剪贴板、通知、文件、socket、加密等）必须经由 `Platform` 模块或导出的 `platformCall` / `platformHas` / `platformAccess`，不要直接 import Electron / 浏览器 API，否则浏览器端会编译/运行失败。
-- **模块别名**：eslint `import/resolver` 与 webpack 共同识别 `Platform`、`Config`、`ExtsRuntime`、`ExtsView`。新增跨目录引用优先用这些别名。
+- **平台抽象层不可绕过**：`xxc/app/platform/{electron,browser,common}` 通过 Vite `resolve.alias` 的 `Platform` 注入（桌面默认指向 `platform/electron/index.js`，浏览器开发基线切换为 `platform/browser`）。访问系统能力（剪贴板、通知、文件、socket、加密等）必须经由 `Platform` 模块或导出的 `platformCall` / `platformHas` / `platformAccess`，不要直接 import Electron / 浏览器 API，否则浏览器端会编译/运行失败。
+- **模块别名**：`eslint-import-resolver-vite` 与 `vite.config.ts` 的 `resolve.alias` 共同识别 `Platform`、`Config`、`ExtsRuntime`、`ExtsView`。新增跨目录引用优先用这些别名。
 - **入口文件**：Electron 主进程入口 `xxc/app/main.development.js`（编译产物 `main.js` 已被 gitignore，勿手改）；渲染进程入口 `xxc/app/index.js` 与 `xxc/app/index.html`。
 - **xxd 只转发**：不要在 `xxd/` 增加业务数据存储逻辑；新数据接口应由业务后端（`xxb/` 或 `ranzhi/`）实现，`xxd` 仅转发。
 - **扩展系统仅限桌面端**：扩展（plugin / app / theme）只支持 Electron，浏览器端不支持。扩展逻辑集中在 `xxc/app/exts/`，打包格式与 `xext` 配置见 `doc/extension.md`。
@@ -75,8 +76,8 @@ Go 依赖需手动 `go get`：`github.com/Unknwon/goconfig`、`github.com/gorill
 
 升级完成后如需补充自动化测试，另行评估。
 
-- **Lint**：airbnb 规则集，4 空格缩进，`object-curly-spacing: never`（花括号内无空格），JSX 允许 `.js`/`.jsx`。改动 `xxc/app` 前后都跑 `npm run eslint`。
-- **全局变量**：lint 已声明 `DEBUG` 和 `Pace` 为全局；DEBUG 模式下会把 `$platform` / `$Platform` 挂到 global 便于调试。
+- **Lint**：ESLint 9 flat config（`xxc/eslint.config.mjs`，基底 @eslint/js + react/promise/jsx-a11y/import recommended，再叠加从旧 .eslintrc 迁移的项目自定义约定），4 空格缩进，`object-curly-spacing: never`（花括号内无空格），JSX 允许 `.js`/`.jsx`。改动 `xxc/app` 前后都跑 `pnpm lint`（`pnpm lint:fix` 可自动修复部分项）。
+- **全局变量**：flat config 用 `globals` 包声明 `browser` + `node` 环境，并保留 `DEBUG` / `Pace` 为自定义全局；DEBUG 模式下会把 `$platform` / `$Platform` 挂到 global 便于调试。
 - **国际化**：界面文案集中在 `xxc/app/lang/{en,zh-cn,zh-tw}.json`，另有 `xxc/app/config/lang.json`。新增用户可见文案需三语同步。
 - **生成产物勿手改**：`xxc/app/main.js`、`bundle.js`、`style.css`、`xxc/app/dist`、`xxc/release` 等均为构建产物并被 gitignore。
 - **配置与密钥**：`xxc/build/build-config.*.json`、`electron-builder.json`、`xxd/certificate`、`xxd/log`、`xxd/tmpfile` 均为本地/敏感产物，已 gitignore，不要提交。
