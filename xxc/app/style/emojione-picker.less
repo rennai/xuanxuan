@@ -193,3 +193,12 @@
     }
   }
 }
+
+// emoji-mart v5（`@emoji-mart/react`）的 em-emoji-picker 自定义元素在 shadow DOM 内
+// 通过 `:host { height: 435px }` 固定高度，且无 height 属性可覆盖。若 Popover 容器高度
+// 小于此值，选择器会以 overflow:visible 溢出容器并被遮挡。此处用 light DOM 规则约束
+// host 高度（优先级高于 shadow :host），使其与下方 Popover 的 height 一致，内部 .scroll
+// 区域自适应滚动。
+#app-emoji-popover em-emoji-picker {
+  height: 350px;
+}

@@ -57,21 +57,23 @@ export const showEmojiPopover = (position, onSelectEmoji, callback) => {
         position,
         <EmojiMartPicker
             data={data}
+            theme="light"
             // emoji-mart 默认即含搜索框；这里按原配置开关搜索
             searchPosition={enableSearchInEmojionePicker ? 'sticky' : 'none'}
             previewPosition="none"
             skinTonePosition="none"
             perLine={7}
             i18n={i18n}
-            // 尺寸由下方 Popover 的 width/height 控制（emoji-mart 会自适应容器）
+            // 尺寸由下方 Popover 的 width/height 控制
+            // （emoji-mart em-emoji-picker 默认 :host 高 435px，需配合 emojione-picker.less
+            // 中 #app-emoji-popover em-emoji-picker 规则约束高度，否则会溢出容器被遮挡）
             onEmojiSelect={emoji => {
                 if (onSelectEmoji) {
-                    const shortname = (emoji.shortcodes && emoji.shortcodes[0]) || `:${emoji.id}:`;
-                    // 不传 unicode（保持 undefined），与原 emojione-picker 行为一致。
-                    // 消费方 im-ui.js 调用 `Emojione.convert(emoji.unicode || emojioneList[shortname].uc_base)`，
-                    // convert 期望 hex code point 字符串（如 "1f600"）；若传 native char 会返回 \u0000。
-                    // unicode 为 undefined 时走 uc_base fallback，由 convert 正确转成原生字符。
+                    // emoji-mart v5 返回的 emoji 对象包含 native, id, name, shortcodes 等属性
+                    // shortcodes 是数组，如 ["grinning"]，需要加上冒号
+                    const shortname = (emoji.shortcodes && emoji.shortcodes[0]) ? `:${emoji.shortcodes[0]}:` : `:${emoji.id}:`;
                     onSelectEmoji({
+                        unicode: emoji.native,
                         shortname,
                         name: emoji.name,
                     });
@@ -80,7 +82,7 @@ export const showEmojiPopover = (position, onSelectEmoji, callback) => {
             }}
         />,
         {
-            id: popoverId, width: 280, height: 261, cache: true
+            id: popoverId, width: 280, height: 350
         },
         callback
     );
