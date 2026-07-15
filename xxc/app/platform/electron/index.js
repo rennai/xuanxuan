@@ -1,4 +1,4 @@
-import fs from 'fs-extra';
+import native from './native';
 import sound from '../common/sound';
 import env from './env';
 import screenshot from './screenshot';
@@ -17,10 +17,6 @@ import clipboard from './clipboard';
 import webview from './webview';
 import buildIn, {buildInPath} from './build-in';
 import language, {initLanguage} from './language';
-
-if (process.type !== 'renderer') {
-    throw new Error('platform/electron/index.js must run in renderer process.');
-}
 
 export const init = ({config, lang}) => {
     if (config) {
@@ -55,7 +51,8 @@ const platform = {
     ui,
     shortcut,
     dialog,
-    fs,
+    // [upgrade] contextIsolation 下渲染进程通过 native.fs（IPC 白名单）访问文件
+    fs: native.fs,
     sound,
     net,
     crypto,
