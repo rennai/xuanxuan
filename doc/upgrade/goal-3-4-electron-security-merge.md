@@ -41,6 +41,16 @@
 4. **三平台打包未做**：`build/package.js`（823 行）归档 + electron-builder 声明式配置 + Windows/Linux/
    macOS arm64 构建留作后续 follow-up（原 Goal 4 范围）。
 
+5. **WebSocket 自定义头与自签证书**：`socket.js` 由 `ws` 库改用原生 `WebSocket` 后，无法在握手阶段
+   发送自定义 HTTP 头（浏览器 WebSocket API 限制）。旧实现发送 `headers:{version}` 并按连接关闭 TLS
+   校验（`rejectUnauthorized:false`），新版丢失这两项。影响：
+   - 若真实 xxd 服务端在 WS 升级时校验 `version` 头，新版客户端会被拒绝升级（mock server 不校验，
+     故本地无法发现）。
+   - 自签 `wss` 连接依赖 `main.development.js` 的全局 `ignore-certificate-errors` 开关（生产 main.js
+     同样打包此开关），存在全局 MITM 风险；原生 WebSocket 无法按连接关闭 TLS 校验。
+   待真实后端联调时评估：版本号改用 subprotocol 或首条登录消息携带；自签证书引导用户安装而非全局
+   关校验，或为 wss 域配置合法证书。
+
 ## 文件变更清单
 
 - 新建：`app/platform/electron/preload.js`、`app/platform/electron/native.js`
