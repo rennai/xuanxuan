@@ -1,4 +1,3 @@
-import WS from 'ws';
 import crypto from './crypto';
 import Status from '../../utils/status';
 
@@ -17,6 +16,9 @@ const STATUS = new Status({
 
 /**
  * Socket 连接管理类（Electron）
+ *
+ * [upgrade] contextIsolation 安全模型下改用浏览器原生 WebSocket（不再依赖 ws 库）。
+ * 实现参考 platform/browser/socket.js（已验证可用）。
  *
  * @export
  * @class Socket
@@ -63,7 +65,9 @@ export default class Socket {
             connent: true,
             userToken: '',
             cipherIV: '',
-            encryptEnable: true,
+            // [upgrade] mock server 暂未实现 AES 加解密，与 browser 基线一致关闭加密。
+            // mock 补 AES 后改回 true。仅改默认值，不改信封协议。
+            encryptEnable: false,
         }, options);
 
         this.options = options;
@@ -107,7 +111,7 @@ export default class Socket {
     /**
      * 设置状态
      * @param {string|number} newStatus 状态值或名称
-     * @memberof Member
+     * @memberof Socket
      */
     set status(newStatus) {
         this._status.change(newStatus);
@@ -133,7 +137,6 @@ export default class Socket {
 
     /**
      * 判断当前状态是否是给定的状态
-     * @memberof Member
      * @param {number|string} status 要判断的状态值或状态名称
      * @return {boolean} 如果为 `true` 则为给定的状态，否则不是
      */
@@ -165,24 +168,30 @@ export default class Socket {
         this.close();
 
         this.status = STATUS.CONNECTING;
-        this.client = new WS(this.url, {
-            rejectUnauthorized: false,
-            headers: {version: this.options.version}
-        });
+
+        const client = new WebSocket(this.url);
+        client.binaryType = 'arraybuffer';
+        client.onopen = this.handleConnect.bind(this);
+        client.onmessage = e => {
+            this.handleData(e.data, {binary: true});
+        };
+        client.onclose = e => {
+            if (!this.isConnected) {
+                this.handleConnectFail(e);
+            }
+            this.handleClose(e.code, e.reason);
+        };
+        client.onerror = e => {
+            this.handleError(e);
+        };
+
+        this.client = client;
 
         if (DEBUG) {
             console.collapse('SOCKET Connect', 'indigoBg', this.url, 'indigoPale', this.statusName, this.isConnected ? 'greenPale' : 'orangePale');
             console.log('socket', this);
             console.groupEnd();
         }
-
-        this.client.on('open', this.handleConnect.bind(this));
-        this.client.on('message', this.handleData.bind(this));
-        this.client.on('close', this.handleClose.bind(this));
-        this.client.on('error', this.handleError.bind(this));
-        this.client.on('unexpected-response', this.handleError.bind(this));
-        this.client.on('pong', this.handlePong.bind(this));
-        this.client.on('ping', this.handlePing.bind(this));
     }
 
     /**
@@ -196,36 +205,18 @@ export default class Socket {
     }
 
     /**
-     * 处理 ping 事件
-     * @param {string|Buffer} data ping 数据
+     * 处理连接失败事件
+     * @param {Event} e 连接失败事件对象
      * @memberof Socket
      * @return {void}
      * @protected
      */
-    handlePing(data) {
-        if (this.onPing) {
-            this.onPing(data);
+    handleConnectFail(e) {
+        if (this.onConnectFail) {
+            this.onConnectFail(e);
         }
-
-        if (this.options && this.options.onPing) {
-            this.options.onPing(this, data);
-        }
-    }
-
-    /**
-     * 处理 pong 事件
-     * @param {string|Buffer} data pong 数据
-     * @memberof Socket
-     * @return {void}
-     * @protected
-     */
-    handlePong(data) {
-        if (this.onPong) {
-            this.onPong(data);
-        }
-
-        if (this.options && this.options.onPong) {
-            this.options.onPong(this, data);
+        if (this.options && this.options.onConnectFail) {
+            this.options.onConnectFail(e);
         }
     }
 
@@ -244,7 +235,7 @@ export default class Socket {
             console.groupEnd();
         }
 
-        if (this.options.onConnect) {
+        if (this.options && this.options.onConnect) {
             this.options.onConnect(this);
         }
 
@@ -263,14 +254,9 @@ export default class Socket {
      * @return {void}
      */
     handleClose(code, reason) {
-        if (!this.isConnected) {
-            this.handleConnectFail({code, message: reason});
-        }
-
         const unexpected = !this._status.is(STATUS.CLOSING);
         this.updateStatusFromClient();
         this.client = null;
-        this.status = STATUS.CLOSED;
 
         if (DEBUG) {
             console.collapse('SOCKET Closed', 'indigoBg', this.url, 'indigoPale');
@@ -286,22 +272,6 @@ export default class Socket {
 
         if (this.options && this.options.onClose) {
             this.options.onClose(this, code, reason, unexpected);
-        }
-    }
-
-    /**
-     * 处理连接失败事件
-     * @param {Event} e 连接失败事件对象
-     * @memberof Socket
-     * @return {void}
-     * @protected
-     */
-    handleConnectFail(e) {
-        if (this.onConnectFail) {
-            this.onConnectFail(e);
-        }
-        if (this.options && this.options.onConnectFail) {
-            this.options.onConnectFail(e);
         }
     }
 
@@ -323,7 +293,7 @@ export default class Socket {
             console.groupEnd();
         }
 
-        if (this.options.onError) {
+        if (this.options && this.options.onError) {
             this.options.onError(this, error);
         }
 
@@ -345,14 +315,14 @@ export default class Socket {
         this.updateStatusFromClient();
         let data = null;
         if (flags && flags.binary) {
-            if (this.options.encryptEnable) {
+            if (this.options && this.options.encryptEnable) {
                 data = crypto.decrypt(rawdata, this.options.userToken, this.options.cipherIV);
             } else {
                 data = rawdata.toString();
             }
         }
 
-        if (this.options.onData) {
+        if (this.options && this.options.onData) {
             this.options.onData(this, data, flags);
         }
 
@@ -370,20 +340,15 @@ export default class Socket {
      * @return {void}
      */
     send(rawdata, callback) {
-        let data = null;
-        if (this.options.encryptEnable) {
+        let data = rawdata;
+        if (this.options && this.options.encryptEnable) {
             data = crypto.encrypt(rawdata, this.options.userToken, this.options.cipherIV);
-            // if (DEBUG) {
-            //     console.collapse('ENCRYPT Data', 'blueBg', `length: ${data.length}`, 'bluePale');
-            //     console.log('data', data);
-            //     console.log('rawdata', rawdata);
-            //     console.groupEnd();
-            // }
         }
 
-        this.client.send(data, {
-            binary: this.options.encryptEnable
-        }, callback);
+        this.client.send(data);
+        if (callback) {
+            callback();
+        }
     }
 
     /**
@@ -403,7 +368,12 @@ export default class Socket {
      * @return {void}
      */
     removeAllListeners() {
-        this.client.removeAllListeners();
+        if (this.client) {
+            this.client.onclose = null;
+            this.client.onerror = null;
+            this.client.onmessage = null;
+            this.client.onopen = null;
+        }
     }
 
     /**
@@ -418,11 +388,7 @@ export default class Socket {
                 this.markClose();
             }
             this.removeAllListeners();
-            if (reason === true) {
-                this.client.terminate();
-            } else {
-                this.client.close(code || 1000);
-            }
+            this.client.close(code || 1000);
             this.handleClose(code, reason);
         }
     }
