@@ -1,7 +1,6 @@
 import electron, {
     BrowserWindow, app as ElectronApp, Tray, Menu, nativeImage, globalShortcut, ipcMain, dialog, shell
 } from 'electron';
-import {exec} from 'child_process';
 import Path from 'path';
 import fse from 'fs-extra';
 import EVENT from './remote-events';
@@ -34,6 +33,47 @@ const IS_MAC_OSX = process.platform === 'darwin';
  * @private
  */
 const SHOW_LOG = DEBUG;
+
+/**
+ * callRemote 反射 RPC 白名单。
+ * contextIsolation 安全模型下，渲染进程（含被 XSS 攻破的场景）只能调用此清单内的方法。
+ * execOsascript / createWindow / quit / sendToWindow 等危险方法不在此列：
+ *   - execOsascript 可执行任意 shell（RCE），登录项改用 app.setLoginItemSettings
+ *   - createWindow 的 webPreferences 会被渲染进程传入值浅合并覆盖（沙箱逃逸）
+ *   - sendToWindow 可向任意窗口伪造 IPC 消息
+ * 此清单须与 preload.js 暴露的方法保持同步。
+ */
+const REMOTE_METHOD_WHITELIST = new Set([
+    // 文件操作
+    'fs_outputFile', 'fs_copy', 'fs_pathExists', 'fs_ensureDir',
+    'fs_readJson', 'fs_writeJson', 'fs_remove', 'fs_stat',
+    // 对话框
+    'dialog_showMessageBox', 'dialog_showSaveDialog', 'dialog_showOpenDialog',
+    // 全局快捷键
+    'shortcut_isRegistered',
+    // App / Screen
+    'app_getPath', 'app_getLocale', 'app_getName',
+    'app_getLoginItemSettings', 'app_setLoginItemSettings',
+    'screen_getAllDisplays', 'screen_getPrimaryDisplay',
+    // 窗口 / 托盘 / Dock
+    'createAppWindow', 'closeWindow', 'showAndFocusWindow',
+    'trayTooltip', 'flashTrayIcon', 'dockBadgeLabel', 'dockBounce'
+]);
+
+/**
+ * 将错误回送给渲染进程（避免 callRemote 的 Promise 永久挂起）。
+ * @param {Event} e IPC 事件
+ * @param {string} callBackEventName 回调事件名
+ * @param {Error|*} error 错误对象
+ */
+const sendRemoteError = (e, callBackEventName, error) => {
+    const message = String((error && error.message) || error);
+    try {
+        e.sender.send(callBackEventName, {__error: true, message});
+    } catch (_) {
+        // 窗口已销毁，忽略
+    }
+};
 
 if (DEBUG && process.type === 'renderer') {
     console.error('AppRemote must run in main process.');
@@ -68,12 +108,23 @@ class AppRemote {
         });
 
         // 绑定与渲染进程通信事件
+        // [upgrade] contextIsolation 安全：反射 RPC 受白名单约束，仅允许 REMOTE_METHOD_WHITELIST 内的方法
         ipcMain.on(EVENT.remote, (e, method, callBackEventName, ...args) => {
-            let result = this[method];
-            if (typeof result === 'function') {
-                result = result.call(this, ...args);
+            if (!REMOTE_METHOD_WHITELIST.has(method)) {
+                if (SHOW_LOG) console.warn(`\n>> Blocked remote call to non-whitelisted method: ${method}`);
+                sendRemoteError(e, callBackEventName, new Error(`Method '${method}' is not allowed`));
+                return;
             }
-            if (method === 'quit') return;
+            let result;
+            try {
+                const target = this[method];
+                result = typeof target === 'function' ? target.call(this, ...args) : target;
+            } catch (err) {
+                // 同步抛出也回送错误，避免渲染进程 callRemote 永久挂起
+                console.error('\n>> ERROR: Remote call threw synchronously.', method, err);
+                sendRemoteError(e, callBackEventName, err);
+                return;
+            }
             if (result instanceof Promise) {
                 result.then(x => {
                     try {
@@ -83,7 +134,9 @@ class AppRemote {
                     }
                     return x;
                 }).catch(error => {
+                    // [upgrade] 回送错误到渲染进程，避免 callRemote 的 Promise 永久挂起
                     console.warn('Remote error', error);
+                    sendRemoteError(e, callBackEventName, error);
                 });
             } else {
                 try {
@@ -150,7 +203,11 @@ class AppRemote {
         // 当前窗口控制（channel = 'window'，用 e.sender 定位 BrowserWindow）
         ipcMain.on('window', (e, method, callBackEventName, ...args) => {
             const win = BrowserWindow.fromWebContents(e.sender);
-            if (!win) return;
+            // [upgrade] 无窗口时回送错误，避免渲染进程 callWindow 永久挂起
+            if (!win) {
+                if (callBackEventName) sendRemoteError(e, callBackEventName, new Error('BrowserWindow not found'));
+                return;
+            }
             const wc = win.webContents;
             let result;
             switch (method) {
@@ -164,7 +221,10 @@ class AppRemote {
             case 'setTitle': win.setTitle(args[0]); break;
             case 'setSkipTaskbar': win.setSkipTaskbar(args[0]); break;
             case 'flashFrame': win.flashFrame(args[0]); break;
-            case 'openDevTools': wc.openDevTools(args[0] ? {mode: args[0]} : undefined); break;
+            case 'openDevTools':
+                // [upgrade] 仅开发模式允许开 DevTools，防止被攻破的渲染进程探查 preload 隔离世界
+                if (DEBUG) wc.openDevTools(args[0] ? {mode: args[0]} : undefined);
+                break;
             case 'copy': wc.copy(); break;
             case 'selectAll': wc.selectAll(); break;
             case 'isFocused': result = win.isFocused(); break;
@@ -173,7 +233,11 @@ class AppRemote {
             default: break;
             }
             if (callBackEventName) {
-                e.sender.send(callBackEventName, result);
+                try {
+                    e.sender.send(callBackEventName, result);
+                } catch (err) {
+                    console.error('\n>> ERROR: Cannot send window result to BrowserWindow.', err);
+                }
             }
         });
 
@@ -213,7 +277,11 @@ class AppRemote {
         ipcMain.on('menu.popup', (e, template, x, y) => {
             const win = BrowserWindow.fromWebContents(e.sender);
             const menu = Menu.buildFromTemplate(template);
-            menu.popup(win, x, y);
+            // [upgrade] Electron 43 Menu.popup 用 options 签名；x/y 缺省时定位到鼠标位置
+            const popupOpts = {};
+            if (typeof x === 'number') popupOpts.x = x;
+            if (typeof y === 'number') popupOpts.y = y;
+            menu.popup(win, popupOpts);
         });
     }
 
@@ -630,14 +698,18 @@ class AppRemote {
             autoHideMenuBar: !IS_MAC_OSX,
             backgroundColor: '#ffffff',
             show: DEBUG,
-            webPreferences: {
-                nodeIntegration: false,
-                contextIsolation: true,
-                // [upgrade] sandbox:false 让 preload 可用 Node crypto/fs/path/os（contextIsolation 仍隔离渲染进程主世界）
-                sandbox: false,
-                preload: Path.join(__dirname, 'platform/electron/preload.js'),
-            }
+            webPreferences: {}
         }, options);
+
+        // [upgrade] 安全：webPreferences 的安全关键字段始终由主进程强制，忽略渲染进程传入值。
+        // 防止经 createAppWindow 反射调用时传入 {nodeIntegration:true, contextIsolation:false} 实现沙箱逃逸。
+        options.webPreferences = Object.assign({}, options.webPreferences, {
+            nodeIntegration: false,
+            contextIsolation: true,
+            // sandbox:false 让 preload 可用 Node crypto/fs/path/os（contextIsolation 仍隔离渲染进程主世界）
+            sandbox: false,
+            preload: Path.join(__dirname, 'platform/electron/preload.js'),
+        });
 
         let browserWindow = this.windows[name];
         if (browserWindow) {
@@ -1027,6 +1099,24 @@ class AppRemote {
     fs_writeJson(p, obj) {return fse.writeJSON(p, obj);}
     // eslint-disable-next-line class-methods-use-this
     fs_remove(p) {return fse.remove(p);}
+    /**
+     * 获取文件状态
+     * @param {string} p 文件路径
+     * @returns {Promise} 纯对象（Stats 方法经 IPC 结构化克隆会丢失原型，故提取数据字段）
+     */
+    // eslint-disable-next-line class-methods-use-this
+    async fs_stat(p) {
+        const st = await fse.stat(p);
+        return {
+            size: st.size,
+            mtime: st.mtime,
+            mtimeMs: st.mtimeMs,
+            ctime: st.ctime,
+            birthtime: st.birthtime,
+            isFile: st.isFile(),
+            isDirectory: st.isDirectory()
+        };
+    }
 
     /**
      * 对话框（主进程 API）
@@ -1047,25 +1137,6 @@ class AppRemote {
      */
     // eslint-disable-next-line class-methods-use-this
     shortcut_isRegistered(accelerator) {return globalShortcut.isRegistered(accelerator);}
-
-    /**
-     * 执行 osascript 命令（用于 macOS 登录项管理）
-     * @param {string} command 要执行的命令
-     * @memberof AppRemote
-     * @return {Promise}
-     */
-    // eslint-disable-next-line class-methods-use-this
-    execOsascript(command) {
-        return new Promise((resolve, reject) => {
-            exec(command, (err, stdout) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(stdout);
-                }
-            });
-        });
-    }
 
     // ─── App API（callRemote 反射 RPC 调用） ───
     // eslint-disable-next-line class-methods-use-this
