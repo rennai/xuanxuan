@@ -127,16 +127,21 @@ export const closeWindow = () => {
 
 /**
  * 显示并隐藏应用窗口
+ * [upgrade] async（isMinimized 经 IPC），内部吞掉错误避免调用方 fire-and-forget 产生 unhandled rejection
  * @return {void}
  */
 export const showAndFocusWindow = async () => {
-    const minimized = await win.isMinimized();
-    if (minimized) {
-        win.restore();
-    } else {
-        showWindow();
+    try {
+        const minimized = await win.isMinimized();
+        if (minimized) {
+            win.restore();
+        } else {
+            showWindow();
+        }
+        focusWindow();
+    } catch (_) {
+        // 窗口销毁竞态下忽略
     }
-    focusWindow();
 };
 
 /**
@@ -144,7 +149,7 @@ export const showAndFocusWindow = async () => {
  * @return {void}
  */
 export const quitIM = () => {
-    callRemote('closeWindow', browserWindowName);
+    callRemote('closeWindow', browserWindowName).catch(() => {});
 };
 
 /**
@@ -250,11 +255,30 @@ export const reloadWindow = () => {
 };
 
 /**
+ * 登录项状态缓存。
+ * [upgrade] contextIsolation 移除 @electron/remote 同步代理后 getLoginItemSettings 改为异步 IPC，
+ * 但调用方（登录表单上下文菜单的 checked）需同步布尔。故缓存状态，模块加载时异步填充。
+ * @type {boolean}
+ * @private
+ */
+let openAtLoginCached = false;
+let openAtLoginInited = false;
+const ensureLoginItemSettings = () => {
+    if (openAtLoginInited) return;
+    openAtLoginInited = true;
+    native.app.getLoginItemSettings().then(settings => {
+        openAtLoginCached = !!(settings && settings.openAtLogin);
+    }).catch(() => {});
+};
+ensureLoginItemSettings();
+
+/**
  * 判断是否在操作系统登录后启动应用
  * @returns {boolean} 如果返回 `true` 则为是在操作系统登录后启动应用，否则为不是
  */
 export const isOpenAtLogin = () => {
-    return native.app.getLoginItemSettings().openAtLogin;
+    ensureLoginItemSettings();
+    return openAtLoginCached;
 };
 
 /**
@@ -263,11 +287,12 @@ export const isOpenAtLogin = () => {
  * @return {void}
  */
 export const setOpenAtLogin = openAtLogin => {
-    native.app.setLoginItemSettings({openAtLogin});
-    // Fix disable openAtLogin not work in mac os, see https://github.com/electron/electron/issues/10880#issuecomment-356067655
-    if (!openAtLogin && env.isOSX) {
-        callRemote('execOsascript', `osascript -e 'tell application "System Events" to delete login item "${native.app.getName()}"'`);
-    }
+    // 立即更新缓存保证 UI 响应，主进程实际写入异步完成
+    openAtLoginCached = !!openAtLogin;
+    native.app.setLoginItemSettings({openAtLogin}).catch(() => {});
+    // [upgrade] 旧版用 execOsascript 删除登录项绕过 Electron 4 的 macOS bug
+    // （https://github.com/electron/electron/issues/10880），该 bug 在新版 Electron 已修复，
+    // setLoginItemSettings({openAtLogin:false}) 可正确移除登录项，无需 shell 命令。
 };
 
 /**
@@ -297,30 +322,24 @@ export const onWindowRestore = listener => {
 
 /**
  * 判断应用窗口是否获得焦点
- * @returns {Promise<boolean>} 如果返回 `true` 则为是获得焦点，否则为不是
+ * [upgrade] contextIsolation 移除 remote 模块后改用 DOM API（同步，与 browser 基线一致），
+ * 避免旧 callWindow 异步返回 Promise 被调用方当同步布尔用导致通知焦点判断失效。
+ * @returns {boolean}
  */
-export const isWindowFocus = () => win.isFocused();
+export const isWindowFocus = () => document.hasFocus();
 
 /**
  * 判断应用窗口是否处于打开状态
- * @returns {Promise<boolean>} 如果返回 `true` 则为是处于打开状态，否则为不是
+ * [upgrade] 窗口最小化/隐藏时 document.visibilityState 为 'hidden'
+ * @returns {boolean}
  */
-export const isWindowOpen = async () => {
-    const minimized = await win.isMinimized();
-    const visible = await win.isVisible();
-    return !minimized && visible;
-};
+export const isWindowOpen = () => document.visibilityState !== 'hidden';
 
 /**
  * 判断应用窗口是否处于打开且获得焦点状态
- * @returns {Promise<boolean>} 如果返回 `true` 则为是处于打开且获得焦点状态，否则为不是
+ * @returns {boolean}
  */
-export const isWindowOpenAndFocus = async () => {
-    const focused = await win.isFocused();
-    const minimized = await win.isMinimized();
-    const visible = await win.isVisible();
-    return focused && !minimized && visible;
-};
+export const isWindowOpenAndFocus = () => document.hasFocus() && document.visibilityState !== 'hidden';
 
 /**
  * 获取应用根目录路径
@@ -333,7 +352,7 @@ export const getAppRoot = () => env.appRoot;
  * @return {void}
  */
 export const createAppWindow = () => {
-    callRemote('createAppWindow');
+    callRemote('createAppWindow').catch(() => {});
 };
 
 export const setWindowTitle = title => {

@@ -11,7 +11,7 @@ import {playSound} from '../common/sound';
  */
 export const requestAttention = (attention = true) => {
     if (attention) {
-        remote.call('dockBounce', 'informational');
+        remote.call('dockBounce', 'informational').catch(() => {});
     }
     native.window.flashFrame(attention);
 };
@@ -26,7 +26,8 @@ export const setBadgeLabel = (label) => {
     if (label === false) {
         label = '';
     }
-    ui.setBadgeLabel(label);
+    // [upgrade] callRemote 异步返回 Promise，fire-and-forget 调用吞掉 reject 避免 unhandled rejection
+    ui.setBadgeLabel(label).catch(() => {});
 };
 
 /**
@@ -36,8 +37,8 @@ export const setBadgeLabel = (label) => {
  * @return {void}
  */
 export const updateTrayIcon = (title, flash = false) => {
-    ui.setTrayTooltip(title);
-    ui.flashTrayIcon(flash);
+    ui.setTrayTooltip(title).catch(() => {});
+    ui.flashTrayIcon(flash).catch(() => {});
 };
 
 export default {

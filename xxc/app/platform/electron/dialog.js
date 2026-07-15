@@ -2,6 +2,7 @@ import native from './native';
 import env from './env';
 import {showOpenDialog} from '../common/open-file-button';
 import {downloadFileWithRequest} from './net';
+import {base64ToBuffer} from './image';
 
 /**
  * 上次在文件保存对话框中选择的文件保存位置
@@ -126,22 +127,24 @@ export const saveAsImageFromUrl = (url, dataType) => new Promise((resolve, rejec
         filename: (isBase64Image || isBlob) ? 'xuanxuan-image.png' : basename(url),
         sourceFilePath: (isBase64Image || isBlob) ? null : url
     }, filename => {
-        if (filename) {
-            if (isBase64Image) {
-                // [upgrade] contextIsolation 下 nativeImage 经 preload 处理；base64 图片直接写文件
-                native.fs.outputFile(filename, url).then(() => {
-                    resolve(filename);
-                }).catch(reject);
-            } else if (isBlob) {
-                return downloadFileWithRequest(url, filename).then(() => {
-                    resolve(filename);
-                }).catch(reject);
-            }
-            resolve(filename);
-        } else {
+        if (!filename) {
             reject();
+            return;
         }
-    });
+        if (isBase64Image) {
+            // [upgrade] 解码 base64 data URL 为二进制再写入（等价于旧 nativeImage.createFromDataURL(url).toPNG()）
+            native.fs.outputFile(filename, base64ToBuffer(url)).then(() => {
+                resolve(filename);
+            }).catch(reject);
+        } else if (isBlob) {
+            return downloadFileWithRequest(url, filename).then(() => {
+                resolve(filename);
+            }).catch(reject);
+        } else {
+            // 非 base64/blob：sourceFilePath 已在 showSaveDialog 内 fs.copy 完成
+            resolve(filename);
+        }
+    }).catch(reject); // [upgrade] showSaveDialog 为 async，捕获其内部 await reject 避免 unhandledrejection + 外层挂起
 });
 
 export default {
