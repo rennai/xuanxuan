@@ -82,6 +82,16 @@ export default defineConfig(({command}) => ({
 
   plugins: [jsxInJsPlugin()],
 
+  // 依赖预打包扫描器（rolldown/oxc）不跑上面 plugins 里的 jsxInJsPlugin，且 oxc 按扩展名
+  // 决定是否解析 JSX——.js 永远按纯 JS 解析（JSX syntax is disabled），扫描 app/index.js
+  // 会在 <HomeIndex /> 处 PARSE_ERROR。把同一 JSX 转换插件也挂到扫描器的 rolldown 插件管线，
+  // 让它在扫描解析前先把 .js 的 JSX 转成 React.createElement，与 dev 路径行为一致。
+  optimizeDeps: {
+    rolldownOptions: {
+      plugins: [jsxInJsPlugin()],
+    },
+  },
+
   resolve: {
     alias: [
       {find: 'Platform', replacement: path.resolve(__dirname, 'app/platform/browser/index.js')},
