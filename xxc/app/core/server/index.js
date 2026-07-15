@@ -1,5 +1,4 @@
-// eslint-disable-next-line import/no-unresolved
-import compareVersions from 'compare-versions';
+import {compareVersions} from 'compare-versions';
 import pkg from '../../package.json';
 import Socket from '../network/socket';
 import serverHandlers from './server-handlers';

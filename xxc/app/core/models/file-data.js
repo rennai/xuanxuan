@@ -1,4 +1,4 @@
-import UUID from 'uuid';
+import {v4 as UUID} from 'uuid';
 import md5 from 'md5';
 import Entity from './entity';
 import Member from './member';

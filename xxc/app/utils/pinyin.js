@@ -1,4 +1,4 @@
-import PinYin from 'pinyin';
+import {pinyin as PinYin} from 'pinyin';
 
 /** @module pinyin */
 
