@@ -1,4 +1,6 @@
-import {remote} from 'electron';
+import native from './native';
+
+const sc = native.shortcut;
 
 /**
  * 保存所有注册的全局快捷键
@@ -16,7 +18,7 @@ const unregisterGlobalShortcut = (name) => {
     const accelerator = shortcuts[name];
     if (accelerator) {
         try {
-            remote.globalShortcut.unregister(accelerator);
+            sc.unregister(accelerator);
         } catch (err) {
             if (DEBUG) {
                 console.warn('Unregister shortcut error:', name, err);
@@ -41,7 +43,7 @@ const registerGlobalShortcut = (name, accelerator, callback) => {
     if (accelerator) {
         shortcuts[name] = accelerator;
         try {
-            remote.globalShortcut.register(accelerator, () => {
+            sc.register(accelerator, () => {
                 if (DEBUG) {
                     console.color(`GLOBAL KEY ACTIVE ${name}: ${accelerator}`, 'redOutline');
                 }
@@ -65,10 +67,10 @@ const registerGlobalShortcut = (name, accelerator, callback) => {
  * @param {Accelerator} accelerator 快捷键组合
  * @returns {boolean} 如果返回 `true` 则为被注册，否则为没有被注册
  */
-const isGlobalShortcutRegistered = (accelerator) => remote.globalShortcut.isRegistered(accelerator);
+const isGlobalShortcutRegistered = (accelerator) => sc.isRegistered(accelerator);
 
 export default {
-    unregisterAll: remote.globalShortcut.unregisterAll,
+    unregisterAll: sc.unregisterAll,
     unregisterGlobalShortcut,
     registerGlobalShortcut,
     isGlobalShortcutRegistered

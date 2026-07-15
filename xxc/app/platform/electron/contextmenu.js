@@ -1,5 +1,4 @@
-import {remote} from 'electron';
-import {browserWindow} from './ui';
+import native from './native';
 
 /**
  * 语言文本访问对象
@@ -8,11 +7,7 @@ import {browserWindow} from './ui';
  */
 let lang = null;
 
-/**
- * Electron 上下文菜单类
- * @private
- */
-const {Menu} = remote;
+const menuApi = native.menu;
 
 /**
  * 设置语言文本访问对象
@@ -26,18 +21,18 @@ const setLangObj = langObj => {
 /**
  * 创建上下文菜单实例
  * @param {Object[]} menu 要创建的上下文菜单项清单
- * @return {Menu} 上下文菜单类
+ * @return {Object[]} 上下文菜单项清单
  */
 export const createContextMenu = menu => {
-    if (Array.isArray(menu) && !menu.popup) {
-        menu = Menu.buildFromTemplate(menu);
+    if (Array.isArray(menu)) {
+        return menu;
     }
     return menu;
 };
 
 /**
  * 显示右键上下文菜单
- * @param {Menu|Object[]} menu 要创建的上下文菜单项清单或者上下文菜单实例
+ * @param {Object[]} menu 要创建的上下文菜单项清单
  * @param {number} x 菜单显示在 X 轴上的位置
  * @param {number} y 菜单显示在 Y 轴上的位置
  * @param {BrowserWindow} windowObj 应用窗口实例
@@ -49,7 +44,7 @@ export const popupContextMenu = (menu, x, y, windowObj) => {
         x = x.clientX;
     }
     menu = createContextMenu(menu);
-    menu.popup(windowObj || browserWindow, x, y);
+    menuApi.popup(menu, x, y);
 };
 
 /**

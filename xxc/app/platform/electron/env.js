@@ -1,8 +1,5 @@
-import os from 'os';
-import {remote as Remote} from 'electron';
-import path from 'path';
+import native from './native';
 import {getSearchParam} from '../../utils/html-helper';
-
 
 /**
  * 访问地址参数表
@@ -15,56 +12,28 @@ const urlParams = getSearchParam();
  * 当前窗口名称
  * @type {string}
  */
-const windowName = urlParams._name;
-
-/**
- * 操作系统平台
- * @type {string}
- * @private
- */
-const OS_PLATFORM = os.platform();
-
-/**
- * 用户个人数据文件夹路径
- * @type {string}
- * @private
- */
-const dataPath = Remote.app.getPath('userData');
-
-/**
- * 用户临时文件存储路径
- * @type {string}
- * @private
- */
-const tmpPath = path.join(dataPath, 'temp');
-
-/**
- * 用户桌面文件夹路径
- * @type {string}
- * @private
- */
-const desktopPath = Remote.app.getPath('desktop');
+const windowName = urlParams._name || native.env.windowName;
 
 /**
  * 当前运行的操作系统是否是 Mac
  * @type {boolean}
  * @private
  */
-const isOSX = OS_PLATFORM === 'osx' || OS_PLATFORM === 'darwin';
+const isOSX = native.env.isOSX;
 
 /**
  * 当前运行的操作系统是否是 Windows
  * @type {boolean}
  * @private
  */
-const isWindowsOS = OS_PLATFORM === 'win32' || OS_PLATFORM === 'win64';
+const isWindowsOS = native.env.isWindowsOS;
 
 /**
  * 当前运行的操作系统是否是 Linux
  * @type {boolean}
  * @private
  */
-const isLinux = !isOSX && !isWindowsOS;
+const isLinux = native.env.isLinux;
 
 /**
  * 当前操作系统运行环境信息
@@ -81,17 +50,17 @@ const isLinux = !isOSX && !isWindowsOS;
  * @property {string} appRoot Electron 应用根目录路径
  */
 export default {
-    arch: process.arch,
-    os: isOSX ? 'mac' : isWindowsOS ? 'windows' : OS_PLATFORM,
+    arch: native.env.arch,
+    os: native.env.os,
     isWindowsOS,
     isOSX,
     isLinux,
-    dataPath,
-    desktopPath,
-    tmpPath,
+    dataPath: native.env.dataPath,
+    desktopPath: native.env.desktopPath,
+    tmpPath: native.env.tmpPath,
     get appPath() {
-        return path.resolve(Remote.app.getAppPath(), '..');
+        return native.env.appPath;
     },
-    appRoot: Remote.getGlobal('entryPath'),
+    appRoot: native.env.appRoot,
     windowName,
 };

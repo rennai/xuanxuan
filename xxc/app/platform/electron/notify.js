@@ -1,3 +1,4 @@
+import native from './native';
 import ui from './ui';
 import remote from './remote';
 import {showNotification} from '../common/notification';
@@ -12,7 +13,7 @@ export const requestAttention = (attention = true) => {
     if (attention) {
         remote.call('dockBounce', 'informational');
     }
-    ui.browserWindow.flashFrame(attention);
+    native.window.flashFrame(attention);
 };
 
 /**

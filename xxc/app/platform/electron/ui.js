@@ -1,9 +1,5 @@
-import {
-    shell,
-    remote as Remote,
-} from 'electron';
+import native from './native';
 import {v4 as uuid} from 'uuid';
-import Path from 'path';
 import EVENT from './remote-events';
 import {
     onRequestQuit as onMainRequestQuit, callRemote, ipcSend, onRequestOpenUrl
@@ -11,6 +7,8 @@ import {
 import shortcut from './shortcut';
 import env from './env';
 import getUrlMeta from './get-url-meta';
+
+const win = native.window;
 
 /**
  * 当前窗口名称
@@ -28,13 +26,7 @@ export const isMainWindow = () => browserWindowName === 'main';
  * 用户数据目录
  * @type {string}
  */
-export const userDataPath = Remote.app.getPath('userData');
-
-/**
- * 当前应用窗口实例
- * @type {BrowserWindow}
- */
-export const browserWindow = Remote.getCurrentWindow();
+export const userDataPath = native.env.dataPath;
 
 /**
  * 处理请求退出回调函数
@@ -51,7 +43,7 @@ let onRequestQuitListener = null;
  * @return {string} 用户个人目录
  */
 export const createUserDataPath = (user, fileName, dirName = 'images') => {
-    return Path.join(userDataPath, 'users', user.identify, dirName, fileName);
+    return `${userDataPath}/users/${user.identify}/${dirName}/${fileName}`;
 };
 
 /**
@@ -60,7 +52,7 @@ export const createUserDataPath = (user, fileName, dirName = 'images') => {
  * @return {string} 临时文件保存路径
  */
 export const makeTmpFilePath = (ext = '') => {
-    return Path.join(userDataPath, `tmp/${uuid()}${ext}`);
+    return `${userDataPath}/tmp/${uuid()}${ext}`;
 };
 
 /**
@@ -80,7 +72,7 @@ export const setBadgeLabel = (label = '') => {
  * @return {void}
  */
 export const setShowInTaskbar = flag => {
-    return browserWindow.setSkipTaskbar(!flag);
+    return win.setSkipTaskbar(!flag);
 };
 
 /**
@@ -106,7 +98,7 @@ export const flashTrayIcon = (flash = true) => {
  * @return {void}
  */
 export const showWindow = () => {
-    browserWindow.show();
+    win.show();
 };
 
 /**
@@ -114,7 +106,7 @@ export const showWindow = () => {
  * @return {void}
  */
 export const hideWindow = () => {
-    browserWindow.minimize();
+    win.minimize();
 };
 
 /**
@@ -122,7 +114,7 @@ export const hideWindow = () => {
  * @return {void}
  */
 export const focusWindow = () => {
-    browserWindow.focus();
+    win.focus();
 };
 
 /**
@@ -130,16 +122,17 @@ export const focusWindow = () => {
  * @return {void}
  */
 export const closeWindow = () => {
-    browserWindow.close();
+    win.close();
 };
 
 /**
  * 显示并隐藏应用窗口
  * @return {void}
  */
-export const showAndFocusWindow = () => {
-    if (browserWindow.isMinimized()) {
-        browserWindow.restore();
+export const showAndFocusWindow = async () => {
+    const minimized = await win.isMinimized();
+    if (minimized) {
+        win.restore();
     } else {
         showWindow();
     }
@@ -167,7 +160,7 @@ export const quit = (delay = 1000, ignoreListener = false) => {
         }
     }
 
-    browserWindow.hide();
+    win.hide();
     shortcut.unregisterAll();
 
     if (delay && delay !== true) {
@@ -189,28 +182,28 @@ export const onRequestQuit = listener => {
 /**
  * 绑定监听应用窗口获得焦点事件
  * @param {funcion} listener 事件回调函数
- * @return {Symbol} 使用 `Symbol` 存储的事件 ID，用于取消事件
+ * @return {void}
  */
 export const onWindowFocus = listener => {
-    browserWindow.on('focus', listener);
+    win.on('focus', () => listener());
 };
 
 /**
  * 绑定监听应用窗口失去焦点事件
  * @param {funcion} listener 事件回调函数
- * @return {Symbol} 使用 `Symbol` 存储的事件 ID，用于取消事件
+ * @return {void}
  */
 export const onWindowBlur = listener => {
-    browserWindow.on('blur', listener);
+    win.on('blur', () => listener());
 };
 
 /**
  * 绑定监听应用窗口最小化事件
  * @param {funcion} listener 事件回调函数
- * @return {Symbol} 使用 `Symbol` 存储的事件 ID，用于取消事件
+ * @return {void}
  */
 export const onWindowMinimize = listener => {
-    browserWindow.on('minimize', listener);
+    win.on('minimize', () => listener());
 };
 
 /**
@@ -218,8 +211,8 @@ export const onWindowMinimize = listener => {
  * @param {function} callback 回调函数
  * @return {void}
  */
-export const showQuitConfirmDialog = (message, rememberText, buttons, callback) => {
-    Remote.dialog.showMessageBox(browserWindow, {
+export const showQuitConfirmDialog = async (message, rememberText, buttons, callback) => {
+    const result = await native.dialog.showMessageBox({
         type: 'question',
         message,
         checkboxLabel: callback ? rememberText : undefined,
@@ -227,17 +220,17 @@ export const showQuitConfirmDialog = (message, rememberText, buttons, callback) 
         cancelId: 2,
         defaultId: 0,
         buttons,
-    }, (result, checked) => {
-        result = ['minimize', 'close', ''][result];
-        if (callback) {
-            result = callback(result, checked);
-        }
-        if (result === 'minimize') {
-            hideWindow();
-        } else if (result === 'close') {
-            quit(true);
-        }
     });
+    let action = ['minimize', 'close', ''][result.response];
+    const checked = result.checkboxChecked;
+    if (callback) {
+        action = callback(action, checked);
+    }
+    if (action === 'minimize') {
+        hideWindow();
+    } else if (action === 'close') {
+        quit(true);
+    }
 };
 
 /**
@@ -245,8 +238,7 @@ export const showQuitConfirmDialog = (message, rememberText, buttons, callback) 
  * @return {void}
  */
 export const openDevTools = () => {
-    browserWindow.webContents.openDevTools({mode: 'bottom'});
-    // todo: Turn on debug mode
+    win.openDevTools({mode: 'bottom'});
 };
 
 /**
@@ -254,7 +246,7 @@ export const openDevTools = () => {
  * @return {void}
  */
 export const reloadWindow = () => {
-    browserWindow.reload();
+    win.reload();
 };
 
 /**
@@ -262,7 +254,7 @@ export const reloadWindow = () => {
  * @returns {boolean} 如果返回 `true` 则为是在操作系统登录后启动应用，否则为不是
  */
 export const isOpenAtLogin = () => {
-    return Remote.app.getLoginItemSettings().openAtLogin;
+    return native.app.getLoginItemSettings().openAtLogin;
 };
 
 /**
@@ -271,11 +263,10 @@ export const isOpenAtLogin = () => {
  * @return {void}
  */
 export const setOpenAtLogin = openAtLogin => {
-    Remote.app.setLoginItemSettings({openAtLogin});
+    native.app.setLoginItemSettings({openAtLogin});
     // Fix disable openAtLogin not work in mac os, see https://github.com/electron/electron/issues/10880#issuecomment-356067655
     if (!openAtLogin && env.isOSX) {
-        // eslint-disable-next-line no-undef
-        __non_webpack_require__('child_process').exec(`osascript -e 'tell application "System Events" to delete login item "${Remote.app.getName()}"'`);
+        callRemote('execOsascript', `osascript -e 'tell application "System Events" to delete login item "${native.app.getName()}"'`);
     }
 };
 
@@ -284,7 +275,7 @@ export const setOpenAtLogin = openAtLogin => {
  * @return {void}
  */
 export const copySelectText = () => {
-    browserWindow.webContents.copy();
+    win.copy();
 };
 
 /**
@@ -292,35 +283,44 @@ export const copySelectText = () => {
  * @return {void}
  */
 export const selectAllText = () => {
-    browserWindow.webContents.selectAll();
+    win.selectAll();
 };
 
 /**
  * 绑定监听应用窗口还原事件
  * @param {funcion} listener 事件回调函数
- * @return {Symbol} 使用 `Symbol` 存储的事件 ID，用于取消事件
+ * @return {void}
  */
 export const onWindowRestore = listener => {
-    browserWindow.on('restore', listener);
+    win.on('restore', () => listener());
 };
 
 /**
  * 判断应用窗口是否获得焦点
- * @returns {boolean} 如果返回 `true` 则为是获得焦点，否则为不是获得焦点
+ * @returns {Promise<boolean>} 如果返回 `true` 则为是获得焦点，否则为不是
  */
-export const isWindowFocus = () => browserWindow.isFocused();
+export const isWindowFocus = () => win.isFocused();
 
 /**
  * 判断应用窗口是否处于打开状态
- * @returns {boolean} 如果返回 `true` 则为是处于打开状态，否则为不是处于打开状态
+ * @returns {Promise<boolean>} 如果返回 `true` 则为是处于打开状态，否则为不是
  */
-export const isWindowOpen = () => !browserWindow.isMinimized() && browserWindow.isVisible();
+export const isWindowOpen = async () => {
+    const minimized = await win.isMinimized();
+    const visible = await win.isVisible();
+    return !minimized && visible;
+};
 
 /**
  * 判断应用窗口是否处于打开且获得焦点状态
- * @returns {boolean} 如果返回 `true` 则为是处于打开且获得焦点状态，否则为不是处于打开且获得焦点状态
+ * @returns {Promise<boolean>} 如果返回 `true` 则为是处于打开且获得焦点状态，否则为不是
  */
-export const isWindowOpenAndFocus = () => browserWindow.isFocused() && !browserWindow.isMinimized() && browserWindow.isVisible();
+export const isWindowOpenAndFocus = async () => {
+    const focused = await win.isFocused();
+    const minimized = await win.isMinimized();
+    const visible = await win.isVisible();
+    return focused && !minimized && visible;
+};
 
 /**
  * 获取应用根目录路径
@@ -337,7 +337,7 @@ export const createAppWindow = () => {
 };
 
 export const setWindowTitle = title => {
-    browserWindow.setTitle(title);
+    win.setTitle(title);
 };
 
 /**
@@ -352,7 +352,7 @@ const init = (config) => {
     });
 
     // 监听应用窗口还原事件
-    browserWindow.on('restore', () => {
+    win.on('restore', () => {
         setShowInTaskbar(true);
     });
 
@@ -368,11 +368,10 @@ export default {
     userDataPath,
     browserWindowName,
     isMainWindow,
-    browserWindow,
     makeTmpFilePath,
-    openExternal: shell.openExternal,
-    showItemInFolder: shell.showItemInFolder,
-    openFileItem: shell.openItem,
+    openExternal: native.shell.openExternal,
+    showItemInFolder: native.shell.showItemInFolder,
+    openFileItem: native.shell.openItem,
     setBadgeLabel,
     setShowInTaskbar,
     onWindowMinimize,
