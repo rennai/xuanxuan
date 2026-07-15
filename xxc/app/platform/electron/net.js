@@ -1,7 +1,8 @@
-import fse from 'fs-extra';
-import Path from 'path';
+import native from './native';
 import network, {downloadFile as downloadFileOrigin, uploadFile as uploadFileOrigin} from '../common/network';
 import {createUserDataPath} from './ui';
+
+const fs = native.fs;
 
 /**
  * 下载文件
@@ -11,9 +12,9 @@ import {createUserDataPath} from './ui';
  * @returns {Promise} 使用 Promise 异步返回处理文件下载结果
  */
 export const downloadFileWithRequest = (url, fileSavePath, onProgress) => {
-    return downloadFileOrigin(url, null, onProgress).then(fileBuffer => {
-        const buffer = Buffer.from(new Uint8Array(fileBuffer));
-        return fse.outputFile(fileSavePath, buffer);
+    return downloadFileOrigin(url, null, onProgress).then(async fileBuffer => {
+        const buffer = new Uint8Array(fileBuffer);
+        return fs.outputFile(fileSavePath, buffer);
     });
 };
 
@@ -44,28 +45,27 @@ const createCachePath = (file, user, dirName = 'images') => {
  * @returns {Promise} 使用 Promise 异步返回处理结果
  * @private
  */
-const checkFileCache = (file, user, dirName = 'images') => {
+const checkFileCache = async (file, user, dirName = 'images') => {
     if (file.path) {
-        return Promise.resolve(false);
+        return false;
     }
     if (file.localPath) {
         filesCache[file.gid] = file.localPath;
-        return Promise.resolve(file.localPath);
+        return file.localPath;
     }
     let cachePath = filesCache[file.gid];
     if (cachePath) {
         file.localPath = cachePath;
-        return Promise.resolve(cachePath);
+        return cachePath;
     }
     cachePath = createCachePath(file, user, dirName);
-    return fse.pathExists(cachePath).then(exists => {
-        if (exists) {
-            filesCache[file.gid] = cachePath;
-            file.localPath = cachePath;
-            return Promise.resolve(cachePath);
-        }
-        return Promise.resolve(false);
-    });
+    const exists = await fs.pathExists(cachePath);
+    if (exists) {
+        filesCache[file.gid] = cachePath;
+        file.localPath = cachePath;
+        return cachePath;
+    }
+    return false;
 };
 
 /**
@@ -75,36 +75,32 @@ const checkFileCache = (file, user, dirName = 'images') => {
  * @param {function(progresss: number)} onProgress 下载进度变更事件回调函数
  * @returns {Promise} 使用 Promise 异步返回处理文件下载结果
  */
-export const downloadFile = (user, file, onProgress) => {
-    return checkFileCache(file, user).then(cachePath => {
-        const url = file.url || file.makeUrl(user);
-        const fileSavePath = file.path || createCachePath(file, user);
-        if (cachePath) {
-            if (DEBUG) {
-                console.collapse('HTTP DOWNLOAD', 'blueBg', url, 'bluePale', 'Cached', 'greenPale');
-                console.log('file', file);
-                console.groupEnd();
-            }
-            if (fileSavePath !== cachePath) {
-                return fse.copy(cachePath, fileSavePath).then(() => {
-                    return Promise.resolve(file);
-                });
-            }
-            return Promise.resolve(file);
+export const downloadFile = async (user, file, onProgress) => {
+    const cachePath = await checkFileCache(file, user);
+    const url = file.url || file.makeUrl(user);
+    const fileSavePath = file.path || createCachePath(file, user);
+    if (cachePath) {
+        if (DEBUG) {
+            console.collapse('HTTP DOWNLOAD', 'blueBg', url, 'bluePale', 'Cached', 'greenPale');
+            console.log('file', file);
+            console.groupEnd();
         }
+        if (fileSavePath !== cachePath) {
+            await fs.copy(cachePath, fileSavePath);
+            return file;
+        }
+        return file;
+    }
 
-        fse.ensureDirSync(Path.dirname(fileSavePath));
-        return downloadFileWithRequest(url, fileSavePath, onProgress).then(() => {
-            if (DEBUG) {
-                console.collapse('HTTP DOWNLOAD', 'blueBg', url, 'bluePale', 'OK', 'greenPale');
-                console.log('file', file);
-                console.groupEnd();
-            }
-            file.localPath = fileSavePath;
-            filesCache[file.gid] = file.localPath;
-            return Promise.resolve(file);
-        });
-    });
+    await downloadFileWithRequest(url, fileSavePath, onProgress);
+    if (DEBUG) {
+        console.collapse('HTTP DOWNLOAD', 'blueBg', url, 'bluePale', 'OK', 'greenPale');
+        console.log('file', file);
+        console.groupEnd();
+    }
+    file.localPath = fileSavePath;
+    filesCache[file.gid] = file.localPath;
+    return file;
 };
 
 /**
@@ -115,7 +111,7 @@ export const downloadFile = (user, file, onProgress) => {
  * @param {boolean} [copyCache=false] 是否将原始文件拷贝到缓存目录
  * @returns {Promise} 使用 Promise 异步返回处理上传文件结果
  */
-export const uploadFile = (user, file, onProgress, copyCache = false) => {
+export const uploadFile = async (user, file, onProgress, copyCache = false) => {
     const {originFile} = file;
     if (!originFile) {
         return console.warn('Upload file fail, cannot get origin file object.', file);
@@ -127,49 +123,45 @@ export const uploadFile = (user, file, onProgress, copyCache = false) => {
     form.append('gid', file.cgid);
     file.form = form;
 
-    return uploadFileOrigin(file, serverUrl, xhr => {
+    const remoteData = await uploadFileOrigin(file, serverUrl, xhr => {
         xhr.setRequestHeader('ServerName', user.serverName);
         xhr.setRequestHeader('Authorization', user.token);
-    }, onProgress).then(remoteData => {
-        const finishUpload = () => {
-            if (DEBUG) {
-                console.collapse('HTTP UPLOAD Request', 'blueBg', serverUrl, 'bluePale', 'OK', 'greenPale');
-                console.log('files', file);
-                console.log('remoteData', remoteData);
-                console.groupEnd();
-            }
-            return Promise.resolve(remoteData);
-        };
-        if (copyCache) {
-            const copyPath = createCachePath(file, user, copyCache === true ? 'images' : copyCache);
-            file.localPath = copyPath;
+    }, onProgress);
 
-            if (originFile.blob) {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                        if (reader.readyState === 2) {
-                            const buffer = Buffer.from(reader.result);
-                            fse.outputFile(copyPath, buffer)
-                                .then(finishUpload)
-                                .then(resolve)
-                                .catch(reject);
-                        }
-                    };
-                    reader.readAsArrayBuffer(file.blob);
-                });
-            }
-            if (originFile.path) {
-                return fse.copy(originFile.path, copyPath).then(finishUpload);
-            }
-        }
-        return finishUpload();
-    }).catch(error => {
+    const finishUpload = () => {
         if (DEBUG) {
-            console.error('Upload file error', error, file);
+            console.collapse('HTTP UPLOAD Request', 'blueBg', serverUrl, 'bluePale', 'OK', 'greenPale');
+            console.log('files', file);
+            console.log('remoteData', remoteData);
+            console.groupEnd();
         }
-        return Promise.reject(error);
-    });
+        return remoteData;
+    };
+
+    if (copyCache) {
+        const copyPath = createCachePath(file, user, copyCache === true ? 'images' : copyCache);
+        file.localPath = copyPath;
+
+        if (originFile.blob) {
+            const buffer = await new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    if (reader.readyState === 2) {
+                        resolve(new Uint8Array(reader.result));
+                    }
+                };
+                reader.onerror = reject;
+                reader.readAsArrayBuffer(file.blob);
+            });
+            await fs.outputFile(copyPath, buffer);
+            return finishUpload();
+        }
+        if (originFile.path) {
+            await fs.copy(originFile.path, copyPath);
+            return finishUpload();
+        }
+    }
+    return finishUpload();
 };
 
 network.uploadFile = uploadFile;

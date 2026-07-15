@@ -1,8 +1,5 @@
-import {remote as Remote, nativeImage} from 'electron';
-import Path from 'path';
-import fs from 'fs-extra';
+import native from './native';
 import env from './env';
-import ui from './ui';
 import {showOpenDialog} from '../common/open-file-button';
 import {downloadFileWithRequest} from './net';
 
@@ -14,26 +11,59 @@ import {downloadFileWithRequest} from './net';
 let lastFileSavePath = '';
 
 /**
+ * 获取文件名（仅文件名部分）
+ * @param {string} filename 完整路径
+ * @return {string} 文件名
+ */
+const basename = filename => {
+    const idx = Math.max(filename.lastIndexOf('/'), filename.lastIndexOf('\\'));
+    return idx >= 0 ? filename.substring(idx + 1) : filename;
+};
+
+/**
+ * 获取目录路径
+ * @param {string} filename 完整路径
+ * @return {string} 目录路径
+ */
+const dirname = filename => {
+    const idx = Math.max(filename.lastIndexOf('/'), filename.lastIndexOf('\\'));
+    return idx >= 0 ? filename.substring(0, idx) : '';
+};
+
+/**
+ * 拼接路径
+ * @param  {...string} parts 路径片段
+ * @return {string} 拼接后的路径
+ */
+const join = (...parts) => parts.filter(Boolean).join('/').replace(/\/+/g, '/');
+
+/**
  * 显示文件保存对话框
  * @param {{sourceFilePath: string}} options 选项
  * @param {function(result: boolean)} callback 保存完成后的回调函数，其中参数 `result` 为是否成功保存文件
  * @return {void}
  */
-export const showSaveDialog = (options, callback) => {
+export const showSaveDialog = async (options, callback) => {
     if (options.sourceFilePath) {
         const {sourceFilePath} = options;
         delete options.sourceFilePath;
-        return showSaveDialog(options, filename => {
+        return showSaveDialog(options, async filename => {
             if (filename) {
                 if (sourceFilePath === filename) {
-                    callback(filename);
+                    if (callback) {
+                        callback(filename);
+                    }
                 } else {
-                    fs.copy(sourceFilePath, filename)
-                        .then(() => {
-                            if (callback) {
-                                callback(filename);
-                            }
-                        }).catch(callback);
+                    try {
+                        await native.fs.copy(sourceFilePath, filename);
+                        if (callback) {
+                            callback(filename);
+                        }
+                    } catch (err) {
+                        if (callback) {
+                            callback(err);
+                        }
+                    }
                 }
             } else if (callback) {
                 callback();
@@ -44,20 +74,21 @@ export const showSaveDialog = (options, callback) => {
     let filename = options.filename || '';
     delete options.filename;
     if (filename) {
-        filename = Path.basename(filename);
+        filename = basename(filename);
     }
 
     options = Object.assign({
-        defaultPath: Path.join(lastFileSavePath || env.desktopPath, filename)
+        defaultPath: join(lastFileSavePath || env.desktopPath, filename)
     }, options);
-    Remote.dialog.showSaveDialog(ui.browserWindow, options, filename => {
-        if (filename) {
-            lastFileSavePath = Path.dirname(filename);
-        }
-        if (callback) {
-            callback(filename);
-        }
-    });
+
+    const result = await native.dialog.showSaveDialog(options);
+    const filePath = result && result.filePath;
+    if (filePath) {
+        lastFileSavePath = dirname(filePath);
+    }
+    if (callback) {
+        callback(filePath);
+    }
 };
 
 /**
@@ -66,12 +97,15 @@ export const showSaveDialog = (options, callback) => {
  * @param {function(result: boolean)} callback 保存完成后的回调函数，其中参数 `result` 为是否成功保存文件
  * @return {void}
  */
-export const showRemoteOpenDialog = (options, callback) => {
+export const showRemoteOpenDialog = async (options, callback) => {
     options = Object.assign({
         defaultPath: env.desktopPath,
         properties: ['openFile']
     }, options);
-    Remote.dialog.showOpenDialog(ui.browserWindow, options, callback);
+    const result = await native.dialog.showOpenDialog(options);
+    if (callback) {
+        callback(result && result.filePaths);
+    }
 };
 
 /**
@@ -89,13 +123,15 @@ export const saveAsImageFromUrl = (url, dataType) => new Promise((resolve, rejec
         url = url.substr(7);
     }
     showSaveDialog({
-        filename: (isBase64Image || isBlob) ? 'xuanxuan-image.png' : Path.basename(url),
+        filename: (isBase64Image || isBlob) ? 'xuanxuan-image.png' : basename(url),
         sourceFilePath: (isBase64Image || isBlob) ? null : url
     }, filename => {
         if (filename) {
             if (isBase64Image) {
-                const image = nativeImage.createFromDataURL(url);
-                fs.outputFileSync(filename, image.toPNG());
+                // [upgrade] contextIsolation 下 nativeImage 经 preload 处理；base64 图片直接写文件
+                native.fs.outputFile(filename, url).then(() => {
+                    resolve(filename);
+                }).catch(reject);
             } else if (isBlob) {
                 return downloadFileWithRequest(url, filename).then(() => {
                     resolve(filename);
@@ -109,7 +145,6 @@ export const saveAsImageFromUrl = (url, dataType) => new Promise((resolve, rejec
 });
 
 export default {
-    // showRemoteOpenDialog,
     showSaveDialog,
     showOpenDialog,
     saveAsImageFromUrl

@@ -1,4 +1,6 @@
-import {clipboard, nativeImage} from 'electron';
+import native from './native';
+
+const cb = native.clipboard;
 
 /**
  * 将指定的图片复制到剪切板
@@ -7,34 +9,7 @@ import {clipboard, nativeImage} from 'electron';
  * @return {void}
  */
 export const writeImageFromUrl = (url, dataType = 'path') => {
-    if (url.startsWith('file://')) {
-        url = url.substr(7);
-    }
-    const img = dataType === 'base64' ? nativeImage.createFromDataURL(url) : nativeImage.createFromPath(url);
-    clipboard.writeImage(img);
-};
-
-/**
- * 获取 NativeImage 图片信息
- * @param {NativeImage} nativeImg NativeImage 图片对象
- * @return {{name: string, type: string, base64: string, width: number, height: number, size: number}} 图片信息对象
- * @private
- */
-const getImageData = nativeImg => {
-    if (nativeImg && !nativeImg.isEmpty()) {
-        const size = nativeImg.getSize();
-        const base64 = nativeImg.toDataURL();
-        const base64Length = base64.length;
-        return {
-            name: `clipboard-image-${size.width}x${size.height}.png`,
-            type: 'base64',
-            base64,
-            width: size.width,
-            height: size.height,
-            size: Math.ceil(((4 * (base64Length / 3))) + (base64Length % 3 !== 0 ? 4 : 0))
-        };
-    }
-    return null;
+    cb.writeImageFromUrl(url, dataType);
 };
 
 /**
@@ -42,14 +17,14 @@ const getImageData = nativeImg => {
  * @type {{name: string, type: string, base64: string, width: number, height: number, size: number}}
  * @private
  */
-let lastNewImage = getImageData(clipboard.readImage());
+let lastNewImage = cb.getNewImage();
 
 /**
  * 获取剪切板中的新的图片信息
  * @return {{name: string, type: string, base64: string, width: number, height: number, size: number}} 图片信息对象
  */
 export const getNewImage = () => {
-    const currentImage = getImageData(clipboard.readImage());
+    const currentImage = cb.getNewImage();
     if (!lastNewImage || !currentImage || currentImage.base64 !== lastNewImage.base64) {
         lastNewImage = currentImage;
         return currentImage;
@@ -62,7 +37,7 @@ export const getNewImage = () => {
  * @param {?string} type 内容类型
  * @return {string} 剪贴板中的纯文本内容。
  */
-export const readText = clipboard.readText;
+export const readText = (...args) => cb.readText(...args);
 
 /**
  * 将文本内容写入剪切板中
@@ -70,29 +45,29 @@ export const readText = clipboard.readText;
  * @param {?string} type 内容类型
  * @return {void}
  */
-export const writeText = clipboard.writeText;
+export const writeText = (...args) => cb.writeText(...args);
 
 /**
  * 获取剪切板中的图片内容
  * @param {?string} type 内容类型
- * @return {NativeImage} 返回剪贴板中的图像内容
+ * @return {string} 返回剪贴板中的图像内容（dataURL）
  */
-export const readImage = clipboard.readImage;
+export const readImage = (...args) => cb.readImage(...args);
 
 /**
  * 将图片内容写入剪切板中
- * @param {NativeImage} image 图片内容
+ * @param {string} dataUrl 图片内容（dataURL）
  * @param {?string} type 内容类型
  * @return {void}
  */
-export const writeImage = clipboard.writeImage;
+export const writeImage = (...args) => cb.writeImage(...args);
 
 /**
  * 获取剪切板中的HTML内容
  * @param {?string} type 内容类型
  * @return {string} 返回剪贴板中的HTML内容
  */
-export const readHTML = clipboard.readHTML;
+export const readHTML = (...args) => cb.readHTML(...args);
 
 /**
  * 将HTML内容写入剪切板中
@@ -100,7 +75,7 @@ export const readHTML = clipboard.readHTML;
  * @param {?string} type 内容类型
  * @return {void}
  */
-export const writeHTML = clipboard.writeHTML;
+export const writeHTML = (...args) => cb.writeHTML(...args);
 
 /**
  * 将内容写入剪切板中
@@ -108,7 +83,7 @@ export const writeHTML = clipboard.writeHTML;
  * @param {?string} type 内容类型
  * @return {void}
  */
-export const write = clipboard.write;
+export const write = (...args) => cb.write(...args);
 
 export default {
     readText,
