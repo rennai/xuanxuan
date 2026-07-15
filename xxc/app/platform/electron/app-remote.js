@@ -1,6 +1,9 @@
 import electron, {
     BrowserWindow, app as ElectronApp, Tray, Menu, nativeImage, globalShortcut, ipcMain, dialog, shell
 } from 'electron';
+import {exec} from 'child_process';
+import Path from 'path';
+import fse from 'fs-extra';
 import EVENT from './remote-events';
 import events from './events';
 import Lang, {onLangChange} from './lang-remote';
@@ -142,6 +145,75 @@ class AppRemote {
         onLangChange(() => {
             this.createAppMenu();
             this.createDockMenu();
+        });
+
+        // 当前窗口控制（channel = 'window'，用 e.sender 定位 BrowserWindow）
+        ipcMain.on('window', (e, method, callBackEventName, ...args) => {
+            const win = BrowserWindow.fromWebContents(e.sender);
+            if (!win) return;
+            const wc = win.webContents;
+            let result;
+            switch (method) {
+            case 'show': win.show(); break;
+            case 'hide': win.hide(); break;
+            case 'minimize': win.minimize(); break;
+            case 'restore': win.restore(); break;
+            case 'focus': win.focus(); break;
+            case 'close': win.close(); break;
+            case 'reload': wc.reload(); break;
+            case 'setTitle': win.setTitle(args[0]); break;
+            case 'setSkipTaskbar': win.setSkipTaskbar(args[0]); break;
+            case 'flashFrame': win.flashFrame(args[0]); break;
+            case 'openDevTools': wc.openDevTools(args[0] ? {mode: args[0]} : undefined); break;
+            case 'copy': wc.copy(); break;
+            case 'selectAll': wc.selectAll(); break;
+            case 'isFocused': result = win.isFocused(); break;
+            case 'isMinimized': result = win.isMinimized(); break;
+            case 'isVisible': result = win.isVisible(); break;
+            default: break;
+            }
+            if (callBackEventName) {
+                e.sender.send(callBackEventName, result);
+            }
+        });
+
+        // 全局快捷键（register 需要回调渲染进程，走独立 channel 'shortcut.register' 等）
+        ipcMain.on('shortcut.register', (e, accelerator, cbEventName) => {
+            globalShortcut.register(accelerator, () => {
+                e.sender.send(cbEventName);
+            });
+        });
+        ipcMain.on('shortcut.unregister', (e, accelerator) => {
+            globalShortcut.unregister(accelerator);
+        });
+        ipcMain.on('shortcut.unregisterAll', () => {
+            globalShortcut.unregisterAll();
+        });
+
+        // [dev] 渲染进程控制台错误转发
+        ipcMain.on('renderer-console', (e, level, message) => {
+            console.log(`[renderer:${level}] ${message}`);
+        });
+
+        // [upgrade] 同步获取 app 信息（preload 启动时调用，需 sendSync）
+        ipcMain.on('app:get-info', (e) => {
+            e.returnValue = {
+                userDataPath: ElectronApp.getPath('userData'),
+                desktopPath: ElectronApp.getPath('desktop'),
+                appPath: Path.resolve(ElectronApp.getAppPath(), '..'),
+                appRoot: process.env.ELECTRON_APP_ROOT || ElectronApp.getAppPath(),
+            };
+        });
+
+        // [upgrade] 渲染进程经 callRemote 调用的 app/screen 方法（反射 RPC）
+        // app_getPath / app_getLocale / app_getName / app_getLoginItemSettings / app_setLoginItemSettings
+        // screen_getAllDisplays / screen_getPrimaryDisplay 已在下方类方法区定义
+
+        // [upgrade] 上下文菜单 popup（主进程创建 Menu 并弹出）
+        ipcMain.on('menu.popup', (e, template, x, y) => {
+            const win = BrowserWindow.fromWebContents(e.sender);
+            const menu = Menu.buildFromTemplate(template);
+            menu.popup(win, x, y);
         });
     }
 
@@ -334,7 +406,7 @@ class AppRemote {
         this.createAppMenu();
 
         // 设置关于窗口
-        if (typeof ElectronApp.setAboutPanelOptions === 'function') {
+        if (typeof ElectronApp.setAboutPanelOptions === 'function' && this.appConfig.pkg) {
             ElectronApp.setAboutPanelOptions({
                 applicationName: Lang.title,
                 applicationVersion: this.appConfig.pkg.version,
@@ -479,18 +551,19 @@ class AppRemote {
             if (this.markClose && this.markClose[windowName]) return;
             const now = new Date().getTime();
             if (this.lastRequestCloseTime && (now - this.lastRequestCloseTime) < 1000) {
-                electron.dialog.showMessageBox(appWindow, {
+                dialog.showMessageBox(appWindow, {
                     buttons: [Lang.string('common.exitIM'), Lang.string('common.cancel')],
                     defaultId: 0,
                     type: 'question',
                     message: Lang.string('common.comfirmQuiteIM')
-                }, response => {
+                }).then(({response}) => {
                     if (response === 0) {
                         setTimeout(() => {
                             this.closeWindow(windowName);
                         }, 0);
                     }
-                });
+                    return null;
+                }).catch(() => {});
             } else {
                 this.lastRequestCloseTime = now;
                 if (appWindow) {
@@ -558,8 +631,11 @@ class AppRemote {
             backgroundColor: '#ffffff',
             show: DEBUG,
             webPreferences: {
-                webSecurity: false,
-                nodeIntegration: true,
+                nodeIntegration: false,
+                contextIsolation: true,
+                // [upgrade] sandbox:false 让 preload 可用 Node crypto/fs/path/os（contextIsolation 仍隔离渲染进程主世界）
+                sandbox: false,
+                preload: Path.join(__dirname, 'platform/electron/preload.js'),
             }
         }, options);
 
@@ -607,15 +683,26 @@ class AppRemote {
             event.preventDefault();
         });
 
-        // 阻止应用内的链接打开新窗口
-        browserWindow.webContents.on('new-window', (event, url) => {
+        // 阻止应用内的链接打开新窗口（Electron 24+ 移除 new-window 事件，改用 setWindowOpenHandler）
+        browserWindow.webContents.setWindowOpenHandler(({url}) => {
             browserWindow.webContents.send(EVENT.open_url, url);
-            event.preventDefault();
+            return {action: 'deny'};
+        });
+
+        // [upgrade] contextIsolation：转发当前窗口事件给渲染进程（preload window.on 监听）
+        ['focus', 'blur', 'minimize', 'restore'].forEach(evt => {
+            browserWindow.on(evt, () => {
+                browserWindow.webContents.send(`window.${evt}`);
+            });
         });
 
         let {url} = options;
         if (url) {
-            if (!url.startsWith('file://') && !url.startsWith('http://') && !url.startsWith('https://')) {
+            // [upgrade] 开发模式从 Vite dev server 加载（XXC_PLATFORM=electron），生产从 file:// 加载
+            const devServerUrl = process.env.VITE_DEV_SERVER_URL;
+            if (devServerUrl) {
+                url = `${devServerUrl}/${url}`;
+            } else if (!url.startsWith('file://') && !url.startsWith('http://') && !url.startsWith('https://')) {
                 url = `file://${this.entryPath}/${options.url}`;
             }
             if (DEBUG) {
@@ -649,13 +736,14 @@ class AppRemote {
                 if (DEBUG) {
                     console.error(`\n>> ERROR: ${messageBoxOptions.message}`);
                 }
-                dialog.showMessageBox(messageBoxOptions, (index) => {
-                    if (index === 0) {
+                dialog.showMessageBox(messageBoxOptions).then(({response}) => {
+                    if (response === 0) {
                         browserWindow.reload();
                     } else {
                         browserWindow.close();
                     }
-                });
+                    return null;
+                }).catch(() => {});
             });
         }
 
@@ -862,16 +950,17 @@ class AppRemote {
      */
     confirmCreateAppWindow() {
         this.showAndFocusWindow();
-        electron.dialog.showMessageBox(this.currentFocusWindow, {
+        dialog.showMessageBox(this.currentFocusWindow, {
             buttons: [Lang.string('common.confirm'), Lang.string('common.cancel')],
             defaultId: 0,
             type: 'question',
             message: Lang.string('common.confirmCreateAppWindow')
-        }, response => {
+        }).then(({response}) => {
             if (response === 0) {
                 this.createAppWindow();
             }
-        });
+            return null;
+        }).catch(() => {});
     }
 
     /**
@@ -916,6 +1005,85 @@ class AppRemote {
             ElectronApp.dock.bounce(type);
         }
     }
+
+    // ─── contextIsolation 安全模型：callRemote 反射 RPC 调用的方法 ───
+
+    /**
+     * 文件操作（fs 白名单）
+     * @memberof AppRemote
+     * @return {Promise}
+     */
+    // eslint-disable-next-line class-methods-use-this
+    fs_outputFile(file, data) {return fse.outputFile(file, Buffer.from(data));}
+    // eslint-disable-next-line class-methods-use-this
+    fs_copy(src, dest) {return fse.copy(src, dest);}
+    // eslint-disable-next-line class-methods-use-this
+    fs_pathExists(p) {return fse.pathExists(p);}
+    // eslint-disable-next-line class-methods-use-this
+    fs_ensureDir(p) {return fse.ensureDir(p);}
+    // eslint-disable-next-line class-methods-use-this
+    fs_readJson(p) {return fse.readJSON(p, {throws: false});}
+    // eslint-disable-next-line class-methods-use-this
+    fs_writeJson(p, obj) {return fse.writeJSON(p, obj);}
+    // eslint-disable-next-line class-methods-use-this
+    fs_remove(p) {return fse.remove(p);}
+
+    /**
+     * 对话框（主进程 API）
+     * @memberof AppRemote
+     * @return {Promise}
+     */
+    // eslint-disable-next-line class-methods-use-this
+    dialog_showMessageBox(options) {return dialog.showMessageBox(options);}
+    // eslint-disable-next-line class-methods-use-this
+    dialog_showSaveDialog(options) {return dialog.showSaveDialog(options);}
+    // eslint-disable-next-line class-methods-use-this
+    dialog_showOpenDialog(options) {return dialog.showOpenDialog(options);}
+
+    /**
+     * 全局快捷键是否已注册
+     * @memberof AppRemote
+     * @return {boolean}
+     */
+    // eslint-disable-next-line class-methods-use-this
+    shortcut_isRegistered(accelerator) {return globalShortcut.isRegistered(accelerator);}
+
+    /**
+     * 执行 osascript 命令（用于 macOS 登录项管理）
+     * @param {string} command 要执行的命令
+     * @memberof AppRemote
+     * @return {Promise}
+     */
+    // eslint-disable-next-line class-methods-use-this
+    execOsascript(command) {
+        return new Promise((resolve, reject) => {
+            exec(command, (err, stdout) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(stdout);
+                }
+            });
+        });
+    }
+
+    // ─── App API（callRemote 反射 RPC 调用） ───
+    // eslint-disable-next-line class-methods-use-this
+    app_getPath(name) {return ElectronApp.getPath(name);}
+    // eslint-disable-next-line class-methods-use-this
+    app_getLocale() {return ElectronApp.getLocale();}
+    // eslint-disable-next-line class-methods-use-this
+    app_getName() {return ElectronApp.getName();}
+    // eslint-disable-next-line class-methods-use-this
+    app_getLoginItemSettings() {return ElectronApp.getLoginItemSettings();}
+    // eslint-disable-next-line class-methods-use-this
+    app_setLoginItemSettings(settings) {return ElectronApp.setLoginItemSettings(settings);}
+
+    // ─── Screen API（callRemote 反射 RPC 调用） ───
+    // eslint-disable-next-line class-methods-use-this
+    screen_getAllDisplays() {return electron.screen.getAllDisplays();}
+    // eslint-disable-next-line class-methods-use-this
+    screen_getPrimaryDisplay() {return electron.screen.getPrimaryDisplay();}
 }
 
 /**
