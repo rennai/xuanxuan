@@ -1,4 +1,4 @@
-import cheerio from 'cheerio';
+import {load as cheerioLoad} from 'cheerio';
 import {request, getTextFromResponse} from '../common/network';
 import limitTimePromise from '../../utils/limit-time-promise';
 
@@ -72,7 +72,7 @@ export class UrlMeta {
             this.contentType = 'page';
             return getTextFromResponse(response).then(documentSource => {
                 this.document = documentSource;
-                this.parsedDocument = cheerio.load(documentSource);
+                this.parsedDocument = cheerioLoad(documentSource);
                 return Promise.resolve(this);
             });
         } else if (controller) {

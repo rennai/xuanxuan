@@ -1,25 +1,28 @@
-import path from 'path';
-import fse from 'fs-extra';
-import {remote} from 'electron';
+import native from './native';
 import env from './env';
 import {ipcSend, remoteOn} from './remote';
 import EVENTS from './remote-events';
+import {getJSON} from '../common/network';
 
 /**
  * 获取语言表数据
  * @param {String} langName 语言名称
- * @return {Map<String, String>} 语言表数据对象
+ * @return {Promise<Map<String, String>>} 语言表数据对象
  */
 export const loadLangData = (langName) => {
-    const langFilePath = path.join(process.env.HOT ? env.appRoot : env.appPath, 'lang', `${langName || getPlatformLangName()}.json`);
-    return fse.readJSON(langFilePath, {throws: false});
+    const name = langName || getPlatformLangName();
+    // [upgrade] contextIsolation 下渲染进程无法读本地文件，改用 HTTP 获取（同 browser 基线）。
+    return getJSON(`lang/${name}.json`);
 };
 
 /**
  * 获取系统平台所使用的默认语言名称
  * @return {String} 系统默认语言名称
  */
-export const getPlatformLangName = () => (remote.app.getLocale() || navigator.language).toLowerCase();
+export const getPlatformLangName = () => {
+    // [upgrade] contextIsolation 下 app.getLocale 经 IPC 异步返回，此处同步用 navigator.language（同 browser 基线）
+    return (navigator.language || 'en').toLowerCase();
+};
 
 /**
  * 处理语言变更事件
@@ -54,9 +57,6 @@ export const setRequestChangeLangHandler = (handler) => {
 export const initLanguage = () => {
     // 处理其他窗口请求变更语言事件
     remoteOn(EVENTS.remote_lang_change, (e, langName, langData, windowName) => {
-        console.error('EVENTS.remote_lang_change', {
-            e, langName, langData, windowName,
-        });
         if (requestChangeLangHandler && windowName !== env.windowName) {
             requestChangeLangHandler(langName);
         }
