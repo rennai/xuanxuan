@@ -185,7 +185,7 @@ export default class ExtensionDetail extends Component {
             extension,
             className,
             onRequestClose,
-            ...other,
+            ...other
         } = this.props;
 
         const buttons = [];
