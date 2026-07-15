@@ -76,7 +76,14 @@ function jsxInJsPlugin(): Plugin {
   };
 }
 
-export default defineConfig(({command}) => ({
+export default defineConfig(({command}) => {
+  // [upgrade] Platform 别名：默认 browser（浏览器开发基线），XXC_PLATFORM=electron 时切回 electron。
+  // Electron 安全模型迁移后，pnpm dev（Electron）设 XXC_PLATFORM=electron，pnpm dev:browser 不设。
+  const isElectron = process.env.XXC_PLATFORM === 'electron';
+  const platformAlias = isElectron
+    ? path.resolve(__dirname, 'app/platform/electron/index.js')
+    : path.resolve(__dirname, 'app/platform/browser/index.js');
+  return {
   root: path.resolve(__dirname, 'app'),
   publicDir: false,
 
@@ -94,9 +101,9 @@ export default defineConfig(({command}) => ({
 
   resolve: {
     alias: [
-      {find: 'Platform', replacement: path.resolve(__dirname, 'app/platform/browser/index.js')},
+      {find: 'Platform', replacement: platformAlias},
       {find: 'Config', replacement: path.resolve(__dirname, 'app/config')},
-      // 浏览器不支持扩展，指向 false 存根（不指向 exts/runtime.js，避免拖入 Node import）
+      // 扩展系统暂禁用（contextIsolation 安全模型迁移期间），指向 false 存根
       {find: 'ExtsRuntime', replacement: path.resolve(__dirname, 'app/platform/browser/exts.js')},
       {find: 'ExtsView', replacement: path.resolve(__dirname, 'app/platform/browser/exts.js')},
       // htmlparser@1.7.7 用 `this.Tautologistics` 依赖顶层 this=global，Vite ESM 下崩溃；
@@ -113,4 +120,5 @@ export default defineConfig(({command}) => ({
     port: 5173,
     host: '127.0.0.1',
   },
-}));
+};
+});
